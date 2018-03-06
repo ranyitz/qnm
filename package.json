@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "query node_modules directory",
   "bin": "bin/qnm.js",
-  "main": "index.js",
+  "main": "workspace.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -20,7 +20,6 @@
     "eslint-plugin-import": "~2.9.0"
   },
   "dependencies": {
-    "glob": "~7.1.2",
-    "lodash": "~4.17.5"
+    "caporal": "~0.10.0"
   }
 }
