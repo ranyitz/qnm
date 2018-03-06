@@ -1,6 +1,6 @@
 {
   "name": "qnm",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "cli utility for querying the node_modules directory",
   "bin": "bin/qnm.js",
   "main": "workspace.js",
