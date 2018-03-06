@@ -26,5 +26,14 @@ For example, if you want to see the installed version of `lodash`:
 qnm lodash
 ```
 
+## Roadmap
+
+* List of all node_modules
+* Search module's node_modules
+* In case of typo, suggest a module name that does exist
+* Search by regex
+* Fuzzy search for node_modules
+* Diff between two workspaces
+
 ## License
 The MIT License
