@@ -1,5 +1,5 @@
 {
-  "extends": "airbnb-base",
+  "extends": ["airbnb-base", "plugin:jest/recommended"],
   "env": {
       "jest": true,
       "node": true
@@ -10,6 +10,7 @@
       "no-restricted-syntax": "off",
       "no-underscore-dangle": "off",
       "guard-for-in": "off",
-      "no-await-in-loop": "off"
+      "no-await-in-loop": "off",
+      "arrow-body-style": "off"
   }
 }

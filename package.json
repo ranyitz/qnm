@@ -3,10 +3,10 @@
   "version": "0.2.0",
   "description": "cli utility for querying the node_modules directory",
   "bin": "bin/qnm.js",
-  "main": "workspace.js",
   "repository": "ranyitz/qnm",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "engines": {
     "node": ">=8.7"
@@ -22,9 +22,22 @@
   "devDependencies": {
     "eslint": "~4.18.2",
     "eslint-config-airbnb-base": "~12.1.0",
-    "eslint-plugin-import": "~2.9.0"
+    "eslint-plugin-import": "~2.9.0",
+    "eslint-plugin-jest": "~21.13.0",
+    "jest": "~22.4.2"
   },
   "dependencies": {
-    "caporal": "~0.10.0"
+    "caporal": "~0.10.0",
+    "chalk": "~2.3.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/fixtures/"
+    ],
+    "watchPathIgnorePatterns": [
+      "node_modules"
+    ]
   }
 }
