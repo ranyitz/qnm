@@ -1,0 +1,15 @@
+{
+  "extends": "airbnb-base",
+  "env": {
+      "jest": true,
+      "node": true
+  },
+  "rules": {
+      "no-console": "warn",
+      "no-plusplus": "off",
+      "no-restricted-syntax": "off",
+      "no-underscore-dangle": "off",
+      "guard-for-in": "off",
+      "no-await-in-loop": "off"
+  }
+}

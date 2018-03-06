@@ -1,0 +1,26 @@
+{
+  "name": "qnm",
+  "version": "0.1.0",
+  "description": "query node_modules directory",
+  "bin": "bin/qnm.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "query",
+    "node_modules",
+    "version"
+  ],
+  "author": "Ran Yitzhaki",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "~4.18.2",
+    "eslint-config-airbnb-base": "~12.1.0",
+    "eslint-plugin-import": "~2.9.0"
+  },
+  "dependencies": {
+    "glob": "~7.1.2",
+    "lodash": "~4.17.5"
+  }
+}
