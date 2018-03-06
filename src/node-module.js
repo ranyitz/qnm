@@ -2,28 +2,31 @@ const fs = require('fs');
 const path = require('path');
 
 module.exports = class NodeModule {
-  constructor({ packageJson, nodeModulesRoot, name }) {
+  constructor({ nodeModulesRoot, name }) {
     this.name = name;
-    this.packageJson = packageJson;
     this.nodeModulesRoot = nodeModulesRoot;
+    this._packageJson = null;
+  }
+
+  get packageJson() {
+    if (!this._packageJson) {
+      this.loadPackageJson();
+    }
+
+    return this._packageJson;
   }
 
   get version() {
     return this.packageJson.version;
   }
 
-  static load() {
-    // TODO
-  }
-
-  static loadSync(nodeModulesRoot, name) {
-    const packageJsonPath = path.resolve(nodeModulesRoot, name, 'package.json');
+  loadPackageJson() {
+    const packageJsonPath = path.resolve(this.nodeModulesRoot, this.name, 'package.json');
     try {
-      const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
-      return new NodeModule({ packageJson, nodeModulesRoot, name });
+      this._packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
     } catch (error) {
       if (error.code === 'ENOENT') {
-        throw new Error(`Couldn't find "package.json" in path ${packageJsonPath}`);
+        throw new Error(`Couldn't find "package.json" for module ${this.name}`);
       }
 
       throw error;

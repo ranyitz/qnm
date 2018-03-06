@@ -27,7 +27,7 @@ module.exports = class ModulesMap extends Map {
       const modulesNames = fs.readdirSync(nodeModulesRoot).filter(isNotHiddenDirectory);
 
       const rawModulesMap = modulesNames.map(name =>
-        [name, NodeModule.loadSync(nodeModulesRoot, name)]);
+        [name, new NodeModule({ nodeModulesRoot, name })]);
 
       return new ModulesMap({ rawModulesMap, root: nodeModulesRoot });
     } catch (error) {
