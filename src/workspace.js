@@ -1,25 +1,19 @@
 const ModulesMap = require('./modules-map');
 
 module.exports = class Workspace {
-  constructor({ root, modulesMap, logger }) {
-    this.root = root;
+  constructor({ cwd, modulesMap }) {
+    this.cwd = cwd;
     this.modulesMap = modulesMap;
-    this.logger = logger;
   }
 
-  getVersion(packageName) {
-    return this.modulesMap.getModule(packageName).version;
+  get(packageName) {
+    return this.modulesMap.getModule(packageName);
   }
 
-  static load(from) {
-    // TODO
-    // implement
-  }
-
-  static loadSync({ cwd = process.cwd(), logger }) {
+  static loadSync({ cwd = process.cwd() } = {}) {
     // TODO
     // identify nodeModules recursivly
     const modulesMap = ModulesMap.loadSync(cwd);
-    return new Workspace({ cwd, modulesMap, logger });
+    return new Workspace({ cwd, modulesMap });
   }
 };

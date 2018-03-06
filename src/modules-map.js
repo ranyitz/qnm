@@ -4,38 +4,51 @@ const NodeModule = require('./node-module');
 
 const isNotHiddenDirectory = dirname => !dirname.startsWith('.');
 
-module.exports = class ModulesMap extends Map {
-  constructor({ rawModulesMap, root }) {
-    super(rawModulesMap);
+class ModulesMap extends Map {
+  constructor({ root }) {
+    super();
     this.root = root;
   }
 
-  getModule(name) {
-    const m = this.get(name);
+  addModule(name, nodeModule) {
+    if (!this.has(name)) {
+      this.set(name, [nodeModule]);
+      return;
+    }
 
-    if (!m) {
+    this.get(name).push(nodeModule);
+  }
+
+  getModule(name) {
+    const modules = this.get(name);
+
+    if (!modules) {
       throw new Error(`The node module "${name}" does not exist in ${this.root}`);
     }
 
-    return m;
+    return modules.map(m => m.load());
   }
 
-  static loadSync(root) {
-    const nodeModulesRoot = path.resolve(root, 'node_modules');
+  static loadSync(cwd) {
+    const modulesMap = new ModulesMap({ root: cwd });
 
-    try {
-      const modulesNames = fs.readdirSync(nodeModulesRoot).filter(isNotHiddenDirectory);
+    function traverseNodeModules(root, parent) {
+      const nodeModulesPath = path.resolve(root, 'node_modules');
 
-      const rawModulesMap = modulesNames.map(name =>
-        [name, new NodeModule({ nodeModulesRoot, name })]);
+      if (fs.existsSync(nodeModulesPath)) {
+        const modulesNames = fs.readdirSync(nodeModulesPath).filter(isNotHiddenDirectory);
 
-      return new ModulesMap({ rawModulesMap, root: nodeModulesRoot });
-    } catch (error) {
-      if (error.code === 'ENOENT') {
-        throw new Error(`couldn't find node_modules directory in path ${root}`);
+        modulesNames.map((name) => {
+          const nodeModule = new NodeModule({ nodeModulesPath, name, parent });
+          modulesMap.addModule(name, nodeModule);
+          return nodeModule;
+        }).forEach(nodeModule => traverseNodeModules(nodeModule.path, nodeModule));
       }
-
-      throw error;
     }
+
+    traverseNodeModules(cwd);
+    return modulesMap;
   }
-};
+}
+
+module.exports = ModulesMap;
