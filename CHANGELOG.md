@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.0 (March 8, 2018)
+* Improve error message when nothing was found.
+* Add support for `--match` option.
+
 ## 0.4.0 (March 7, 2018)
 * Add support for organizations.
 * Add the `list`/`ls` command which gives you a list of all installed modules.
