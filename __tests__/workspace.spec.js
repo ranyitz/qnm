@@ -14,6 +14,10 @@ describe('workspace', () => {
     expect(output).toMatch(`> ${chalk.bold('1.0.0')}`);
   });
 
+  it('should show a message when no module has found', () => {
+    // TODO
+  });
+
   it('should get the version of a module in depth', () => {
     const nm = Workspace.loadSync(resolveFixture('module-in-depth'));
     const modules = nm.get('test');
@@ -56,5 +60,9 @@ describe('workspace', () => {
     expect(output).toMatch(`${chalk.magenta('anot')}her > ${chalk.bold('1.0.0')}`);
     expect(output).not.toMatch(`test > ${chalk.bold('1.0.0')}`);
     expect(output).not.toMatch(`> ${chalk.bold('1.0.0')} ${chalk.magenta('(another)')}`);
+  });
+
+  it('should show a message when no module has matched the provided string', () => {
+    // TODO
   });
 });

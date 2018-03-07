@@ -2,8 +2,11 @@
 const prog = require('caporal');
 const pkg = require('../package.json');
 const Workspace = require('../src/workspace');
-const { printVersions, printModulesList } = require('./printer');
+const {
+  printVersions, printModulesList, notFoundModuleMessage, notMatchModuleMessage, noModulesMessage,
+} = require('./printer');
 const handlerError = require('./handler-error');
+const isEmpty = require('lodash/isEmpty');
 
 prog
   .version(pkg.version)
@@ -22,9 +25,15 @@ prog
     if (match) {
       try {
         const nm = Workspace.loadSync();
-
+        const modulesList = nm.match(match);
         console.log('');
-        console.log(printModulesList(nm.match(match), { match }));
+
+        if (isEmpty(modulesList)) {
+          console.log(notMatchModuleMessage(match));
+          return;
+        }
+
+        console.log(printModulesList(modulesList, { match }));
       } catch (error) {
         handlerError(error, verbose);
       }
@@ -35,8 +44,13 @@ prog
     try {
       const nm = Workspace.loadSync();
       const modules = nm.get(name);
-
       console.log('');
+
+      if (isEmpty(modules)) {
+        console.log(notFoundModuleMessage(name));
+        return;
+      }
+
       console.log(printVersions(modules));
     } catch (error) {
       handlerError(error, verbose);
@@ -49,10 +63,15 @@ prog
     const { verbose } = options;
     try {
       const nm = Workspace.loadSync();
-
+      const modulesList = nm.list();
       console.log('');
 
-      console.log(printModulesList(nm.list()));
+      if (isEmpty(modulesList)) {
+        console.log(noModulesMessage());
+        return;
+      }
+
+      console.log(printModulesList());
     } catch (error) {
       handlerError(error, verbose);
     }

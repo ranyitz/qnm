@@ -8,7 +8,11 @@ module.exports = class Workspace {
   }
 
   get(packageName) {
-    return this.modulesMap.getModule(packageName);
+    try {
+      return this.modulesMap.getModule(packageName);
+    } catch (err) {
+      return [];
+    }
   }
 
   list() {

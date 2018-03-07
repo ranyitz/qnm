@@ -27,3 +27,9 @@ module.exports.printVersions = (modules) => {
 module.exports.printModulesList = (modulesList, { match } = {}) => {
   return modulesList.map(([name, nodeModule]) => `${highlightMatch(name, match)} ${exports.printVersions(nodeModule)}`).join('\n');
 };
+
+module.exports.notFoundModuleMessage = name => chalk.red(`Could not find any module by the name "${name}"`);
+
+module.exports.notMatchModuleMessage = str => chalk.red(`Could not find any module that matches "${str}"`);
+
+module.exports.noModulesMessage = () => chalk.red('Could not find any module in the node_modules directory');
