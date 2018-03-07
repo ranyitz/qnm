@@ -47,7 +47,6 @@ qnm list
 ```
 ## Roadmap
 
-* List all node_modules
 * Search a module's node_modules
 * In case of typo, suggest module name that does exist
 * Search by regex
