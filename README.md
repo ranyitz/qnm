@@ -10,6 +10,12 @@ When debugging a problem, I sometimes find myself checking what are the **realâ„
 
 This tool should help me ease and improve this workflow.
 
+### So what's the problem with `npm list`?
+* Very slow
+* A lot of output
+* Sometimes fails on big projects
+* Lack of debugging features
+
 ## Installation
 ```bash
 npm i --global qnm
