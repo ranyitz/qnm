@@ -28,7 +28,8 @@
   },
   "dependencies": {
     "caporal": "~0.10.0",
-    "chalk": "~2.3.2"
+    "chalk": "~2.3.2",
+    "pkg-dir": "~2.0.0"
   },
   "jest": {
     "testEnvironment": "node",
