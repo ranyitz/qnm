@@ -43,6 +43,21 @@ Which means you have 3 occurences of lodash in your `node_modules`:
 2. `./node_module/cli-table2/node_modules/lodash`
 3. `./node_module/karma/node_modules/lodash`
 
+## Options
+### -m, --match
+Works like grep, and match's any module that includes the supplied string.
+
+For example:
+```bash
+qnm -m lodash
+```
+
+Will provide the following output:
+```bash
+lodash.includes > 4.3.0
+lodash.isarguments > 3.1.0
+lodash.isarray > 3.0.4
+```
 
 ### list
 > alias: ls

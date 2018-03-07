@@ -1,6 +1,10 @@
 const chalk = require('chalk');
 
-function printSingleModule(moduleObject) {
+function highlightMatch(str, match) {
+  return str.split(match).join(chalk.magenta(match));
+}
+
+function printSingleVersion(moduleObject) {
   const getParents = () => {
     const parentsList = [];
     let currentParent = moduleObject.parent;
@@ -16,10 +20,10 @@ function printSingleModule(moduleObject) {
   return `> ${chalk.bold(moduleObject.version)} ${getParents()}`.trim();
 }
 
-module.exports.printModules = (modules) => {
-  return modules.map(m => printSingleModule(m.toObject())).join('\n');
+module.exports.printVersions = (modules) => {
+  return modules.map(m => printSingleVersion(m.toObject())).join('\n');
 };
 
-module.exports.printModulesList = (modulesList) => {
-  return Array.from(modulesList.values()).map(modules => `${modules[0].name} ${exports.printModules(modules)}`).join('\n');
+module.exports.printModulesList = (modulesList, { match } = {}) => {
+  return modulesList.map(([name, nodeModule]) => `${highlightMatch(name, match)} ${exports.printVersions(nodeModule)}`).join('\n');
 };

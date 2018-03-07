@@ -2,19 +2,33 @@
 const prog = require('caporal');
 const pkg = require('../package.json');
 const Workspace = require('../src/workspace');
-const { printModules, printModulesList } = require('./printer');
+const { printVersions, printModulesList } = require('./printer');
 const handlerError = require('./handler-error');
 
 prog
   .version(pkg.version)
   .argument('[module]', 'prints module version from the node_modules')
   .option('-v, --verbose', 'Verbose mode - will also output debug messages')
+  .option('-m, --match', 'works like grep, and prints modules which the provided string matches')
   .action((args, options) => {
-    const { verbose } = options;
+    const { verbose, match } = options;
     const name = args.module;
-    if (!name) {
+
+    if (!name && !match) {
       // prints help in case these are no arguments
-      console.log(prog._helper.get());
+      return;
+    }
+
+    if (match) {
+      try {
+        const nm = Workspace.loadSync();
+
+        console.log('');
+        console.log(printModulesList(nm.match(match), { match }));
+      } catch (error) {
+        handlerError(error, verbose);
+      }
+
       return;
     }
 
@@ -23,7 +37,7 @@ prog
       const modules = nm.get(name);
 
       console.log('');
-      console.log(printModules(modules));
+      console.log(printVersions(modules));
     } catch (error) {
       handlerError(error, verbose);
     }
@@ -38,7 +52,7 @@ prog
 
       console.log('');
 
-      console.log(printModulesList(nm.modulesMap));
+      console.log(printModulesList(nm.list()));
     } catch (error) {
       handlerError(error, verbose);
     }
