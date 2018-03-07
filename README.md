@@ -20,7 +20,7 @@ npm i --global qnm
 qnm [module]
 ```
 
-For example, if you want to see the installed version of `lodash`:
+For example, if you want to see the installed versions of `lodash`:
 ```bash
 qnm lodash
 ```
@@ -32,16 +32,16 @@ And you'll see something like that:
 > 3.10.1 (karma)
 ```
 
-Which means you have 3 occurences of lodash in your node_modules:
+Which means you have 3 occurences of lodash in your `node_modules`:
 1. `./node_module/lodash`
-2. `./node_module/cli-table2/lodash`
-3. `./node_module/karma/lodash`
+2. `./node_module/cli-table2/node_modules/lodash`
+3. `./node_module/karma/node_modules/lodash`
 
 
 ### list
 > alias: ls
 
-Returns a list of all modules in node_modules directory
+Returns a list of all modules in node_modules directory.
 ```bash
 qnm list
 ```
