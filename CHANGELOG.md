@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.0 (March 7, 2018)
+* Add support for organizations
+* Add the list/ls command which gives you a list of all installed modules
+
 ## 0.3.0 (March 7, 2018)
 * Support running commands from a module's subdirectory.
 * Improve error handling and show `error.stack` only when `--verbose` option is used.

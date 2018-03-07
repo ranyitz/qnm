@@ -1,8 +1,10 @@
 const fs = require('fs');
 const path = require('path');
 const NodeModule = require('./node-module');
+const flattenDeep = require('lodash/flattenDeep');
 
 const isNotHiddenDirectory = dirname => !dirname.startsWith('.');
+const isOrg = dirname => dirname.startsWith('@');
 
 class ModulesMap extends Map {
   constructor({ root }) {
@@ -38,11 +40,22 @@ class ModulesMap extends Map {
       if (fs.existsSync(nodeModulesPath)) {
         const modulesNames = fs.readdirSync(nodeModulesPath).filter(isNotHiddenDirectory);
 
-        modulesNames.map((name) => {
+        flattenDeep(modulesNames.map((name) => {
+          if (isOrg(name)) {
+            const subOrgModules = fs.readdirSync(path.join(nodeModulesPath, name));
+
+            return subOrgModules.map((subName) => {
+              const fullName = path.join(name, subName);
+              const nodeModule = new NodeModule({ nodeModulesPath, name: fullName, parent });
+              modulesMap.addModule(fullName, nodeModule);
+              return nodeModule;
+            });
+          }
+
           const nodeModule = new NodeModule({ nodeModulesPath, name, parent });
           modulesMap.addModule(name, nodeModule);
           return nodeModule;
-        }).forEach(nodeModule => traverseNodeModules(nodeModule.path, nodeModule));
+        })).forEach(nodeModule => traverseNodeModules(nodeModule.path, nodeModule));
       }
     }
 

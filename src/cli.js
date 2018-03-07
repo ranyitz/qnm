@@ -2,7 +2,7 @@
 const prog = require('caporal');
 const pkg = require('../package.json');
 const Workspace = require('../src/workspace');
-const { printModules } = require('./printer');
+const { printModules, printModulesList } = require('./printer');
 const handlerError = require('./handler-error');
 
 prog
@@ -24,6 +24,21 @@ prog
 
       console.log('');
       console.log(printModules(modules));
+    } catch (error) {
+      handlerError(error, verbose);
+    }
+  })
+  .command('list', 'list all node_modules with their versions')
+  .alias('ls')
+  .option('-v, --verbose', 'Verbose mode - will also output debug messages')
+  .action((args, options) => {
+    const { verbose } = options;
+    try {
+      const nm = Workspace.loadSync();
+
+      console.log('');
+
+      console.log(printModulesList(nm.modulesMap));
     } catch (error) {
       handlerError(error, verbose);
     }

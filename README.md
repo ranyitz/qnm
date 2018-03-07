@@ -32,11 +32,19 @@ And you'll see something like that:
 > 3.10.1 (karma)
 ```
 
-which means you have 3 occurences of lodash in your node_modules:
+Which means you have 3 occurences of lodash in your node_modules:
 1. `./node_module/lodash`
 2. `./node_module/cli-table2/lodash`
 3. `./node_module/karma/lodash`
 
+
+### list
+> alias: ls
+
+Returns a list of all modules in node_modules directory
+```bash
+qnm list
+```
 ## Roadmap
 
 * List all node_modules

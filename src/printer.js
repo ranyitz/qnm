@@ -19,3 +19,7 @@ function printSingleModule(moduleObject) {
 module.exports.printModules = (modules) => {
   return modules.map(m => printSingleModule(m.toObject())).join('\n');
 };
+
+module.exports.printModulesList = (modulesList) => {
+  return Array.from(modulesList.values()).map(modules => `${modules[0].name} ${exports.printModules(modules)}`).join('\n');
+};
