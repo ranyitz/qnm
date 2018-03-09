@@ -68,8 +68,7 @@ qnm list
 ```
 ## Roadmap
 
-* Search a module's node_modules
-* In case of typo, suggest module name that does exist
+* Supply a path as an argument and qnm will list this directory
 * Search by regex
 * Fuzzy search for node_modules
 * Diff between two workspaces
