@@ -1,6 +1,6 @@
 const chalk = require('chalk');
 const getAction = require('../../src/actions/get');
-const { resolveWorkspace } = require('./utils');
+const { resolveWorkspace } = require('../utils');
 
 describe('get', () => {
   it('should get the version of a single module', () => {

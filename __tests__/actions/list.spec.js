@@ -1,6 +1,6 @@
 const chalk = require('chalk');
 const listAction = require('../../src/actions/list');
-const { resolveWorkspace } = require('./utils');
+const { resolveWorkspace } = require('../utils');
 
 describe('list', () => {
   it('should list the versions of mixed modules', () => {

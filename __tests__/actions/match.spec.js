@@ -1,6 +1,6 @@
 const chalk = require('chalk');
 const matchAction = require('../../src/actions/match');
-const { resolveWorkspace } = require('./utils');
+const { resolveWorkspace } = require('../utils');
 
 describe('list', () => {
   it('should print the matched modules according to passed string', () => {
