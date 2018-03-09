@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.6.0 (March 9, 2018)
+* Add suggestion in case there is no result for get action.
+
 ## 0.5.1 (March 8, 2018)
 * Improve error message when nothing was found.
 * Add support for `--match` option.
