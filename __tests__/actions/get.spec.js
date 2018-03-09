@@ -17,6 +17,14 @@ describe('get', () => {
     expect(output).toMatch('Could not find any module by the name "not-exist"');
   });
 
+  it('should suggest an alternative when no module has found and there is an alternative with an edit distance smaller than 2', () => {
+    const workspace = resolveWorkspace('single-module');
+    const output = getAction(workspace, 'dest');
+
+    expect(output).toMatch('Could not find any module by the name "dest"');
+    expect(output).toMatch(`Did you mean "${chalk.bold('t')}est?"`);
+  });
+
   it('should get the version of a module in depth', () => {
     const workspace = resolveWorkspace('module-in-depth');
     const output = getAction(workspace, 'test');

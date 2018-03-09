@@ -29,6 +29,7 @@
   "dependencies": {
     "caporal": "~0.10.0",
     "chalk": "~2.3.2",
+    "fast-levenshtein": "~2.0.6",
     "lodash": "~4.17.5",
     "pkg-dir": "~2.0.0"
   },
