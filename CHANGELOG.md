@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.0 (March 9, 2018)
+* Moved the cli app to use commander.
+* Enabled tab completions using tabtab.
+
 ## 0.6.0 (March 9, 2018)
 * Add suggestion in case there is no result for get action.
 
