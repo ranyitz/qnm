@@ -71,7 +71,7 @@ prog
         return;
       }
 
-      console.log(printModulesList());
+      console.log(printModulesList(modulesList));
     } catch (error) {
       handlerError(error, verbose);
     }

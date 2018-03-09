@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.5.0 (March 8, 2018)
+## 0.5.1 (March 8, 2018)
 * Improve error message when nothing was found.
 * Add support for `--match` option.
 
