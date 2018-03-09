@@ -5,7 +5,7 @@
 * Add support for `--match` option.
 
 ## 0.4.0 (March 7, 2018)
-* Add support for organizations.
+* Add support for scoped packages.
 * Add the `list`/`ls` command which gives you a list of all installed modules.
 
 ## 0.3.0 (March 7, 2018)

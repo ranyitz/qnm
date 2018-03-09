@@ -4,7 +4,7 @@ const NodeModule = require('./node-module');
 const flattenDeep = require('lodash/flattenDeep');
 
 const isNotHiddenDirectory = dirname => !dirname.startsWith('.');
-const isOrg = dirname => dirname.startsWith('@');
+const isScope = dirname => dirname.startsWith('@');
 
 class ModulesMap extends Map {
   constructor({ root }) {
@@ -41,10 +41,10 @@ class ModulesMap extends Map {
         const modulesNames = fs.readdirSync(nodeModulesPath).filter(isNotHiddenDirectory);
 
         flattenDeep(modulesNames.map((name) => {
-          if (isOrg(name)) {
-            const subOrgModules = fs.readdirSync(path.join(nodeModulesPath, name));
+          if (isScope(name)) {
+            const subScopeModules = fs.readdirSync(path.join(nodeModulesPath, name));
 
-            return subOrgModules.map((subName) => {
+            return subScopeModules.map((subName) => {
               const fullName = path.join(name, subName);
               const nodeModule = new NodeModule({ nodeModulesPath, name: fullName, parent });
               modulesMap.addModule(fullName, nodeModule);
