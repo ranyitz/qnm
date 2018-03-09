@@ -1,6 +1,6 @@
 {
   "name": "qnm",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "cli utility for querying the node_modules directory",
   "bin": "bin/qnm.js",
   "repository": "ranyitz/qnm",
