@@ -19,6 +19,10 @@ module.exports = class Workspace {
     return Array.from(this.modulesMap);
   }
 
+  getModulesNames() {
+    return Array.from(this.modulesMap.keys());
+  }
+
   match(str) {
     return this.list().filter(([name]) => name.includes(str));
   }

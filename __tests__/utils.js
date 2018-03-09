@@ -1,5 +1,5 @@
 const path = require('path');
-const Workespace = require('../src/workspace');
+const Workespace = require('../src/workspace/workspace');
 
 module.exports.resolveFixture = fixure => path.resolve(__dirname, './fixtures', fixure);
 

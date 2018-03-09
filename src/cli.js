@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 const prog = require('caporal');
 const pkg = require('../package.json');
-const Workspace = require('../src/workspace');
+const Workspace = require('../src/workspace/workspace');
 
 const matchAction = require('./actions/match');
 const getAction = require('./actions/get');
