@@ -14,6 +14,9 @@ describe('list', () => {
   });
 
   it('should show a message when no module has matched the provided string', () => {
-    // TODO
+    const workspace = resolveWorkspace('single-module');
+    const output = matchAction(workspace, 'bla');
+
+    expect(output).toMatch('Could not find any module that matches "bla"');
   });
 });

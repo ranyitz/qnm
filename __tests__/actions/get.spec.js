@@ -11,7 +11,10 @@ describe('get', () => {
   });
 
   it('should show a message when no module has found', () => {
-    // TODO
+    const workspace = resolveWorkspace('single-module');
+    const output = getAction(workspace, 'not-exist');
+
+    expect(output).toMatch('Could not find any module by the name "not-exist"');
   });
 
   it('should get the version of a module in depth', () => {
