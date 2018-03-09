@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const program = require('commander');
 
 const Workspace = require('../src/workspace/workspace');
