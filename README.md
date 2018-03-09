@@ -3,6 +3,8 @@
 
 A simple cli utility for querying the `node_modules` directory.
 
+[![Build Status](https://circleci.com/gh/ranyitz/qnm/tree/master.svg?style=shield&circle-token=44b1fb1aa4b5bd58b977bda99d94d1be137ecbc3)](https://circleci.com/gh/ranyitz/qnm)
+
 ## Why?
 > most bugs are caused by the assumptions we didn't realize we were making.
 
