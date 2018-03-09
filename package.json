@@ -6,7 +6,7 @@
   "repository": "ranyitz/qnm",
   "scripts": {
     "test": "jest",
-    "install": "tabtab install",
+    "install": "tabtab install --auto",
     "test:watch": "jest --watch"
   },
   "engines": {

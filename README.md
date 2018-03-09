@@ -21,10 +21,7 @@ This tool should help me ease and improve this workflow.
 npm i --global qnm
 ```
 
-> You will be prompt to setup the completion script, use the keyboard to choose the best option for you.
-> The script will enable tab completions for node_modules.
-
-![completion-script-prompt](assets/completion-script-prompt.png)
+> qnm will also install tab completions during post install.
 
 ## Usage
 ```bash
