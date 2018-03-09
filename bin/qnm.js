@@ -4,6 +4,7 @@
 const program = require('commander');
 const pkg = require('../package.json');
 const Workspace = require('../src/workspace/workspace');
+const setupCompletions = require('../src/completions/setup-completions');
 
 const matchAction = require('../src/actions/match');
 const getAction = require('../src/actions/get');
@@ -23,7 +24,7 @@ if (program.args.length === 0) {
 
 const preDefinedCommands = program.commands.map(c => c._name);
 
-if (!preDefinedCommands.includes(program.args[0])) {
+if (!preDefinedCommands.includes(program.args[0]) && program.args[0] !== 'completion') {
   const arg = program.args[0];
   const { match } = program;
 
@@ -35,3 +36,5 @@ if (!preDefinedCommands.includes(program.args[0])) {
     console.log(getAction(workspace, arg));
   }
 }
+
+setupCompletions(preDefinedCommands);

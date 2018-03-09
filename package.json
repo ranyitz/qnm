@@ -6,6 +6,7 @@
   "repository": "ranyitz/qnm",
   "scripts": {
     "test": "jest",
+    "install": "tabtab install",
     "test:watch": "jest --watch"
   },
   "engines": {
@@ -31,7 +32,8 @@
     "commander": "~2.15.0",
     "js-levenshtein": "~1.1.3",
     "lodash": "~4.17.5",
-    "pkg-dir": "~2.0.0"
+    "pkg-dir": "~2.0.0",
+    "tabtab": "~2.2.2"
   },
   "jest": {
     "testEnvironment": "node",
