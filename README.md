@@ -21,6 +21,11 @@ This tool should help me ease and improve this workflow.
 npm i --global qnm
 ```
 
+> You will be prompt to setup the completion script, use the keyboard to choose the best option for you.
+> The script will enable tab completions for node_modules.
+
+![completion-script-prompt](assets/completion-script-prompt.png)
+
 ## Usage
 ```bash
 qnm [module]
@@ -44,6 +49,7 @@ Which means you have 3 occurences of lodash in your `node_modules`:
 3. `./node_module/karma/node_modules/lodash`
 
 ## Options
+
 ### -m, --match
 Works like grep, and match's any module that includes the supplied string.
 
@@ -58,6 +64,8 @@ lodash.includes > 4.3.0
 lodash.isarguments > 3.1.0
 lodash.isarray > 3.0.4
 ```
+
+## Commands
 
 ### list
 > alias: ls
