@@ -21,14 +21,14 @@ class ModulesMap extends Map {
     this.get(name).push(nodeModule);
   }
 
-  getModule(name) {
-    const modules = this.get(name);
+  getModuleOccurrences(name) {
+    const moduleOccurrences = this.get(name);
 
-    if (!modules) {
+    if (!moduleOccurrences) {
       throw new Error(`The node module "${name}" does not exist in ${this.root}`);
     }
 
-    return modules.map(m => m.load());
+    return moduleOccurrences.map(m => m.load());
   }
 
   static loadSync(cwd) {

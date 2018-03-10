@@ -1,12 +1,14 @@
 const isEmpty = require('lodash/isEmpty');
-const { printModulesList, noModulesMessage } = require('../printer');
+const { noModulesMessage } = require('../printer');
+const renderModuleList = require('../render/render-module-list');
 
 module.exports = (workspace) => {
-  const modulesList = workspace.list();
+  const moduleOccurrencesList = workspace.list();
 
-  if (isEmpty(modulesList)) {
+  if (isEmpty(moduleOccurrencesList)) {
     return noModulesMessage();
   }
 
-  return printModulesList(modulesList);
+
+  return renderModuleList(moduleOccurrencesList);
 };

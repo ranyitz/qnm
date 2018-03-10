@@ -1,12 +1,13 @@
 const isEmpty = require('lodash/isEmpty');
-const { printModulesList, notMatchModuleMessage } = require('../printer');
+const { notMatchModuleMessage } = require('../printer');
+const renderModuleList = require('../render/render-module-list');
 
 module.exports = (workspace, match) => {
-  const modulesList = workspace.match(match);
+  const moduleOccurrencesList = workspace.match(match);
 
-  if (isEmpty(modulesList)) {
+  if (isEmpty(moduleOccurrencesList)) {
     return notMatchModuleMessage(match);
   }
 
-  return printModulesList(modulesList, { match });
+  return renderModuleList(moduleOccurrencesList, { match });
 };

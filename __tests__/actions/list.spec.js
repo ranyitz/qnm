@@ -7,9 +7,15 @@ describe('list', () => {
     const workspace = resolveWorkspace('mix-modules');
     const output = listAction(workspace);
 
-    expect(output).toMatch(`@scope/test > ${chalk.bold('1.0.0')}`);
-    expect(output).toMatch(`another > ${chalk.bold('1.0.0')}`);
-    expect(output).toMatch(`test > ${chalk.bold('1.0.0')}`);
-    expect(output).toMatch(`> ${chalk.bold('1.0.0')} ${chalk.magenta('(another)')}`);
+    expect(output).toMatch(`@scope/test
+└── 1.0.0
+
+another
+└── 1.0.0
+
+test
+├── 1.0.0
+└─┬ ${chalk.grey('another')}
+  └── 1.0.0`);
   });
 });

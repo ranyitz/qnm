@@ -29,6 +29,7 @@
     "jest": "~22.4.2"
   },
   "dependencies": {
+    "archy": "~1.0.0",
     "chalk": "~2.3.2",
     "commander": "~2.15.0",
     "js-levenshtein": "~1.1.3",

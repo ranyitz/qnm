@@ -7,9 +7,9 @@ module.exports = class Workspace {
     this.modulesMap = modulesMap;
   }
 
-  get(packageName) {
+  getModuleOccurrences(packageName) {
     try {
-      return this.modulesMap.getModule(packageName);
+      return this.modulesMap.getModuleOccurrences(packageName);
     } catch (err) {
       return [];
     }
