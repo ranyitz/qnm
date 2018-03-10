@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.7.1 (March 10, 2018)
+* Install tab completions automatically.
+
 ## 0.7.0 (March 9, 2018)
 * Moved the cli app to use commander.
 * Enabled tab completions using tabtab.
