@@ -37,9 +37,12 @@ qnm lodash
 
 And you'll see something like that:
 ```bash
-> 4.17.5
-> 3.10.1 (cli-table2)
-> 3.10.1 (karma)
+lodash
+├── 4.17.5
+├─┬ cli-table2
+│ └── 3.10.1
+└─┬ karma
+  └── 3.10.1
 ```
 
 Which means you have 3 occurences of lodash in your `node_modules`:
@@ -52,16 +55,22 @@ Which means you have 3 occurences of lodash in your `node_modules`:
 ### -m, --match
 Works like grep, and match's any module that includes the supplied string.
 
-For example:
-```bash
-qnm -m lodash
-```
+For example, i want to see which eslint plugins i have installed:
 
-Will provide the following output:
 ```bash
-lodash.includes > 4.3.0
-lodash.isarguments > 3.1.0
-lodash.isarray > 3.0.4
+qnm -m eslint-plug
+
+eslint-plugin-babel
+└── 3.3.0
+
+eslint-plugin-lodash
+└── 2.6.1
+
+eslint-plugin-mocha
+└── 4.12.1
+
+eslint-plugin-react
+└── 6.10.3
 ```
 
 ## Commands
@@ -76,8 +85,6 @@ qnm list
 ## Roadmap
 
 * Supply a path as an argument and qnm will list this directory
-* Search by regex
-* Fuzzy search for node_modules
 * Diff between two workspaces
 
 ## License
