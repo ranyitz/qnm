@@ -35,7 +35,11 @@ module.exports = class NodeModule {
   }
 
   load() {
-    const packageJsonPath = path.resolve(this.nodeModulesPath, this.name, 'package.json');
+    const packageJsonPath = path.resolve(
+      this.nodeModulesPath,
+      this.name,
+      'package.json',
+    );
 
     try {
       this._packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
@@ -49,4 +53,3 @@ module.exports = class NodeModule {
     }
   }
 };
-

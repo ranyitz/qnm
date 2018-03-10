@@ -1,7 +1,7 @@
 const Workspace = require('../workspace/workspace');
 const tabtab = require('tabtab');
 
-module.exports = (preDefinedCommands) => {
+module.exports = preDefinedCommands => {
   const tab = tabtab({ cache: false });
 
   tab.on('qnm', (data, done) => {
@@ -9,7 +9,9 @@ module.exports = (preDefinedCommands) => {
       return done();
     }
 
-    const tabtabCommands = preDefinedCommands.map(command => `${command}:command`);
+    const tabtabCommands = preDefinedCommands.map(
+      command => `${command}:command`,
+    );
 
     try {
       const workspace = Workspace.loadSync();
@@ -23,4 +25,3 @@ module.exports = (preDefinedCommands) => {
 
   tab.start();
 };
-

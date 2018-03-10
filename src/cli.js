@@ -22,7 +22,10 @@ try {
 
   program
     .arguments('[module]', 'prints module version from the node_modules')
-    .option('-m, --match', 'works like grep, and prints modules which the provided string matches')
+    .option(
+      '-m, --match',
+      'works like grep, and prints modules which the provided string matches',
+    )
     .option('-d, --debug', 'see full error messages, mostly for debugging');
 
   program.parse(process.argv);

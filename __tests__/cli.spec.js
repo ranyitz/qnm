@@ -2,7 +2,8 @@ const { execSync } = require('child_process');
 const { resolveFixture } = require('./utils');
 
 const qnmBin = require.resolve('../bin/qnm');
-const runCommand = (command, { cwd }) => execSync(`${qnmBin} ${command}`, { cwd, encoding: 'utf-8' });
+const runCommand = (command, { cwd }) =>
+  execSync(`${qnmBin} ${command}`, { cwd, encoding: 'utf-8' });
 
 describe('CLI', () => {
   describe('qnm with no arguments', () => {
@@ -49,4 +50,3 @@ test
     });
   });
 });
-

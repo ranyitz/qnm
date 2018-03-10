@@ -1,9 +1,10 @@
 const archy = require('archy');
 const chalk = require('chalk');
 
-const highlightMatch = (str, match) => str.split(match).join(chalk.magenta(match));
+const highlightMatch = (str, match) =>
+  str.split(match).join(chalk.magenta(match));
 
-const buildWithAncestors = (m) => {
+const buildWithAncestors = m => {
   let hierarchy = [m.version];
 
   if (m.parent) {
@@ -25,4 +26,3 @@ module.exports = (moduleOccurrences, { match } = {}) => {
 
   return tree;
 };
-
