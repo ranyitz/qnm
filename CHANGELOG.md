@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.7.2 (March 10, 2018)
+* Improve error handling.
+* Add debug option.
+
 ## 0.7.1 (March 10, 2018)
 * Install tab completions automatically.
 
