@@ -18,8 +18,8 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.js": ["eslint --fix", "git add"],
-    "*.{md,json}": ["prettier --write", "git add"]
+    "*.js": ["eslint"],
+    "*.{md,json}": ["prettier"]
   },
   "devDependencies": {
     "eslint": "~4.18.2",
