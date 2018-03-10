@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.0 (March 10, 2018)
+* Improve rendering, output a tree view of the modules and versions.
+* Show nesting of modules ancestors.
+
 ## 0.7.2 (March 10, 2018)
 * Improve error handling.
 * Add debug option.
