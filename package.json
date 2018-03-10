@@ -4,12 +4,6 @@
   "description": "cli utility for querying the node_modules directory",
   "bin": "bin/qnm.js",
   "repository": "ranyitz/qnm",
-  "scripts": {
-    "test": "jest",
-    "lint": "eslint .",
-    "install": "tabtab install --auto",
-    "test:watch": "jest --watch"
-  },
   "engines": {
     "node": ">=8.7"
   },
@@ -21,12 +15,27 @@
   ],
   "author": "Ran Yitzhaki",
   "license": "MIT",
+  "scripts": {
+    "test": "jest",
+    "lint": "eslint .",
+    "install": "tabtab install --auto",
+    "test:watch": "jest --watch",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
   "devDependencies": {
     "eslint": "~4.18.2",
     "eslint-config-airbnb-base": "~12.1.0",
     "eslint-plugin-import": "~2.9.0",
     "eslint-plugin-jest": "~21.13.0",
-    "jest": "~22.4.2"
+    "husky": "~0.14.3",
+    "jest": "~22.4.2",
+    "lint-staged": "~7.0.0"
   },
   "dependencies": {
     "archy": "~1.0.0",
