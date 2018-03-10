@@ -3,7 +3,7 @@ const getSuggestions = require('../suggest/get-suggestions');
 const { notFoundModuleMessage } = require('../printer');
 const renderModuleOccurrences = require('../render/render-module-occurrences');
 
-module.exports = (workspace, name) => {
+module.exports = (workspace, name, options = {}) => {
   const moduleOccurrences = workspace.getModuleOccurrences(name);
   const modulesNames = workspace.getModulesNames();
 
@@ -13,5 +13,5 @@ module.exports = (workspace, name) => {
     return notFoundModuleMessage(name, suggestions);
   }
 
-  return renderModuleOccurrences(moduleOccurrences);
+  return renderModuleOccurrences(moduleOccurrences, options);
 };

@@ -30,6 +30,22 @@ describe('CLI', () => {
       expect(output).toMatch(`test
 └── 1.0.0`);
     });
+
+    it('should add dependents information when using thw --why option', () => {
+      const cwd = resolveFixture('single-module');
+      const output = runCommand('--why test', { cwd });
+
+      expect(output).toMatch(`test
+└── 1.0.0 (devDependencies, npm install test)`);
+    });
+
+    it('should add dependents information when using thw -w option', () => {
+      const cwd = resolveFixture('single-module');
+      const output = runCommand('-w test', { cwd });
+
+      expect(output).toMatch(`test
+└── 1.0.0 (devDependencies, npm install test)`);
+    });
   });
 
   describe('qnm list', () => {

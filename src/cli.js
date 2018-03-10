@@ -26,6 +26,7 @@ try {
       '-m, --match',
       'works like grep, and prints modules which the provided string matches',
     )
+    .option('-w, --why', 'add information regarding why this package installed')
     .option('-d, --debug', 'see full error messages, mostly for debugging');
 
   program.parse(process.argv);
@@ -42,14 +43,14 @@ try {
 
   if (!preDefinedCommands.includes(firstArg) && firstArg !== 'completion') {
     const arg = program.args[0];
-    const { match } = program;
+    const { match, why } = program;
 
     const workspace = Workspace.loadSync();
 
     if (match) {
       console.log(matchAction(workspace, arg));
     } else {
-      console.log(getAction(workspace, arg));
+      console.log(getAction(workspace, arg, { why }));
     }
   }
 } catch (error) {

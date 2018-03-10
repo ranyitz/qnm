@@ -73,6 +73,12 @@ eslint-plugin-react
 └── 6.10.3
 ```
 
+### -w, --why
+
+> only works if you installed with npm
+
+Add information regarding why this package was installed in the first place, by showing its dependent packages.
+
 ## Commands
 
 ### list

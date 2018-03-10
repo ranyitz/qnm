@@ -1,11 +1,22 @@
 const archy = require('archy');
 const chalk = require('chalk');
+const isEmpty = require('lodash/isEmpty');
 
 const highlightMatch = (str, match) =>
   str.split(match).join(chalk.magenta(match));
 
-const buildWithAncestors = m => {
-  let hierarchy = [m.version];
+const getWhyInfo = m => {
+  const { whyInfo } = m;
+  return !isEmpty(whyInfo)
+    ? ` ${chalk.yellow(`(${m.whyInfo.join(', ')})`)}`
+    : '';
+};
+
+const buildWithAncestors = (m, { why }) => {
+  const whyInfo = why ? getWhyInfo(m) : '';
+  const information = m.version + whyInfo;
+
+  let hierarchy = [information];
 
   if (m.parent) {
     let currentModule = m;
@@ -19,9 +30,11 @@ const buildWithAncestors = m => {
   return hierarchy[0];
 };
 
-module.exports = (moduleOccurrences, { match } = {}) => {
+module.exports = (moduleOccurrences, { match, why } = {}) => {
   const moduleName = highlightMatch(moduleOccurrences[0].name, match);
-  const buildedOccurrences = moduleOccurrences.map(buildWithAncestors);
+  const buildedOccurrences = moduleOccurrences.map(m =>
+    buildWithAncestors(m, { why }),
+  );
   const tree = archy({ label: moduleName, nodes: buildedOccurrences });
 
   return tree;

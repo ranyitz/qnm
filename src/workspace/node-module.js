@@ -25,6 +25,26 @@ module.exports = class NodeModule {
     return path.join(this.nodeModulesPath, this.name);
   }
 
+  get whyInfo() {
+    const requiredByInfo = this.packageJson._requiredBy;
+
+    if (requiredByInfo) {
+      return requiredByInfo.map(modulePath => {
+        if (modulePath === '/') {
+          return 'Dependencies';
+        } else if (modulePath === '#DEV:/') {
+          return 'devDependencies';
+        } else if (modulePath === '#USER') {
+          return `npm install ${this.name}`;
+        }
+
+        return modulePath.slice(1);
+      });
+    }
+
+    return [];
+  }
+
   toObject() {
     return {
       name: this.name,
