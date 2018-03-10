@@ -7,7 +7,12 @@
   "engines": {
     "node": ">=8.7"
   },
-  "keywords": ["query", "node_modules", "version", "cli"],
+  "keywords": [
+    "query",
+    "node_modules",
+    "version",
+    "cli"
+  ],
   "author": "Ran Yitzhaki",
   "license": "MIT",
   "scripts": {
@@ -18,8 +23,12 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.js": ["eslint"],
-    "*.{md,json}": ["prettier"]
+    "*.js": [
+      "eslint"
+    ],
+    "*.{md,json}": [
+      "prettier"
+    ]
   },
   "devDependencies": {
     "eslint": "~4.18.2",
@@ -44,8 +53,15 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "testMatch": ["**/*.spec.js"],
-    "testPathIgnorePatterns": ["/node_modules/", "/fixtures/"],
-    "watchPathIgnorePatterns": ["node_modules"]
+    "testMatch": [
+      "**/*.spec.js"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/fixtures/"
+    ],
+    "watchPathIgnorePatterns": [
+      "node_modules"
+    ]
   }
 }
