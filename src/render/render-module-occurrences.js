@@ -35,7 +35,10 @@ module.exports = (moduleOccurrences, { match, why } = {}) => {
   const buildedOccurrences = moduleOccurrences.map(m =>
     buildWithAncestors(m, { why }),
   );
-  const tree = archy({ label: moduleName, nodes: buildedOccurrences });
+  const tree = archy({
+    label: chalk.underline(moduleName),
+    nodes: buildedOccurrences,
+  });
 
   return tree;
 };

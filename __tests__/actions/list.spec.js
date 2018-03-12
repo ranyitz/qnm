@@ -7,13 +7,13 @@ describe('list', () => {
     const workspace = resolveWorkspace('mix-modules');
     const output = listAction(workspace);
 
-    expect(output).toMatch(`@scope/test
+    expect(output).toMatch(`${chalk.underline('@scope/test')}
 └── 1.0.0
 
-another
+${chalk.underline('another')}
 └── 1.0.0
 
-test
+${chalk.underline('test')}
 ├── 1.0.0
 └─┬ ${chalk.grey('another')}
   └── 1.0.0`);

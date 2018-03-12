@@ -7,7 +7,7 @@ describe('match', () => {
     const workspace = resolveWorkspace('mix-modules');
     const output = matchAction(workspace, 'anot');
 
-    expect(output).toMatch(`${chalk.magenta('anot')}her
+    expect(output).toMatch(`${chalk.underline(`${chalk.magenta('anot')}her`)}
 └── 1.0.0`);
   });
 

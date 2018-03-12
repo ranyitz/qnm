@@ -7,7 +7,7 @@ describe('get', () => {
     const workspace = resolveWorkspace('single-module');
     const output = getAction(workspace, 'test');
 
-    expect(output).toMatch(`test
+    expect(output).toMatch(`${chalk.underline('test')}
 └── 1.0.0`);
   });
 
@@ -30,7 +30,7 @@ describe('get', () => {
     const workspace = resolveWorkspace('module-in-depth');
     const output = getAction(workspace, 'test');
 
-    expect(output).toMatch(`test
+    expect(output).toMatch(`${chalk.underline('test')}
 └─┬ ${chalk.grey('another')}
   └── 1.0.0`);
   });
@@ -39,7 +39,7 @@ describe('get', () => {
     const workspace = resolveWorkspace('single-module/node_modules');
     const output = getAction(workspace, 'test');
 
-    expect(output).toMatch(`test
+    expect(output).toMatch(`${chalk.underline('test')}
 └── 1.0.0`);
   });
 
@@ -47,7 +47,7 @@ describe('get', () => {
     const workspace = resolveWorkspace('scoped-module');
     const output = getAction(workspace, '@scope/test');
 
-    expect(output).toMatch(`@scope/test
+    expect(output).toMatch(`${chalk.underline('@scope/test')}
 └── 1.0.0`);
   });
 
@@ -55,7 +55,7 @@ describe('get', () => {
     const workspace = resolveWorkspace('three-levels-deep');
     const output = getAction(workspace, 'dep-of-dep-of-dep');
 
-    expect(output).toMatch(`dep-of-dep-of-dep
+    expect(output).toMatch(`${chalk.underline('dep-of-dep-of-dep')}
 └─┬ ${chalk.grey('dep')}
   └─┬ ${chalk.grey('dep-of-dep')}
     └── 1.0.0`);
