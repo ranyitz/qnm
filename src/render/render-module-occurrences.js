@@ -7,7 +7,7 @@ const highlightMatch = (str, match) =>
 
 const getWhyInfo = m => {
   const { whyInfo } = m;
-  return !isEmpty(whyInfo)
+  return !isEmpty(whyInfo) && !m.parent
     ? ` ${chalk.yellow(`(${m.whyInfo.join(', ')})`)}`
     : '';
 };
@@ -35,6 +35,7 @@ module.exports = (moduleOccurrences, { match, why } = {}) => {
   const buildedOccurrences = moduleOccurrences.map(m =>
     buildWithAncestors(m, { why }),
   );
+
   const tree = archy({
     label: chalk.underline(moduleName),
     nodes: buildedOccurrences,
