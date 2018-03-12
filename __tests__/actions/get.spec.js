@@ -23,7 +23,7 @@ describe('get', () => {
     const output = getAction(workspace, 'dest');
 
     expect(output).toMatch('Could not find any module by the name "dest"');
-    expect(output).toMatch(`Did you mean "${chalk.bold('t')}est?"`);
+    expect(output).toMatch(`Did you mean "${chalk.bold('t')}est"?`);
   });
 
   it('should get the version of a module in depth', () => {

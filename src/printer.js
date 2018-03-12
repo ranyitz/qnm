@@ -52,7 +52,7 @@ module.exports.notFoundModuleMessage = (name, suggestions) => {
 
   if (!isEmpty(suggestions)) {
     message += chalk.red(
-      ` Did you mean "${paintDiffInBold(name, suggestions[0])}?"`,
+      ` Did you mean "${paintDiffInBold(name, suggestions[0])}"?`,
     );
   }
 
