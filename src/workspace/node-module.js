@@ -31,7 +31,7 @@ module.exports = class NodeModule {
     if (requiredByInfo) {
       return requiredByInfo.map(modulePath => {
         if (modulePath === '/') {
-          return 'Dependencies';
+          return 'dependencies';
         } else if (modulePath === '#DEV:/') {
           return 'devDependencies';
         } else if (modulePath === '#USER') {
