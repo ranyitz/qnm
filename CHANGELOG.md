@@ -1,6 +1,12 @@
 # Changelog
 
-## 0.8.1 (March 10, 2018)
+## 0.8.2 (March 12, 2018)
+* Show the "--why" info only when this is a package installed in the root.
+* Fix question mark position in 'not found module' message.
+* Change 'Dependencies' to 'dependencies' on the '--why' feature.
+* Add underline to main modules render function.
+
+## 0.8.1 (March 11, 2018)
 
 * Add --why option to see who are the dependents of a certain package.
 
