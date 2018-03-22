@@ -3,7 +3,7 @@ const chalk = require('chalk');
 
 module.exports = (error, debug) => {
   if (!debug) {
-    console.error(chalk.red(error.toString()));
+    console.error(chalk.red(error.message.replace('Error: ', '')));
   } else {
     console.error(error.stack);
   }

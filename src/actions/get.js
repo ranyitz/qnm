@@ -1,6 +1,6 @@
 const isEmpty = require('lodash/isEmpty');
 const getSuggestions = require('../suggest/get-suggestions');
-const { notFoundModuleMessage } = require('../printer');
+const NotFoundModuleError = require('../errors/not-found-module-error');
 const renderModuleOccurrences = require('../render/render-module-occurrences');
 
 module.exports = (workspace, name, options = {}) => {
@@ -10,7 +10,7 @@ module.exports = (workspace, name, options = {}) => {
   if (isEmpty(moduleOccurrences)) {
     const suggestions = getSuggestions(name, modulesNames);
 
-    return notFoundModuleMessage(name, suggestions);
+    throw new NotFoundModuleError(name, suggestions);
   }
 
   return renderModuleOccurrences(moduleOccurrences, options);
