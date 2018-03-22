@@ -10,7 +10,12 @@
 
 > most bugs are caused by the assumptions we didn't realize we were making.
 
-When debugging a problem, I sometimes find myself checking what are the installed versions of the modules within `node_modules` directory. It would be real nice to be able to check a specific module; know what its version; why it's installed and whether there are more copies of it. This tool should help by getting this information **fast**. If we have a tool that knows the structure of our `node_modules` we can have even better features, like tab copmletions, searching all occurrences that contains a specific string and more.
+When debugging a problem, I sometimes find myself checking what are the installed versions of the modules within `node_modules` directory. While current commands like `npm list` provide too much clutter and are usually not fast enough. _qnm_ aims to get this information **fast** and show you only important information, while supporting both yarn & npm. 
+
+## Features
+* Tab completions
+* Match all packages with a specific string
+* Why a package was installed?
 
 ## Installation
 
@@ -75,7 +80,7 @@ eslint-plugin-react
 
 ### -w, --why
 
-> only works if you installed with npm
+> currently only works if you installed with npm
 
 Add information regarding why this package was installed in the first place, by showing its dependent packages.
 
@@ -104,20 +109,6 @@ npm install
 npm test
 ```
 
-## Roadmap
-
-* Supply a path as an argument and qnm will list this directory
-* Diff between two workspaces
-
 ## License
 
 The MIT License
-
-## FAQ
-
-#### What's the problem with `npm list`?
-
-* Very slow.
-* A lot of output.
-* Sometimes fails on big projects.
-* Lack of features.
