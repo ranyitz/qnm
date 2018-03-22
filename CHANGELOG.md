@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.9.0 (March 22, 2018)
+* Added a fuzzy search when calling `qnm` without arguments. 
+
 ## 0.8.2 (March 12, 2018)
 * Show the "--why" info only when this is a package installed in the root.
 * Fix question mark position in 'not found module' message.
