@@ -22,11 +22,11 @@ try {
 
   program
     .arguments('[module]', 'prints module version from the node_modules')
+    .option('-m, --match', 'prints modules which matches the provided string')
     .option(
-      '-m, --match',
-      'works like grep, and prints modules which the provided string matches',
+      '-w, --why',
+      'add information regarding why this package was installed',
     )
-    .option('-w, --why', 'add information regarding why this package installed')
     .option('-d, --debug', 'see full error messages, mostly for debugging');
 
   program.parse(process.argv);
