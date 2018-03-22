@@ -4,10 +4,10 @@ module.exports = (list, string) => {
   return fuzzysort
     .go(string, list, {
       threshold: -20, // Don't return matches worse than this (higher is faster)
-      limit: Infinity, // Don't return more results than this (lower is faster)
+      limit: 16, // Don't return more results than this (lower is faster)
       allowTypo: true, // Allwos a snigle transpoes (false is faster)
     })
-    .sort((a, b) => a.score > b.score)
+    .sort((a, b) => a.score < b.score)
     .map(result => {
       return {
         value: result.target,

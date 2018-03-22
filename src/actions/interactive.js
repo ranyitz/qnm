@@ -5,6 +5,8 @@ const getAction = require('./get');
 const chalk = require('chalk');
 const figures = require('figures');
 
+const resetConsole = () => process.stdout.write('\x1Bc');
+
 module.exports = workspace => {
   let results = [];
   let currentResult = 0;
@@ -15,7 +17,7 @@ module.exports = workspace => {
   const renderResults = () => {
     return results
       .map((result, i) => {
-        if (i === results.length - currentResult - 1) {
+        if (i === currentResult) {
           return `${chalk.red(figures.pointer)} ${chalk.bold(
             result.highlight,
           )}`;
@@ -26,6 +28,11 @@ module.exports = workspace => {
   };
 
   const renderInputValue = () => {
+    if (currentInputValue === '') {
+      return `${chalk.cyan(figures.pointer)} ${chalk.inverse(' ')} ${chalk.grey(
+        'start typing to use the fuzzy search',
+      )}`;
+    }
     return `${chalk.cyan(figures.pointer)} ${currentInputValue}`;
   };
 
@@ -35,11 +42,11 @@ module.exports = workspace => {
 
   const renderUi = () => {
     logUpdate(
-      `${renderResults()}\n${renderAmountOfResults()}\n${renderInputValue()}`,
+      `${renderInputValue()}\n${renderAmountOfResults()}\n${renderResults()}`,
     );
   };
 
-  results = sortBySimilarity(modulesNames, '');
+  resetConsole();
   renderUi();
 
   const input = new Input({
@@ -49,19 +56,23 @@ module.exports = workspace => {
   input.on('change', obj => {
     currentInputValue = obj.valueWithCursor;
     results = sortBySimilarity(modulesNames, obj.value);
+
+    if (currentResult > results.length - 1 && results.length !== 0) {
+      currentResult = results.length - 1;
+    }
     renderUi();
   });
 
   input.on('up', () => {
-    if (currentResult < results.length - 1) {
-      currentResult++;
+    if (currentResult > 0) {
+      currentResult--;
     }
     renderUi();
   });
 
   input.on('down', () => {
-    if (currentResult > 0) {
-      currentResult--;
+    if (currentResult < results.length - 1) {
+      currentResult++;
     }
     renderUi();
   });
@@ -72,7 +83,7 @@ module.exports = workspace => {
     }
     input.end();
     logUpdate('');
-    const chosen = results[results.length - 1 - currentResult].value;
+    const chosen = results[currentResult].value;
     console.log(getAction(workspace, chosen));
     process.exit(0);
   });
