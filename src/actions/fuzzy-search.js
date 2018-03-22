@@ -1,9 +1,9 @@
-const Input = require('../interactive/input');
-const logUpdate = require('log-update');
-const sortBySimilarity = require('../interactive/sort-by-similarity');
-const getAction = require('./get');
 const chalk = require('chalk');
 const figures = require('figures');
+const logUpdate = require('log-update');
+const Input = require('../fuzzy-search/input');
+const sortBySimilarity = require('../fuzzy-search/sort-by-similarity');
+const getAction = require('./get');
 
 const resetConsole = () => process.stdout.write('\x1Bc');
 
@@ -33,6 +33,7 @@ module.exports = workspace => {
         'start typing to use the fuzzy search',
       )}`;
     }
+
     return `${chalk.cyan(figures.pointer)} ${currentInputValue}`;
   };
 
@@ -60,6 +61,7 @@ module.exports = workspace => {
     if (currentResult > results.length - 1 && results.length !== 0) {
       currentResult = results.length - 1;
     }
+
     renderUi();
   });
 
@@ -67,6 +69,7 @@ module.exports = workspace => {
     if (currentResult > 0) {
       currentResult--;
     }
+
     renderUi();
   });
 
@@ -74,6 +77,7 @@ module.exports = workspace => {
     if (currentResult < results.length - 1) {
       currentResult++;
     }
+
     renderUi();
   });
 
@@ -81,10 +85,15 @@ module.exports = workspace => {
     if (results.length === 0) {
       return;
     }
+
     input.end();
     logUpdate('');
     const chosen = results[currentResult].value;
-    console.log(getAction(workspace, chosen));
+    console.log(getAction(workspace, chosen)); // eslint-disable-line no-console
     process.exit(0);
+  });
+
+  input.on('exit', () => {
+    logUpdate('');
   });
 };

@@ -7,7 +7,7 @@ const setupCompletions = require('./completions/setup-completions');
 const matchAction = require('./actions/match');
 const getAction = require('./actions/get');
 const listAction = require('./actions/list');
-const interactiveAction = require('./actions/interactive');
+const fuzzySearchAction = require('./actions/fuzzy-search');
 
 const handleError = require('./handler-error');
 
@@ -38,7 +38,7 @@ try {
   const workspace = Workspace.loadSync();
 
   if (program.args.length === 0) {
-    interactiveAction(workspace);
+    fuzzySearchAction(workspace);
   } else {
     const firstArg = program.rawArgs[2];
 

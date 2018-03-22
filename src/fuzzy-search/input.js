@@ -54,6 +54,7 @@ module.exports = class Input extends EventEmitter {
       case ctrlC:
       case ctrlD:
       case esc:
+        this.emit('exit');
         process.emit('SIGINT');
         process.exit(1);
         break;
