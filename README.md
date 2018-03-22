@@ -58,7 +58,7 @@ Which means you have 3 occurrences of lodash in your `node_modules`:
 
 Use `qnm` command without arguments to trigger an [`fzf`](https://github.com/junegunn/fzf) like fuzzy search, start typing to filter the matches from your `node_modules`.
 
-![fuzzy-search](./assets/fuzzy-search.gif)
+<img src="./assets/fuzzy-search.gif" alt="fuzzy-search" width="400px" height="400px" />
 
 ## Options
 
