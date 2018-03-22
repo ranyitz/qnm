@@ -13,9 +13,10 @@
 When debugging a problem, I sometimes find myself checking what are the installed versions of the modules within `node_modules` directory. While current commands like `npm list` provide too much clutter and are usually not fast enough. _qnm_ aims to get this information **fast** and show you only important information, while supporting both yarn & npm. 
 
 ## Features
-* Tab completions
-* Match all packages with a specific string
-* Why a package was installed?
+* :speech_balloon: Tab completions
+* :sparkles: Interactive fuzzy-search
+* :abc: Match all packages with a specific string
+* :interrobang: Why a package was installed?
 
 ## Installation
 
