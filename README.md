@@ -54,6 +54,12 @@ Which means you have 3 occurrences of lodash in your `node_modules`:
 2.  `./node_module/cli-table2/node_modules/lodash`
 3.  `./node_module/karma/node_modules/lodash`
 
+## Fuzzy search
+
+Use `qnm` command without arguments to trigger an [`fzf`](https://github.com/junegunn/fzf) like fuzzy search, start typing to filter the matches from your `node_modules`.
+
+![fuzzy-search](./assets/fuzzy-search.gif)
+
 ## Options
 
 ### -m, --match
