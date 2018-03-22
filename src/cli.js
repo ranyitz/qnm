@@ -7,6 +7,7 @@ const setupCompletions = require('./completions/setup-completions');
 const matchAction = require('./actions/match');
 const getAction = require('./actions/get');
 const listAction = require('./actions/list');
+const fuzzySearchAction = require('./actions/fuzzy-search');
 
 const handleError = require('./handler-error');
 
@@ -31,26 +32,25 @@ try {
 
   program.parse(process.argv);
 
-  // if no arguments specified, show help
-  if (program.args.length === 0) {
-    program.help();
-  }
-
   const preDefinedCommands = program.commands.map(c => c._name);
   setupCompletions(preDefinedCommands);
 
-  const firstArg = program.rawArgs[2];
+  const workspace = Workspace.loadSync();
 
-  if (!preDefinedCommands.includes(firstArg) && firstArg !== 'completion') {
-    const arg = program.args[0];
-    const { match, why } = program;
+  if (program.args.length === 0) {
+    fuzzySearchAction(workspace);
+  } else {
+    const firstArg = program.rawArgs[2];
 
-    const workspace = Workspace.loadSync();
+    if (!preDefinedCommands.includes(firstArg) && firstArg !== 'completion') {
+      const arg = program.args[0];
+      const { match, why } = program;
 
-    if (match) {
-      console.log(matchAction(workspace, arg));
-    } else {
-      console.log(getAction(workspace, arg, { why }));
+      if (match) {
+        console.log(matchAction(workspace, arg));
+      } else {
+        console.log(getAction(workspace, arg, { why }));
+      }
     }
   }
 } catch (error) {
