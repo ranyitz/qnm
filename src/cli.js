@@ -16,9 +16,10 @@ try {
     .version(pkg.version)
     .command('list')
     .description('list all node_modules with their versions')
-    .action(() => {
+    .option('--json-output', 'output results as json')
+    .action(({ jsonOutput: json }) => {
       const workspace = Workspace.loadSync();
-      console.log(listAction(workspace));
+      console.log(listAction(workspace, { json }));
     });
 
   program
@@ -28,6 +29,7 @@ try {
       '-w, --why',
       'add information regarding why this package was installed',
     )
+    .option('--json', 'output results as json')
     .option('-d, --debug', 'see full error messages, mostly for debugging');
 
   program.parse(process.argv);
@@ -44,12 +46,12 @@ try {
 
     if (!preDefinedCommands.includes(firstArg) && firstArg !== 'completion') {
       const arg = program.args[0];
-      const { match, why } = program;
+      const { match, why, json } = program;
 
       if (match) {
-        console.log(matchAction(workspace, arg));
+        console.log(matchAction(workspace, arg, { json }));
       } else {
-        console.log(getAction(workspace, arg, { why }));
+        console.log(getAction(workspace, arg, { why, json }));
       }
     }
   }
