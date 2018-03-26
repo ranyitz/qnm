@@ -32,12 +32,12 @@ const renderItem = ({ state, result }) => {
       return `${chalk.red(figures.pointer)} ${chalk.bold(result.highlight)}`;
     }
     case 'marked': {
-      return `${chalk.red(figures.pointer)}${chalk.bold(result.highlight)}`;
+      return ` ${chalk.magenta(result.value)}`;
     }
     case 'current&marked': {
-      return `${chalk.red(figures.pointer)}${chalk.red(
-        figures.pointer,
-      )}${chalk.bold(result.highlight)}`;
+      return `${chalk.red(figures.pointer)} ${chalk.bold(
+        chalk.magenta(result.value),
+      )}`;
     }
     default: {
       return ` ${result.highlight}`;
