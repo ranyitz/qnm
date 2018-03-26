@@ -5,6 +5,7 @@ const Workspace = require('./workspace/workspace');
 const setupCompletions = require('./completions/setup-completions');
 
 const matchAction = require('./actions/match');
+const homepageAction = require('./actions/homepage');
 const getAction = require('./actions/get');
 const listAction = require('./actions/list');
 const fuzzySearchAction = require('./actions/fuzzy-search');
@@ -20,6 +21,7 @@ try {
       '-w, --why',
       'add information regarding why this package was installed',
     )
+    .option('-h, --homepage', 'open the homepage of a certain module')
     .option('-d, --debug', 'see full error messages, mostly for debugging');
 
   program
@@ -44,10 +46,12 @@ try {
 
     if (!preDefinedCommands.includes(firstArg) && firstArg !== 'completion') {
       const arg = program.args[0];
-      const { match, why } = program;
+      const { match, why, homepage } = program;
 
       if (match) {
         console.log(matchAction(workspace, arg));
+      } else if (homepage) {
+        console.log(homepageAction(workspace, arg));
       } else {
         console.log(getAction(workspace, arg, { why }));
       }
