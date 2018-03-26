@@ -22,6 +22,14 @@ npm install
 npm test
 ```
 
+To test the `qnm` command run the following from the project root:
+
+```bash
+npm link
+```
+
+Now you should be able to run the `qnm` command which is linked to your development project.
+
 ### Test
 
 In order to run the tests in watch mode ([jest](https://github.com/facebook/jest)), run the following command:
