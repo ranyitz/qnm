@@ -12,9 +12,9 @@
 
 > most bugs are caused by the assumptions we didn't realize we were making.
 
-When debugging a problem, I sometimes find myself checking what are the installed versions of the modules within `node_modules` directory. Current solutions like running `npm list` are not fast enough and prints too much clutter, checking the version in the `package.json` takes a bit more effort and doesn't give you more information regarding other occurrences of this module. 
+When debugging a problem, I sometimes find myself checking what are the installed versions of the modules within `node_modules` directory. Current solutions like running `npm list` are not fast enough and prints too much clutter, checking the version in the `package.json` takes a bit more effort and doesn't give you more information regarding other occurrences of this module.
 
-_qnm_ aims to get this information **fast** and tries to filter only the important parts, while supporting both yarn & npm. 
+_qnm_ aims to get this information **fast** and tries to filter only the important parts, while supporting both yarn & npm.
 
 ## Features
 * :speech_balloon: Tab completions
@@ -93,6 +93,12 @@ eslint-plugin-react
 > currently only works if you installed with npm
 
 Add information regarding why this package was installed in the first place, by showing its dependent packages.
+
+### --deps
+
+> works with a 'list' command
+
+Displays direct dependencies that one have installed in a package.json file.
 
 ## Commands
 

@@ -25,13 +25,14 @@ try {
   program
     .command('list')
     .description('list all node_modules with their versions')
-    .action(() => {
+    .option('--deps', 'list packaje.json dependencies only')
+    .action(cmd => {
       const workspace = Workspace.loadSync();
-      console.log(listAction(workspace));
+
+      console.log(listAction(workspace, { deps: cmd.deps }));
     });
 
   program.parse(process.argv);
-
   const preDefinedCommands = program.commands.map(c => c._name);
   setupCompletions(preDefinedCommands);
 
@@ -44,12 +45,12 @@ try {
 
     if (!preDefinedCommands.includes(firstArg) && firstArg !== 'completion') {
       const arg = program.args[0];
-      const { match, why } = program;
+      const { match, why, deps } = program;
 
       if (match) {
         console.log(matchAction(workspace, arg));
       } else {
-        console.log(getAction(workspace, arg, { why }));
+        console.log(getAction(workspace, arg, { why, deps }));
       }
     }
   }
