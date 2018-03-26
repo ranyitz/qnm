@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-module.exports = class NodeModule {
+class NodeModule {
   constructor({ nodeModulesPath, name, parent }) {
     this.name = name;
     this.nodeModulesPath = nodeModulesPath;
@@ -72,4 +72,6 @@ module.exports = class NodeModule {
       throw error;
     }
   }
-};
+}
+
+module.exports = NodeModule;

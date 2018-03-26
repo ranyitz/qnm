@@ -1,9 +1,10 @@
+const path = require('path');
 const ModulesMap = require('./modules-map');
 const pkgDir = require('pkg-dir');
 
 module.exports = class Workspace {
-  constructor({ cwd, modulesMap }) {
-    this.cwd = cwd;
+  constructor({ root, modulesMap }) {
+    this.root = root;
     this.modulesMap = modulesMap;
   }
 
@@ -27,6 +28,21 @@ module.exports = class Workspace {
     return this.list().filter(([name]) => name.includes(str));
   }
 
+  listDependencies() {
+    const rootDir = path.resolve(this.root, 'package.json');
+    /* eslint-disable global-require */
+    /* eslint-disable import/no-dynamic-require */
+    const pJson = require(rootDir);
+    // TODO need add method output array or object
+    console.log(
+      'devDependencies',
+      pJson.devDependencies,
+      'dependencies',
+      pJson.dependencies,
+    );
+    return Array.from();
+  }
+
   static loadSync(cwd) {
     const root = pkgDir.sync(cwd);
 
@@ -35,6 +51,6 @@ module.exports = class Workspace {
     }
 
     const modulesMap = ModulesMap.loadSync(root);
-    return new Workspace({ cwd, modulesMap });
+    return new Workspace({ root, modulesMap });
   }
 };
