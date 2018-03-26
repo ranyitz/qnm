@@ -22,13 +22,13 @@ npm install
 npm test
 ```
 
-To test the `qnm` command run the following from the project root:
+To test the `qnm` command, run the following from the project root:
 
 ```bash
 npm link
 ```
 
-Now you should be able to run the `qnm` command which is linked to your development project.
+Now you should be able to run `qnm` from anywhare, and it will be linked to your local project.
 
 ### Test
 
