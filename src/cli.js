@@ -15,7 +15,6 @@ try {
   program
     .version(pkg.version)
     .arguments('[module]', 'prints module version from the node_modules')
-    .option('-m, --match', 'prints modules which matches the provided string')
     .option(
       '-w, --why',
       'add information regarding why this package was installed',
@@ -28,6 +27,15 @@ try {
     .action(() => {
       const workspace = Workspace.loadSync();
       console.log(listAction(workspace));
+    });
+
+  program
+    .command('match <string>')
+    .description('prints modules which matches the provided string')
+    .action(string => {
+      const workspace = Workspace.loadSync();
+
+      console.log(matchAction(workspace, string));
     });
 
   program.parse(process.argv);

@@ -15,17 +15,9 @@ describe('CLI', () => {
 └── 1.0.0`);
     });
 
-    it('should show get matchs when using the --match option', () => {
+    it('should show get matchs when using the match command', () => {
       const cwd = resolveFixture('single-module');
-      const output = runCommand('--match te', { cwd });
-
-      expect(output).toMatch(`test
-└── 1.0.0`);
-    });
-
-    it('should show get matchs when using the -m option', () => {
-      const cwd = resolveFixture('single-module');
-      const output = runCommand('-m te', { cwd });
+      const output = runCommand('match te', { cwd });
 
       expect(output).toMatch(`test
 └── 1.0.0`);

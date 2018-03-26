@@ -66,28 +66,6 @@ Use `qnm` command without arguments to trigger an [`fzf`](https://github.com/jun
 
 ## Options
 
-### -m, --match
-
-Works like grep, and match's any module that includes the supplied string.
-
-For example, i want to see which eslint plugins i have installed:
-
-```bash
-> qnm -m eslint-plug
-
-eslint-plugin-babel
-└── 3.3.0
-
-eslint-plugin-lodash
-└── 2.6.1
-
-eslint-plugin-mocha
-└── 4.12.1
-
-eslint-plugin-react
-└── 6.10.3
-```
-
 ### -w, --why
 
 > currently only works if you installed with npm
@@ -104,6 +82,28 @@ Returns a list of all modules in node_modules directory.
 
 ```bash
 qnm list
+```
+
+### match
+
+Works like grep, and match's any module that includes the supplied string.
+
+For example, i want to see which eslint plugins i have installed:
+
+```bash
+> qnm match eslint-plug
+
+eslint-plugin-babel
+└── 3.3.0
+
+eslint-plugin-lodash
+└── 2.6.1
+
+eslint-plugin-mocha
+└── 4.12.1
+
+eslint-plugin-react
+└── 6.10.3
 ```
 
 ## Contributing
