@@ -24,9 +24,10 @@ try {
   program
     .command('list')
     .description('list all node_modules with their versions')
-    .action(() => {
+    .option('-ds, --deps', 'dependencies/devDependencies')
+    .action(cmd => {
       const workspace = Workspace.loadSync();
-      console.log(listAction(workspace));
+      console.log(listAction(workspace, { deps: cmd.deps }));
     });
 
   program
