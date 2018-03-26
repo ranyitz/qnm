@@ -28,7 +28,7 @@ _qnm_ aims to get this information **fast** and tries to filter only the importa
 npm i --global qnm
 ```
 
-> qnm will also install tab completions during post install.
+> qnm will also install tab completions [during post install](https://github.com/mklabs/node-tabtab#tabtab-install---auto).
 
 ## Usage
 
