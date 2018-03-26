@@ -8,3 +8,5 @@ module.exports.down = '\u001b\u005b\u0042';
 module.exports.enter = '\u000d';
 module.exports.del = '\u001b\u005b\u0033\u007e';
 module.exports.backspace = '\u007f';
+module.exports.tab = '\u0009';
+module.exports.shiftTab = '\u001b[Z';

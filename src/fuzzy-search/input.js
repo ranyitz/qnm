@@ -11,6 +11,8 @@ const {
   enter,
   del,
   backspace,
+  tab,
+  shiftTab,
 } = require('./raw-key-codes');
 
 module.exports = class Input extends EventEmitter {
@@ -87,6 +89,12 @@ module.exports = class Input extends EventEmitter {
         break;
       case enter:
         this.emit('choose');
+        break;
+      case tab:
+        this.emit('tab');
+        break;
+      case shiftTab:
+        this.emit('shiftTab');
         break;
       default:
         this.insertChar(key);
