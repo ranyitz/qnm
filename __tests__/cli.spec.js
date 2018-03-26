@@ -46,6 +46,41 @@ describe('CLI', () => {
       expect(output).toMatch(`test
 └── 1.0.0 (devDependencies, npm install test)`);
     });
+
+    describe('JSON output', () => {
+      it('should output a single module version in JSON when using the --json flag', () => {
+        const cwd = resolveFixture('single-module');
+        const output = runCommand('test --json', { cwd });
+
+        expect(JSON.parse(output)).toMatchObject({
+          name: 'test',
+          version: '1.0.0',
+        });
+      });
+
+      it('should work with the --match options', () => {
+        const cwd = resolveFixture('single-module');
+        const output = runCommand('-m te --json', { cwd });
+
+        expect(JSON.parse(output)).toMatchObject([
+          {
+            name: 'test',
+            version: '1.0.0',
+          },
+        ]);
+      });
+
+      it('should work with the --why option', () => {
+        const cwd = resolveFixture('single-module');
+        const output = runCommand('test --why --json', { cwd });
+
+        expect(JSON.parse(output)).toMatchObject({
+          name: 'test',
+          version: '1.0.0',
+          whyInfo: ['devDependencies', 'npm install test'],
+        });
+      });
+    });
   });
 
   describe('qnm list', () => {
@@ -63,6 +98,32 @@ test
 ├── 1.0.0
 └─┬ another
   └── 1.0.0`);
+    });
+
+    it('should output results as JSON when providing the --json flag', () => {
+      const cwd = resolveFixture('mix-modules');
+      const output = runCommand('list --json-output', { cwd });
+
+      expect(JSON.parse(output)).toMatchObject([
+        {
+          name: '@scope/test',
+          version: '1.0.0',
+        },
+        {
+          name: 'another',
+          version: '1.0.0',
+        },
+        {
+          name: 'test',
+          version: '1.0.0',
+          dependents: [
+            {
+              name: 'another',
+              version: '1.0.0',
+            },
+          ],
+        },
+      ]);
     });
   });
 });
