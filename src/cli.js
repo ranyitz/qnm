@@ -14,14 +14,6 @@ const handleError = require('./handler-error');
 try {
   program
     .version(pkg.version)
-    .command('list')
-    .description('list all node_modules with their versions')
-    .action(() => {
-      const workspace = Workspace.loadSync();
-      console.log(listAction(workspace));
-    });
-
-  program
     .arguments('[module]', 'prints module version from the node_modules')
     .option('-m, --match', 'prints modules which matches the provided string')
     .option(
@@ -29,6 +21,14 @@ try {
       'add information regarding why this package was installed',
     )
     .option('-d, --debug', 'see full error messages, mostly for debugging');
+
+  program
+    .command('list')
+    .description('list all node_modules with their versions')
+    .action(() => {
+      const workspace = Workspace.loadSync();
+      console.log(listAction(workspace));
+    });
 
   program.parse(process.argv);
 
