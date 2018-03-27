@@ -24,7 +24,10 @@ try {
   program
     .command('list')
     .description('list all node_modules with their versions')
-    .option('--deps', 'list packaje.json dependencies only')
+    .option(
+      '--deps',
+      'list dependencies and devDependencies based on package.json.',
+    )
     .action(cmd => {
       const workspace = Workspace.loadSync();
 

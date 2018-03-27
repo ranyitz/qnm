@@ -17,10 +17,11 @@ When debugging a problem, I sometimes find myself checking what are the installe
 _qnm_ aims to get this information **fast** and tries to filter only the important parts, while supporting both yarn & npm.
 
 ## Features
-* :speech_balloon: Tab completions
-* :sparkles: Interactive fuzzy-search
-* :abc: Match all packages with a specific string
-* :interrobang: Explain why a package was installed
+
+*   :speech_balloon: Tab completions
+*   :sparkles: Interactive fuzzy-search
+*   :abc: Match all packages with a specific string
+*   :interrobang: Explain why a package was installed
 
 ## Installation
 
@@ -59,7 +60,6 @@ Which means you have 3 occurrences of lodash in your `node_modules`:
 2.  `./node_module/cli-table2/node_modules/lodash`
 3.  `./node_module/karma/node_modules/lodash`
 
-
 ### Fuzzy-search
 
 Use `qnm` command without arguments to trigger an [`fzf`](https://github.com/junegunn/fzf) like fuzzy search, start typing to filter the matches from your `node_modules`.
@@ -84,6 +84,10 @@ Returns a list of all modules in node_modules directory.
 qnm list
 ```
 
+| Optional arguments |                          Description                          |
+| ------------------ | :-----------------------------------------------------------: |
+| `--deps`           | List the versions of direct dependencies and devDependencies. |
+
 ### match
 
 Works like grep, and match's any module that includes the supplied string.
@@ -105,29 +109,13 @@ eslint-plugin-mocha
 eslint-plugin-react
 └── 6.10.3
 ```
+
 ### -w, --why
 
 > currently only works if you installed with npm
 
 Add information regarding why this package was installed in the first place, by showing its dependent packages.
 
-### --deps
-
-> works with a 'list' command
-
-Displays direct `dependencies` and `devDependencies` that one have installed in a package.json file.
-
-## Commands
-
-### list
-
-> alias: ls
-
-Returns a list of all modules in node_modules directory.
-
-```bash
-qnm list
-```
 ## Contributing
 
 Help is always welcome! Please head to the [CONTRIBUTING.md](./CONTRIBUTING.md) file to see how to get started.
