@@ -66,39 +66,11 @@ Use `qnm` command without arguments to trigger an [`fzf`](https://github.com/jun
 
 ## Options
 
-### -m, --match
-
-Works like grep, and match's any module that includes the supplied string.
-
-For example, i want to see which eslint plugins i have installed:
-
-```bash
-> qnm -m eslint-plug
-
-eslint-plugin-babel
-└── 3.3.0
-
-eslint-plugin-lodash
-└── 2.6.1
-
-eslint-plugin-mocha
-└── 4.12.1
-
-eslint-plugin-react
-└── 6.10.3
-```
-
 ### -w, --why
 
 > currently only works if you installed with npm
 
 Add information regarding why this package was installed in the first place, by showing its dependent packages.
-
-### --deps
-
-> works with a 'list' command
-
-Displays direct dependencies that one have installed in a package.json file.
 
 ## Commands
 
@@ -112,6 +84,50 @@ Returns a list of all modules in node_modules directory.
 qnm list
 ```
 
+### match
+
+Works like grep, and match's any module that includes the supplied string.
+
+For example, i want to see which eslint plugins i have installed:
+
+```bash
+> qnm match eslint-plug
+
+eslint-plugin-babel
+└── 3.3.0
+
+eslint-plugin-lodash
+└── 2.6.1
+
+eslint-plugin-mocha
+└── 4.12.1
+
+eslint-plugin-react
+└── 6.10.3
+```
+### -w, --why
+
+> currently only works if you installed with npm
+
+Add information regarding why this package was installed in the first place, by showing its dependent packages.
+
+### --deps
+
+> works with a 'list' command
+
+Displays direct `dependencies` and `devDependencies` that one have installed in a package.json file.
+
+## Commands
+
+### list
+
+> alias: ls
+
+Returns a list of all modules in node_modules directory.
+
+```bash
+qnm list
+```
 ## Contributing
 
 Help is always welcome! Please head to the [CONTRIBUTING.md](./CONTRIBUTING.md) file to see how to get started.
