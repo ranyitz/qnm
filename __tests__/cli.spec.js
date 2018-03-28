@@ -56,5 +56,23 @@ test
 └─┬ another
   └── 1.0.0`);
     });
+
+    it('should show modules mentioned in package.json', () => {
+      const cwd = resolveFixture('indirect-dependencies');
+      const output = runCommand('list --deps', { cwd });
+
+      expect(output).toMatch(`dependency1
+└── 1.0.0
+
+dependency2
+└── 1.0.0
+
+devDependency1
+└── 1.0.0
+
+devDependency2
+└── 1.0.0
+`);
+    });
   });
 });

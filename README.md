@@ -12,15 +12,16 @@
 
 > most bugs are caused by the assumptions we didn't realize we were making.
 
-When debugging a problem, I sometimes find myself checking what are the installed versions of the modules within `node_modules` directory. Current solutions like running `npm list` are not fast enough and prints too much clutter, checking the version in the `package.json` takes a bit more effort and doesn't give you more information regarding other occurrences of this module. 
+When debugging a problem, I sometimes find myself checking what are the installed versions of the modules within `node_modules` directory. Current solutions like running `npm list` are not fast enough and prints too much clutter, checking the version in the `package.json` takes a bit more effort and doesn't give you more information regarding other occurrences of this module.
 
-_qnm_ aims to get this information **fast** and tries to filter only the important parts, while supporting both yarn & npm. 
+_qnm_ aims to get this information **fast** and tries to filter only the important parts, while supporting both yarn & npm.
 
 ## Features
-* :speech_balloon: Tab completions
-* :sparkles: Interactive fuzzy-search
-* :abc: Match all packages with a specific string
-* :interrobang: Explain why a package was installed
+
+*   :speech_balloon: Tab completions
+*   :sparkles: Interactive fuzzy-search
+*   :abc: Match all packages with a specific string
+*   :interrobang: Explain why a package was installed
 
 ## Installation
 
@@ -59,7 +60,6 @@ Which means you have 3 occurrences of lodash in your `node_modules`:
 2.  `./node_module/cli-table2/node_modules/lodash`
 3.  `./node_module/karma/node_modules/lodash`
 
-
 ### Fuzzy-search
 
 Use `qnm` command without arguments to trigger an [`fzf`](https://github.com/junegunn/fzf) like fuzzy search, start typing to filter the matches from your `node_modules`.
@@ -83,6 +83,10 @@ Returns a list of all modules in node_modules directory.
 ```bash
 qnm list
 ```
+
+| Optional arguments |                          Description                          |
+| ------------------ | :-----------------------------------------------------------: |
+| `--deps`           | List the versions of direct dependencies and devDependencies. |
 
 ### match
 

@@ -1,10 +1,36 @@
 const ModulesMap = require('./modules-map');
 const pkgDir = require('pkg-dir');
+const path = require('path');
+const fs = require('fs');
 
 module.exports = class Workspace {
-  constructor({ cwd, modulesMap }) {
-    this.cwd = cwd;
+  constructor({ root, modulesMap }) {
+    this.root = root;
     this.modulesMap = modulesMap;
+    this._packageJson = null;
+  }
+
+  get packageJson() {
+    if (!this._packageJson) {
+      this.loadPackageJson();
+    }
+
+    return this._packageJson;
+  }
+
+  loadPackageJson() {
+    const packageJsonPath = path.resolve(this.root, 'package.json');
+
+    try {
+      this._packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+      return this;
+    } catch (error) {
+      if (error.code === 'ENOENT') {
+        throw new Error(`Couldn't find "package.json" for module ${this.name}`);
+      }
+
+      throw error;
+    }
   }
 
   getModuleOccurrences(packageName) {
@@ -23,6 +49,21 @@ module.exports = class Workspace {
     return Array.from(this.modulesMap.keys());
   }
 
+  listPackageJsonDependencies() {
+    const dependencies = Object.assign(
+      {},
+      this.packageJson.dependencies,
+      this.packageJson.devDependencies,
+    );
+    const dependenciesMap = new Map();
+
+    for (const dependency in dependencies) {
+      dependenciesMap.set(dependency, this.modulesMap.get(dependency));
+    }
+
+    return Array.from(dependenciesMap);
+  }
+
   match(str) {
     return this.list().filter(([name]) => name.includes(str));
   }
@@ -35,6 +76,6 @@ module.exports = class Workspace {
     }
 
     const modulesMap = ModulesMap.loadSync(root);
-    return new Workspace({ cwd, modulesMap });
+    return new Workspace({ root, modulesMap });
   }
 };
