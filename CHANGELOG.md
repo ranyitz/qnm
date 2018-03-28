@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.10.0 (March 28, 2018)
+* [#21](https://github.com/ranyitz/qnm/pull/21) Add `match` command instead `-m, --match` options.
+* [#22](https://github.com/ranyitz/qnm/pull/22) Add multi-select feature to fuzzy-search.
+
 ## 0.9.0 (March 22, 2018)
 * Added a fuzzy search when calling `qnm` without arguments. 
 
