@@ -1,9 +1,13 @@
 const chalk = require('chalk');
 const figures = require('figures');
 const logUpdate = require('log-update');
+const isEmpty = require('lodash/isEmpty');
+
 const Input = require('../fuzzy-search/input');
 const sortBySimilarity = require('../fuzzy-search/sort-by-similarity');
 const getAction = require('./get');
+
+const HALF_WIDTH_SPACE = '\u2000';
 
 const resetConsole = () => process.stdout.write('\x1Bc');
 
@@ -32,12 +36,14 @@ const renderItem = ({ state, result }) => {
       return `${chalk.red(figures.pointer)} ${chalk.bold(result.highlight)}`;
     }
     case 'marked': {
-      return ` ${chalk.magenta(result.value)}`;
+      return `${HALF_WIDTH_SPACE}${chalk.magenta(figures.pointer)}${
+        result.highlight
+      }`;
     }
     case 'current&marked': {
-      return `${chalk.red(figures.pointer)} ${chalk.bold(
-        chalk.magenta(result.value),
-      )}`;
+      return `${chalk.red(figures.pointer)}${chalk.magenta(
+        figures.pointer,
+      )}${chalk.bold(result.highlight)}`;
     }
     default: {
       return ` ${result.highlight}`;
@@ -129,6 +135,8 @@ module.exports = workspace => {
   });
 
   input.on('tab', () => {
+    if (isEmpty(results)) return;
+
     const { value } = results[currentResult];
 
     chosen = toggleMarking({ chosen, value });
@@ -141,6 +149,8 @@ module.exports = workspace => {
   });
 
   input.on('shiftTab', () => {
+    if (isEmpty(results)) return;
+
     const { value } = results[currentResult];
 
     chosen = toggleMarking({ chosen, value });
@@ -153,14 +163,14 @@ module.exports = workspace => {
   });
 
   input.on('choose', () => {
-    if (results.length === 0) {
+    if (isEmpty(results) && isEmpty(chosen)) {
       return;
     }
 
     input.end();
     logUpdate('');
 
-    if (chosen.length === 0) {
+    if (isEmpty(chosen)) {
       chosen.push(results[currentResult].value);
     }
 
