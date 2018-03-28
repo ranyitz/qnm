@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.10.1 (March 28, 2018)
+* [#24](https://github.com/ranyitz/qnm/pull/24) Add list --deps options for listing modules own dependencies.
+
 ## 0.10.0 (March 28, 2018)
 * [#21](https://github.com/ranyitz/qnm/pull/21) Add `match` command instead `-m, --match` options.
 * [#22](https://github.com/ranyitz/qnm/pull/22) Add multi-select feature to fuzzy-search.
