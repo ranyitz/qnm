@@ -49,7 +49,7 @@ module.exports = class Workspace {
     return Array.from(this.modulesMap.keys());
   }
 
-  listPakckageJsonDependencies() {
+  listPackageJsonDependencies() {
     const dependencies = Object.assign(
       {},
       this.packageJson.dependencies,

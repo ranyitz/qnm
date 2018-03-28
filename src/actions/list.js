@@ -4,7 +4,7 @@ const renderModuleList = require('../render/render-module-list');
 
 module.exports = (workspace, options = {}) => {
   if (options.deps) {
-    const moduleOccurrencesList = workspace.listPakckageJsonDependencies();
+    const moduleOccurrencesList = workspace.listPackageJsonDependencies();
 
     return renderModuleList(moduleOccurrencesList);
   }

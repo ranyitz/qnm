@@ -110,12 +110,6 @@ eslint-plugin-react
 └── 6.10.3
 ```
 
-### -w, --why
-
-> currently only works if you installed with npm
-
-Add information regarding why this package was installed in the first place, by showing its dependent packages.
-
 ## Contributing
 
 Help is always welcome! Please head to the [CONTRIBUTING.md](./CONTRIBUTING.md) file to see how to get started.
