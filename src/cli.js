@@ -17,9 +17,9 @@ try {
     .command('list')
     .description('list all node_modules with their versions')
     .option('--json-output', 'output results as json')
-    .action(({ jsonOutput: json }) => {
+    .action(() => {
       const workspace = Workspace.loadSync();
-      console.log(listAction(workspace, { json }));
+      console.log(listAction(workspace, { json: program.json }));
     });
 
   program
