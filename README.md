@@ -62,7 +62,12 @@ Which means you have 3 occurrences of lodash in your `node_modules`:
 
 ### Fuzzy-search
 
-Use `qnm` command without arguments to trigger an [`fzf`](https://github.com/junegunn/fzf) like fuzzy search, start typing to filter the matches from your `node_modules`.
+Use `qnm` command without arguments to trigger an [`fzf`](https://github.com/junegunn/fzf) like fuzzy search.
+
+* Start typing to filter the matches from your `node_modules`
+* Use arrows to move cursor up and down
+* `Enter` key to select the item, `CTRL-C` / `ESC` to exit
+* `TAB` and `Shift-TAB` to mark multiple items
 
 ## Options
 
