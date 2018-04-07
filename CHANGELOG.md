@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.10.2 (April 7, 2018)
+* Fixed a bug when exiting watch mode would disable `ctrl+c` for the shell process.
+
 ## 0.10.1 (March 28, 2018)
 * [#24](https://github.com/ranyitz/qnm/pull/24) Add list --deps options for listing modules own dependencies.
 
