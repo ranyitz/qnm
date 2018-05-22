@@ -177,6 +177,7 @@ module.exports = workspace => {
     chosen.forEach(moduleName => {
       console.log(getAction(workspace, moduleName)); // eslint-disable-line no-console
     });
+
     process.exit(0);
   });
 

@@ -14,8 +14,7 @@ class ModulesMap extends Map {
 
   addModule(name, nodeModule) {
     if (!this.has(name)) {
-      this.set(name, [nodeModule]);
-      return;
+      this.set(name, []);
     }
 
     this.get(name).push(nodeModule);
@@ -30,7 +29,7 @@ class ModulesMap extends Map {
       );
     }
 
-    return moduleOccurrences.map(m => m.load());
+    return moduleOccurrences;
   }
 
   static loadSync(cwd) {
@@ -58,7 +57,9 @@ class ModulesMap extends Map {
                   name: fullName,
                   parent,
                 });
+
                 modulesMap.addModule(fullName, nodeModule);
+
                 return nodeModule;
               });
             }
@@ -68,7 +69,9 @@ class ModulesMap extends Map {
               name,
               parent,
             });
+
             modulesMap.addModule(name, nodeModule);
+
             return nodeModule;
           }),
         ).forEach(nodeModule =>
