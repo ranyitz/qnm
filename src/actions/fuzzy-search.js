@@ -57,7 +57,7 @@ const toggleMarking = ({ chosen, value }) => {
     : chosen.concat(value);
 };
 
-module.exports = workspace => {
+module.exports = (workspace, options) => {
   let results = [];
   let chosen = [];
   let currentResult = 0;
@@ -175,7 +175,7 @@ module.exports = workspace => {
     }
 
     chosen.forEach(moduleName => {
-      console.log(getAction(workspace, moduleName)); // eslint-disable-line no-console
+      console.log(getAction(workspace, moduleName, options)); // eslint-disable-line no-console
     });
 
     process.exit(0);
