@@ -13,9 +13,10 @@ const getWhyInfo = m => {
     : '';
 };
 
-const buildWithAncestors = (m, { why }) => {
+const buildWithAncestors = (m, { why, noColor }) => {
   const whyInfo = why ? getWhyInfo(m) : '';
-  const information = renderVersion(m.name, m.version) + whyInfo;
+  const version = noColor ? m.version : renderVersion(m.name, m.version);
+  const information = version + whyInfo;
 
   let hierarchy = [information];
 
@@ -31,12 +32,13 @@ const buildWithAncestors = (m, { why }) => {
   return hierarchy[0];
 };
 
-module.exports = (moduleOccurrences, { match, why } = {}) => {
+module.exports = (moduleOccurrences, { match, why, noColor } = {}) => {
   const moduleName = highlightMatch(moduleOccurrences[0].name, match);
   const buildedOccurrences = moduleOccurrences.map(m =>
     buildWithAncestors(m, {
       why,
       renderVersion,
+      noColor,
     }),
   );
 

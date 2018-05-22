@@ -6,7 +6,7 @@ module.exports = (workspace, options = {}) => {
   if (options.deps) {
     const moduleOccurrencesList = workspace.listPackageJsonDependencies();
 
-    return renderModuleList(moduleOccurrencesList);
+    return renderModuleList(moduleOccurrencesList, options);
   }
 
   const moduleOccurrencesList = workspace.list();
@@ -15,5 +15,5 @@ module.exports = (workspace, options = {}) => {
     throw new NoModulesError();
   }
 
-  return renderModuleList(moduleOccurrencesList);
+  return renderModuleList(moduleOccurrencesList, options);
 };

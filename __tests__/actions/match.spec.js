@@ -9,6 +9,15 @@ describe('match', () => {
     expect(output).toMatchSnapshot();
   });
 
+  it('should disable colors', () => {
+    const workspace = resolveWorkspace('mix-modules');
+    const output = matchAction(workspace, 'anot', {
+      noColor: true,
+    });
+
+    expect(output).toMatchSnapshot();
+  });
+
   it('should show a message when no module has matched the provided string', () => {
     const workspace = resolveWorkspace('single-module');
     try {

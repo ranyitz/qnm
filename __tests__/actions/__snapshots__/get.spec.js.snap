@@ -1,5 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`get should disable colors 1`] = `
+"[4mtest[24m
+└─┬ [90manother[39m
+  └── 1.0.0
+"
+`;
+
 exports[`get should get the version of a module in depth 1`] = `
 "[4mtest[24m
 └─┬ [90manother[39m

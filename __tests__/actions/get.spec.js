@@ -35,6 +35,15 @@ describe('get', () => {
     expect(output).toMatchSnapshot();
   });
 
+  it('should disable colors', () => {
+    const workspace = resolveWorkspace('module-in-depth');
+    const output = getAction(workspace, 'test', {
+      noColor: true,
+    });
+
+    expect(output).toMatchSnapshot();
+  });
+
   it('should get the version of a single module when not starting at the root', () => {
     const workspace = resolveWorkspace('single-module/node_modules');
     const output = getAction(workspace, 'test');

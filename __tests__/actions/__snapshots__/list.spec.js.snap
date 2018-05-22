@@ -1,5 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`list should disable colors 1`] = `
+"[4m@scope/test[24m
+└── 1.0.0
+
+[4manother[24m
+└── 1.0.0
+
+[4mtest[24m
+├── 1.0.0
+└─┬ [90manother[39m
+  └── 1.0.0
+"
+`;
+
 exports[`list should list the versions of mixed modules 1`] = `
 "[4m@scope/test[24m
 └── [38;5;72m1.0.0[39m

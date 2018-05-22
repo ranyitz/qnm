@@ -19,6 +19,7 @@ try {
       '-w, --why',
       'add information regarding why this package was installed',
     )
+    .option('--disable-colors', 'minimize color and styling usage in output')
     .option('-d, --debug', 'see full error messages, mostly for debugging');
 
   program
@@ -29,18 +30,25 @@ try {
       'list dependencies and devDependencies based on package.json.',
     )
     .action(cmd => {
+      const { disableColors } = program;
       const workspace = Workspace.loadSync();
 
-      console.log(listAction(workspace, { deps: cmd.deps }));
+      console.log(
+        listAction(workspace, {
+          deps: cmd.deps,
+          noColor: disableColors,
+        }),
+      );
     });
 
   program
     .command('match <string>')
     .description('prints modules which matches the provided string')
     .action(string => {
+      const { disableColors } = program;
       const workspace = Workspace.loadSync();
 
-      console.log(matchAction(workspace, string));
+      console.log(matchAction(workspace, string, { noColor: disableColors }));
     });
 
   program.parse(process.argv);
@@ -51,8 +59,8 @@ try {
 
   const workspace = Workspace.loadSync();
 
-  const { why, deps } = program;
-  const options = { why, deps };
+  const { why, deps, disableColors } = program;
+  const options = { why, deps, noColor: disableColors };
 
   if (program.args.length === 0) {
     fuzzySearchAction(workspace, options);
