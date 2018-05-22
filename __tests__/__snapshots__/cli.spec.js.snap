@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CLI qnm list should show all modules in node_modules directory 1`] = `
+"@scope/test
+└── 1.0.0
+
+another
+└── 1.0.0
+
+test
+├── 1.0.0
+└─┬ another
+  └── 1.0.0
+
+"
+`;
+
+exports[`CLI qnm list should show modules mentioned in package.json 1`] = `
+"dependency1
+└── 1.0.0
+
+dependency2
+└── 1.0.0
+
+devDependency1
+└── 1.0.0
+
+devDependency2
+└── 1.0.0
+
+"
+`;
+
+exports[`CLI qnm with no arguments should add dependents information when using thw --why option 1`] = `
+"test
+└── 1.0.0 (devDependencies, npm install test)
+
+"
+`;
+
+exports[`CLI qnm with no arguments should add dependents information when using thw -w option 1`] = `
+"test
+└── 1.0.0 (devDependencies, npm install test)
+
+"
+`;
+
+exports[`CLI qnm with no arguments should show get matchs when using the match command 1`] = `
+"test
+└── 1.0.0
+
+"
+`;
+
+exports[`CLI qnm with no arguments should show the version on a single module when called with a string 1`] = `
+"test
+└── 1.0.0
+
+"
+`;

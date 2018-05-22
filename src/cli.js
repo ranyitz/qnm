@@ -44,7 +44,9 @@ try {
     });
 
   program.parse(process.argv);
+
   const preDefinedCommands = program.commands.map(c => c._name);
+
   setupCompletions(preDefinedCommands);
 
   const workspace = Workspace.loadSync();
@@ -55,14 +57,10 @@ try {
     const firstArg = program.rawArgs[2];
 
     if (!preDefinedCommands.includes(firstArg) && firstArg !== 'completion') {
-      const arg = program.args[0];
-      const { match, why, deps } = program;
+      const [arg] = program.args;
+      const { why, deps } = program;
 
-      if (match) {
-        console.log(matchAction(workspace, arg));
-      } else {
-        console.log(getAction(workspace, arg, { why, deps }));
-      }
+      console.log(getAction(workspace, arg, { why, deps }));
     }
   }
 } catch (error) {

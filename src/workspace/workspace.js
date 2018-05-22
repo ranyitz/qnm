@@ -68,7 +68,7 @@ module.exports = class Workspace {
     return this.list().filter(([name]) => name.includes(str));
   }
 
-  static loadSync(cwd) {
+  static loadSync(cwd = process.cwd()) {
     const root = pkgDir.sync(cwd);
 
     if (root === null) {

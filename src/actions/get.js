@@ -5,9 +5,9 @@ const renderModuleOccurrences = require('../render/render-module-occurrences');
 
 module.exports = (workspace, name, options = {}) => {
   const moduleOccurrences = workspace.getModuleOccurrences(name);
-  const modulesNames = workspace.getModulesNames();
 
   if (isEmpty(moduleOccurrences)) {
+    const modulesNames = workspace.getModulesNames();
     const suggestions = getSuggestions(name, modulesNames);
 
     throw new NotFoundModuleError(name, suggestions);

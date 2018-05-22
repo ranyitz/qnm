@@ -1,4 +1,3 @@
-const chalk = require('chalk');
 const getAction = require('../../src/actions/get');
 const { resolveWorkspace } = require('../utils');
 
@@ -7,8 +6,7 @@ describe('get', () => {
     const workspace = resolveWorkspace('single-module');
     const output = getAction(workspace, 'test');
 
-    expect(output).toMatch(`${chalk.underline('test')}
-└── 1.0.0`);
+    expect(output).toMatchSnapshot();
   });
 
   it('should show a message when no module has found', () => {
@@ -16,9 +14,7 @@ describe('get', () => {
     try {
       getAction(workspace, 'not-exist');
     } catch (e) {
-      expect(e.message).toMatch(
-        'Could not find any module by the name "not-exist"',
-      );
+      expect(e.message).toMatchSnapshot();
     }
   });
 
@@ -27,8 +23,8 @@ describe('get', () => {
     try {
       getAction(workspace, 'dest');
     } catch (e) {
-      expect(e.message).toMatch('Could not find any module by the name "dest"');
-      expect(e.message).toMatch(`Did you mean "${chalk.bold('t')}est"?`);
+      expect(e.message).toMatchSnapshot();
+      expect(e.message).toMatchSnapshot();
     }
   });
 
@@ -36,34 +32,27 @@ describe('get', () => {
     const workspace = resolveWorkspace('module-in-depth');
     const output = getAction(workspace, 'test');
 
-    expect(output).toMatch(`${chalk.underline('test')}
-└─┬ ${chalk.grey('another')}
-  └── 1.0.0`);
+    expect(output).toMatchSnapshot();
   });
 
   it('should get the version of a single module when not starting at the root', () => {
     const workspace = resolveWorkspace('single-module/node_modules');
     const output = getAction(workspace, 'test');
 
-    expect(output).toMatch(`${chalk.underline('test')}
-└── 1.0.0`);
+    expect(output).toMatchSnapshot();
   });
 
   it('should get the version of a single module when in a scoped package', () => {
     const workspace = resolveWorkspace('scoped-module');
     const output = getAction(workspace, '@scope/test');
 
-    expect(output).toMatch(`${chalk.underline('@scope/test')}
-└── 1.0.0`);
+    expect(output).toMatchSnapshot();
   });
 
   it('should print versions in three levels deep including ancestors', () => {
     const workspace = resolveWorkspace('three-levels-deep');
     const output = getAction(workspace, 'dep-of-dep-of-dep');
 
-    expect(output).toMatch(`${chalk.underline('dep-of-dep-of-dep')}
-└─┬ ${chalk.grey('dep')}
-  └─┬ ${chalk.grey('dep-of-dep')}
-    └── 1.0.0`);
+    expect(output).toMatchSnapshot();
   });
 });
