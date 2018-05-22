@@ -4,7 +4,7 @@ Hey! Thanks for your interest in improving `qnm`! There are plenty of ways you c
 
 Please take a moment to review this document in order to make the contribution process easy and effective for everyone involved.
 
-## Submiting an issue
+## Submitting an issue
 
 Please provide us with an issue in case you've found a bug, want a new feature, have an awesome idea, or there is something you want to discuss.
 
