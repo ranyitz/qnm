@@ -72,6 +72,16 @@ describe('get', () => {
     expect(output).toMatchSnapshot();
   });
 
+  it('--homepage should throw NotFoundHomepageError if there is no "homepage" in package.json', () => {
+    const workspace = resolveWorkspace('single-module');
+
+    try {
+      getAction(workspace, 'test', { homepage: true });
+    } catch (e) {
+      expect(e.message).toMatchSnapshot();
+    }
+  });
+
   describe('--open', () => {
     it('should open module file directory when --open flag used', () => {
       const workspace = resolveWorkspace('three-levels-deep');
