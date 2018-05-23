@@ -65,6 +65,9 @@
     ],
     "watchPathIgnorePatterns": [
       "node_modules"
+    ],
+    "setupFiles": [
+      "./__tests__/setup.js"
     ]
   }
 }
