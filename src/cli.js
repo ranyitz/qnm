@@ -52,16 +52,18 @@ try {
 
   const workspace = Workspace.loadSync();
 
+  const { why, deps, open } = program;
+  const options = { why, deps, open };
+
   if (program.args.length === 0) {
-    fuzzySearchAction(workspace);
+    fuzzySearchAction(workspace, options);
   } else {
     const firstArg = program.rawArgs[2];
 
     if (!preDefinedCommands.includes(firstArg) && firstArg !== 'completion') {
       const [arg] = program.args;
-      const { why, deps, open } = program;
 
-      console.log(getAction(workspace, arg, { why, deps, open }));
+      console.log(getAction(workspace, arg, options));
     }
   }
 } catch (error) {
