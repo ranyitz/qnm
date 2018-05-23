@@ -3,7 +3,14 @@ const { resolveFixture } = require('./utils');
 
 const qnmBin = require.resolve('../bin/qnm');
 const runCommand = (command, { cwd, env }) =>
-  execSync(`${qnmBin} ${command}`, { cwd, env, encoding: 'utf-8' });
+  execSync(`${qnmBin} ${command}`, {
+    cwd,
+    env: {
+      ...process.env,
+      ...env,
+    },
+    encoding: 'utf-8',
+  });
 
 describe('CLI', () => {
   describe('qnm with no arguments', () => {
