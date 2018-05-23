@@ -19,7 +19,8 @@ try {
       '-w, --why',
       'add information regarding why this package was installed',
     )
-    .option('-d, --debug', 'see full error messages, mostly for debugging');
+    .option('-d, --debug', 'see full error messages, mostly for debugging')
+    .option('-o, --open', '"open editor at the module\'s directory"');
 
   program
     .command('list')
@@ -58,9 +59,9 @@ try {
 
     if (!preDefinedCommands.includes(firstArg) && firstArg !== 'completion') {
       const [arg] = program.args;
-      const { why, deps } = program;
+      const { why, deps, open } = program;
 
-      console.log(getAction(workspace, arg, { why, deps }));
+      console.log(getAction(workspace, arg, { why, deps, open }));
     }
   }
 } catch (error) {

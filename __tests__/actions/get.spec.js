@@ -1,6 +1,14 @@
 const getAction = require('../../src/actions/get');
 const { resolveWorkspace } = require('../utils');
 
+jest.mock('opn');
+const opn = require('opn');
+
+jest.mock('prompts', () => {
+  return jest.fn(() => ({ then: () => {} }));
+});
+const prompts = require('prompts');
+
 describe('get', () => {
   it('should get the version of a single module', () => {
     const workspace = resolveWorkspace('single-module');
@@ -54,5 +62,26 @@ describe('get', () => {
     const output = getAction(workspace, 'dep-of-dep-of-dep');
 
     expect(output).toMatchSnapshot();
+  });
+
+  it('should open module file directory when --open flag used', () => {
+    const workspace = resolveWorkspace('three-levels-deep');
+    getAction(workspace, 'dep', { open: true });
+
+    expect(opn).toHaveBeenCalledWith(
+      expect.stringMatching(/node_modules\/dep$/),
+      expect.any(Object),
+    );
+  });
+
+  it('should open correct module file directory when --open flag used with few packages matched', () => {
+    const workspace = resolveWorkspace('few-modules');
+    getAction(workspace, 'dependency2', { open: true });
+
+    expect(prompts).toHaveBeenCalledWith(
+      expect.objectContaining({
+        choices: expect.any(Array),
+      }),
+    );
   });
 });
