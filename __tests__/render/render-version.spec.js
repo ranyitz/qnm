@@ -3,7 +3,7 @@ const renderVersion = require('../../src/render/render-version');
 it('should colorize the first 10 results', () => {
   const actual = [];
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 11; i++) {
     actual.push(renderVersion('colorTest', i));
   }
 

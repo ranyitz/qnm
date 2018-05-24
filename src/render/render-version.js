@@ -3,16 +3,17 @@ const chalk = require('chalk');
 const moduleMap = {};
 
 const colors = [
-  chalk.hex('#48b051'),
+  chalk.white,
+  chalk.hex('#9de5f7'),
+  chalk.hex('#66b5f9'),
   chalk.hex('#00adf4'),
-  chalk.hex('#ff4a07'),
-  chalk.hex('#ffbf00'),
-  chalk.hex('#9d26b0'),
-  chalk.hex('#aad4ad'),
-  chalk.hex('#00bfd6'),
-  chalk.hex('#76aed5'),
-  chalk.hex('#f88c8d'),
-  chalk.hex('#ffd27f'),
+  chalk.hex('#0082f4'),
+  chalk.hex('#8868f9'),
+  chalk.hex('#792bf7'),
+  chalk.hex('#ad7bfc'),
+  chalk.hex('#ce75f4'),
+  chalk.hex('#f993e5'),
+  chalk.hex('#f4a4d0'),
 ];
 
 const renderVersion = (moduleName, version) => {
