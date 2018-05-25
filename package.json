@@ -7,6 +7,14 @@
   "engines": {
     "node": ">=8.7"
   },
+  "files": [
+    "bin",
+    "src",
+    "CHANGELOG.md",
+    "LICENSE",
+    "package.json",
+    "README.md"
+  ],
   "keywords": [
     "query",
     "node_modules",
