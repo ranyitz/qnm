@@ -1,5 +1,53 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`CLI qnm list should --disable-colors 1`] = `
+"[4manotherDependency[24m
+└── 1.0.0
+
+[4mdependency1[24m
+└── 1.0.0
+
+[4mdependency2[24m
+└── 1.0.0
+
+[4mdevDependency1[24m
+└── 1.0.0
+
+[4mdevDependency2[24m
+└── 1.0.0
+
+[4mdep-of-dep[24m
+├─┬ [90manotherDependency[39m
+│ └── 1.0.0
+├─┬ [90mdependency1[39m
+│ └── 1.0.0
+├─┬ [90mdependency2[39m
+│ └── 1.0.0
+├─┬ [90mdevDependency1[39m
+│ └── 1.0.0
+└─┬ [90mdevDependency2[39m
+  └── 1.0.0
+
+[4mdep-of-dep-of-dep[24m
+├─┬ [90manotherDependency[39m
+│ └─┬ [90mdep-of-dep[39m
+│   └── 1.0.0
+├─┬ [90mdependency1[39m
+│ └─┬ [90mdep-of-dep[39m
+│   └── 1.0.0
+├─┬ [90mdependency2[39m
+│ └─┬ [90mdep-of-dep[39m
+│   └── 1.0.0
+├─┬ [90mdevDependency1[39m
+│ └─┬ [90mdep-of-dep[39m
+│   └── 1.0.0
+└─┬ [90mdevDependency2[39m
+  └─┬ [90mdep-of-dep[39m
+    └── 1.0.0
+
+"
+`;
+
 exports[`CLI qnm list should show all modules in node_modules directory 1`] = `
 "@scope/test
 └── 1.0.0
