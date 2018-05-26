@@ -1,6 +1,7 @@
 const archy = require('archy');
 const chalk = require('chalk');
 const isEmpty = require('lodash/isEmpty');
+const renderVersion = require('./render-version');
 
 const highlightMatch = (str, match) =>
   str.split(match).join(chalk.magenta(match));
@@ -12,9 +13,10 @@ const getWhyInfo = m => {
     : '';
 };
 
-const buildWithAncestors = (m, { why }) => {
+const buildWithAncestors = (m, { why, noColor }) => {
   const whyInfo = why ? getWhyInfo(m) : '';
-  const information = m.version + whyInfo;
+  const version = noColor ? m.version : renderVersion(m.name, m.version);
+  const information = version + whyInfo;
 
   let hierarchy = [information];
 
@@ -30,10 +32,14 @@ const buildWithAncestors = (m, { why }) => {
   return hierarchy[0];
 };
 
-module.exports = (moduleOccurrences, { match, why } = {}) => {
+module.exports = (moduleOccurrences, { match, why, noColor } = {}) => {
   const moduleName = highlightMatch(moduleOccurrences[0].name, match);
   const buildedOccurrences = moduleOccurrences.map(m =>
-    buildWithAncestors(m, { why }),
+    buildWithAncestors(m, {
+      why,
+      renderVersion,
+      noColor,
+    }),
   );
 
   const tree = archy({

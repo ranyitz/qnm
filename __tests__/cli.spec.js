@@ -2,8 +2,15 @@ const { execSync } = require('child_process');
 const { resolveFixture } = require('./utils');
 
 const qnmBin = require.resolve('../bin/qnm');
-const runCommand = (command, { cwd }) =>
-  execSync(`${qnmBin} ${command}`, { cwd, encoding: 'utf-8' });
+const runCommand = (command, { cwd, env }) =>
+  execSync(`${qnmBin} ${command}`, {
+    cwd,
+    env: {
+      ...process.env,
+      ...env,
+    },
+    encoding: 'utf-8',
+  });
 
 describe('CLI', () => {
   describe('qnm with no arguments', () => {
@@ -47,6 +54,18 @@ describe('CLI', () => {
     it('should show modules mentioned in package.json', () => {
       const cwd = resolveFixture('indirect-dependencies');
       const output = runCommand('list --deps', { cwd });
+
+      expect(output).toMatchSnapshot();
+    });
+
+    it('should --disable-colors', () => {
+      const cwd = resolveFixture('indirect-dependencies');
+      const output = runCommand('list --disable-colors', {
+        cwd,
+        env: {
+          FORCE_COLOR: '1',
+        },
+      });
 
       expect(output).toMatchSnapshot();
     });

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.11.0 (May 26, 2018)
+* [#34](https://github.com/ranyitz/qnm/pull/34) Highlight the same versions with the same colors.
+* [#30](https://github.com/ranyitz/qnm/pull/30) Be able to pass options to fuzzy search mode.
+
 ## 0.10.2 (April 7, 2018)
 * Fixed a bug when exiting watch mode would disable `ctrl+c` for the shell process.
 

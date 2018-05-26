@@ -8,4 +8,13 @@ describe('list', () => {
 
     expect(output).toMatchSnapshot();
   });
+
+  it('should disable colors', () => {
+    const workspace = resolveWorkspace('mix-modules');
+    const output = listAction(workspace, {
+      noColor: true,
+    });
+
+    expect(output).toMatchSnapshot();
+  });
 });

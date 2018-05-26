@@ -1,27 +1,34 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`get should get the version of a module in depth 1`] = `
+exports[`get should disable colors 1`] = `
 "[4mtest[24m
 └─┬ [90manother[39m
   └── 1.0.0
 "
 `;
 
+exports[`get should get the version of a module in depth 1`] = `
+"[4mtest[24m
+└─┬ [90manother[39m
+  └── [37m1.0.0[39m
+"
+`;
+
 exports[`get should get the version of a single module 1`] = `
 "[4mtest[24m
-└── 1.0.0
+└── [37m1.0.0[39m
 "
 `;
 
 exports[`get should get the version of a single module when in a scoped package 1`] = `
 "[4m@scope/test[24m
-└── 1.0.0
+└── [37m1.0.0[39m
 "
 `;
 
 exports[`get should get the version of a single module when not starting at the root 1`] = `
 "[4mtest[24m
-└── 1.0.0
+└── [37m1.0.0[39m
 "
 `;
 
@@ -29,7 +36,7 @@ exports[`get should print versions in three levels deep including ancestors 1`] 
 "[4mdep-of-dep-of-dep[24m
 └─┬ [90mdep[39m
   └─┬ [90mdep-of-dep[39m
-    └── 1.0.0
+    └── [37m1.0.0[39m
 "
 `;
 

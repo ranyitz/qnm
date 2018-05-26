@@ -77,6 +77,10 @@ Use `qnm` command without arguments to trigger an [`fzf`](https://github.com/jun
 
 Add information regarding why this package was installed in the first place, by showing its dependent packages.
 
+### --disable-colors
+
+Disables the most of colors and styling. E.g. version colors.
+
 ## Commands
 
 ### list
