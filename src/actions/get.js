@@ -1,4 +1,5 @@
 const opn = require('opn');
+const path = require('path');
 const prompts = require('prompts');
 const isEmpty = require('lodash/isEmpty');
 const getSuggestions = require('../suggest/get-suggestions');
@@ -17,10 +18,10 @@ module.exports = (workspace, name, options = {}) => {
   }
 
   if (open) {
-    const opnOptions = { wait: false };
+    const opnOptions = { wait: false, app: process.env.EDITOR };
     if (moduleOccurrences.length === 1) {
       const { nodeModulesPath, name: moduleName } = moduleOccurrences[0];
-      const packagePath = `${nodeModulesPath}/${moduleName}`;
+      const packagePath = path.join(nodeModulesPath, moduleName);
       opn(packagePath, opnOptions);
     } else {
       const listItems = [];
@@ -28,7 +29,7 @@ module.exports = (workspace, name, options = {}) => {
         const { nodeModulesPath, version, parent, name: moduleName } = item;
         listItems.push({
           title: `${version} ${parent ? parent.name : 'node_modules'}`,
-          value: `${nodeModulesPath}/${moduleName}`,
+          value: path.join(nodeModulesPath, moduleName),
         });
       });
 

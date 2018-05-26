@@ -20,7 +20,7 @@ try {
       'add information regarding why this package was installed',
     )
     .option('-d, --debug', 'see full error messages, mostly for debugging')
-    .option('-o, --open', '"open editor at the module\'s directory"')
+    .option('-o, --open', 'open editor at the module directory')
     .option('--disable-colors', 'minimize color and styling usage in output');
 
   program
@@ -70,8 +70,11 @@ try {
 
     if (!preDefinedCommands.includes(firstArg) && firstArg !== 'completion') {
       const [arg] = program.args;
+      const output = getAction(workspace, arg, options);
 
-      console.log(getAction(workspace, arg, options));
+      if (!options.open) {
+        console.log(output);
+      }
     }
   }
 } catch (error) {
