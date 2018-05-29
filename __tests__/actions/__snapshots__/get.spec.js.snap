@@ -1,7 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`get --homepage should throw NotFoundHomepageError if there is no "homepage" in package.json 1`] = `"Could not find homepage link for module \\"test\\"."`;
-
 exports[`get should disable colors 1`] = `
 "[4mtest[24m
 └─┬ [90manother[39m

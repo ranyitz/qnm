@@ -72,14 +72,26 @@ describe('get', () => {
     expect(output).toMatchSnapshot();
   });
 
-  it('--homepage should throw NotFoundHomepageError if there is no "homepage" in package.json', () => {
-    const workspace = resolveWorkspace('single-module');
-
-    try {
+  describe('--homepage', () => {
+    it('should open the homepage of a package using taken from the package.json', () => {
+      const workspace = resolveWorkspace('single-module');
       getAction(workspace, 'test', { homepage: true });
-    } catch (e) {
-      expect(e.message).toMatchSnapshot();
-    }
+
+      expect(opn).toHaveBeenCalledWith(
+        expect.stringMatching('http://www.homepage.com'),
+        expect.any(Object),
+      );
+    });
+
+    it('should throw NotFoundHomepageError if there is no "homepage" in package.json', () => {
+      const workspace = resolveWorkspace('single-module');
+
+      try {
+        getAction(workspace, 'test', { homepage: true });
+      } catch (e) {
+        expect(e.message).toMatchSnapshot();
+      }
+    });
   });
 
   describe('--open', () => {
