@@ -22,7 +22,10 @@ try {
     .option('-d, --debug', 'see full error messages, mostly for debugging')
     .option('-o, --open', 'open editor at the module directory')
     .option('--disable-colors', 'minimize color and styling usage in output')
-    .option('-h, --homepage', 'open the homepage of a certain module');
+    .option(
+      '-h, --homepage',
+      "open module's homepage using the default browser",
+    );
 
   program
     .command('list')

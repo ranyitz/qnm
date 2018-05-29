@@ -81,6 +81,10 @@ Add information regarding why this package was installed in the first place, by 
 
 Open the module's `package.json` file with the default editor.
 
+### homepage
+
+Open the module's `homepage` property using the default browser.
+
 ### -d, --debug
 
 See full error messages, mostly for debugging.
@@ -126,9 +130,6 @@ eslint-plugin-mocha
 eslint-plugin-react
 └── 6.10.3
 ```
-### homepage
-
-Opens package "homepage" property in your browser. 
 
 ## Contributing
 
