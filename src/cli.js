@@ -20,7 +20,7 @@ try {
       'add information regarding why this package was installed',
     )
     .option('-d, --debug', 'see full error messages, mostly for debugging')
-    .option('-o, --open', 'open editor at the module directory')
+    .option('-o, --open', 'open editor at the package.json of a chosen module')
     .option('--disable-colors', 'minimize color and styling usage in output')
     .option('--homepage', "open module's homepage using the default browser");
 
