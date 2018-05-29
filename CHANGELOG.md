@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.13.0 (May 30, 2018)
+* Add an update notifier.
+
 ## 0.12.0 (May 30, 2018)
 * [#31](https://github.com/ranyitz/qnm/pull/31) Add `--homepage` option to open the homepage of a certain package.
 * [#35](https://github.com/ranyitz/qnm/pull/35) Fix `--why` option on match & list commands.
