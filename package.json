@@ -34,7 +34,7 @@
     "*.js": [
       "eslint"
     ],
-    "*.{md,json}": [
+    "*.{md}": [
       "prettier"
     ]
   },
