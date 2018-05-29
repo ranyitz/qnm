@@ -77,6 +77,14 @@ Use `qnm` command without arguments to trigger an [`fzf`](https://github.com/jun
 
 Add information regarding why this package was installed in the first place, by showing its dependent packages.
 
+### -o , --open
+
+Open the module's `package.json` file with the default editor.
+
+### -d, --debug
+
+See full error messages, mostly for debugging.
+
 ### --disable-colors
 
 Disables the most of colors and styling. E.g. version colors.

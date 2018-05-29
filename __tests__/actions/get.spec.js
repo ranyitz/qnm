@@ -1,12 +1,11 @@
+jest.mock('opn');
+jest.mock('prompts', () => {
+  return jest.fn(() => Promise.resolve({}));
+});
+
 const getAction = require('../../src/actions/get');
 const { resolveWorkspace } = require('../utils');
-
-jest.mock('opn');
 const opn = require('opn');
-
-jest.mock('prompts', () => {
-  return jest.fn(() => ({ then: () => {} }));
-});
 const prompts = require('prompts');
 
 describe('get', () => {
@@ -73,24 +72,43 @@ describe('get', () => {
     expect(output).toMatchSnapshot();
   });
 
-  it('should open module file directory when --open flag used', () => {
-    const workspace = resolveWorkspace('three-levels-deep');
-    getAction(workspace, 'dep', { open: true });
+  describe('--open', () => {
+    it('should open module file directory when --open flag used', () => {
+      const workspace = resolveWorkspace('three-levels-deep');
+      getAction(workspace, 'dep', { open: true });
 
-    expect(opn).toHaveBeenCalledWith(
-      expect.stringMatching(/node_modules\/dep$/),
-      expect.any(Object),
-    );
-  });
+      expect(opn).toHaveBeenCalledWith(
+        expect.stringMatching(/node_modules\/dep\/package.json/),
+        expect.any(Object),
+      );
+    });
 
-  it('should open correct module file directory when --open flag used with few packages matched', () => {
-    const workspace = resolveWorkspace('few-modules');
-    getAction(workspace, 'dependency2', { open: true });
+    it('should open correct module file when --open flag used with few packages matched', () => {
+      const workspace = resolveWorkspace('few-modules');
+      getAction(workspace, 'dependency2', { open: true });
 
-    expect(prompts).toHaveBeenCalledWith(
-      expect.objectContaining({
-        choices: expect.any(Array),
-      }),
-    );
+      expect(prompts).toHaveBeenCalledWith(
+        expect.objectContaining({
+          choices: expect.arrayContaining([
+            expect.objectContaining({
+              title: expect.stringMatching(
+                /node_modules\/dependency2\/package.json -/,
+              ),
+              value: expect.stringMatching(
+                /node_modules\/dependency2\/package.json/,
+              ),
+            }),
+            expect.objectContaining({
+              title: expect.stringMatching(
+                /node_modules\/dependency1\/node_modules\/dependency2\/package.json -/,
+              ),
+              value: expect.stringMatching(
+                /node_modules\/dependency1\/node_modules\/dependency2\/package.json/,
+              ),
+            }),
+          ]),
+        }),
+      );
+    });
   });
 });

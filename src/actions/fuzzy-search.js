@@ -8,8 +8,7 @@ const sortBySimilarity = require('../fuzzy-search/sort-by-similarity');
 const getAction = require('./get');
 
 const HALF_WIDTH_SPACE = '\u2000';
-
-const resetConsole = () => process.stdout.write('\x1Bc');
+const consoleHelpers = require('./helpers/console');
 
 const getResultState = ({ chosen, result, i, currentResult }) => {
   const isMarked = chosen.indexOf(result.value) !== -1;
@@ -100,7 +99,7 @@ module.exports = (workspace, options) => {
     );
   };
 
-  resetConsole();
+  consoleHelpers.clear();
   renderUi();
 
   const input = new Input({
