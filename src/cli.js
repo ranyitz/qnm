@@ -30,14 +30,19 @@ try {
       '--deps',
       'list dependencies and devDependencies based on package.json.',
     )
+    .option(
+      '-w, --why',
+      'add information regarding why packages were installed',
+    )
     .action(cmd => {
-      const { disableColors } = program;
+      const { disableColors, why } = program;
       const workspace = Workspace.loadSync();
 
       console.log(
         listAction(workspace, {
           deps: cmd.deps,
           noColor: disableColors,
+          why,
         }),
       );
     });
@@ -45,11 +50,17 @@ try {
   program
     .command('match <string>')
     .description('prints modules which matches the provided string')
+    .option(
+      '-w, --why',
+      'add information regarding why packages were installed',
+    )
     .action(string => {
-      const { disableColors } = program;
+      const { disableColors, why } = program;
       const workspace = Workspace.loadSync();
 
-      console.log(matchAction(workspace, string, { noColor: disableColors }));
+      console.log(
+        matchAction(workspace, string, { noColor: disableColors, why }),
+      );
     });
 
   program.parse(process.argv);
