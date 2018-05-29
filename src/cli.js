@@ -22,7 +22,7 @@ try {
     .option('-d, --debug', 'see full error messages, mostly for debugging')
     .option('-o, --open', 'open editor at the module directory')
     .option('--disable-colors', 'minimize color and styling usage in output')
-    .option('-h, --homepage', 'open the homepage of a certain module');
+    .option('--homepage', "open module's homepage using the default browser");
 
   program
     .command('list')
@@ -72,8 +72,8 @@ try {
 
   const workspace = Workspace.loadSync();
 
-  const { why, deps, disableColors, open } = program;
-  const options = { why, deps, noColor: disableColors, open };
+  const { why, deps, disableColors, open, homepage } = program;
+  const options = { why, deps, noColor: disableColors, open, homepage };
 
   if (program.args.length === 0) {
     fuzzySearchAction(workspace, options);
@@ -84,7 +84,7 @@ try {
       const [arg] = program.args;
       const output = getAction(workspace, arg, options);
 
-      if (!options.open) {
+      if (!options.open && !options.homepage) {
         console.log(output);
       }
     }

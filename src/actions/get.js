@@ -27,7 +27,6 @@ module.exports = (workspace, name, options = {}) => {
     const homepageUrl = nodeModule.packageJson.homepage;
 
     if (!homepageUrl) throw new NotFoundHomepageError(name);
-
     return opn(homepageUrl, { wait: false });
   }
 
