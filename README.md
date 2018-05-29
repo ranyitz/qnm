@@ -126,6 +126,9 @@ eslint-plugin-mocha
 eslint-plugin-react
 └── 6.10.3
 ```
+### homepage
+
+Opens package "homepage" property in your browser. 
 
 ## Contributing
 
