@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.12.0 (May 30, 2018)
+* [#31](https://github.com/ranyitz/qnm/pull/31) Add `--homepage` option to open the homepage of a certain package.
+* [#35](https://github.com/ranyitz/qnm/pull/35) Fix `--why` option on match & list commands.
+* [#33](https://github.com/ranyitz/qnm/pull/33) Add `--open` option to open the `package.json` of a certain package.
+
 ## 0.11.0 (May 26, 2018)
 * [#34](https://github.com/ranyitz/qnm/pull/34) Highlight the same versions with the same colors.
 * [#30](https://github.com/ranyitz/qnm/pull/30) Be able to pass options to fuzzy search mode.
