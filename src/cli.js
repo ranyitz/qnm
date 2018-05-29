@@ -1,5 +1,7 @@
 /* eslint-disable no-console */
 const program = require('commander');
+const updateNotifier = require('update-notifier');
+
 const pkg = require('../package.json');
 const Workspace = require('./workspace/workspace');
 const setupCompletions = require('./completions/setup-completions');
@@ -10,6 +12,8 @@ const listAction = require('./actions/list');
 const fuzzySearchAction = require('./actions/fuzzy-search');
 
 const handleError = require('./handler-error');
+
+updateNotifier({ pkg }).notify();
 
 try {
   program

@@ -62,7 +62,8 @@
     "opn": "^5.3.0",
     "pkg-dir": "^2.0.0",
     "prompts": "^0.1.8",
-    "tabtab": "^2.2.2"
+    "tabtab": "^2.2.2",
+    "update-notifier": "^2.5.0"
   },
   "jest": {
     "testEnvironment": "node",
