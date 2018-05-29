@@ -4,7 +4,7 @@ const { resolveWorkspace } = require('../utils');
 describe('match', () => {
   it('should print the matched modules according to passed string', () => {
     const workspace = resolveWorkspace('mix-modules');
-    const output = matchAction(workspace, 'anot', { why: false });
+    const output = matchAction(workspace, 'anot');
 
     expect(output).toMatchSnapshot();
   });
@@ -30,7 +30,7 @@ describe('match', () => {
   it('should show a message when no module has matched the provided string', () => {
     const workspace = resolveWorkspace('single-module');
     try {
-      matchAction(workspace, 'bla', { why: false });
+      matchAction(workspace, 'bla');
     } catch (e) {
       expect(e.message).toMatchSnapshot();
     }
