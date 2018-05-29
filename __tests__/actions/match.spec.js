@@ -18,6 +18,15 @@ describe('match', () => {
     expect(output).toMatchSnapshot();
   });
 
+  it('should show why info', () => {
+    const workspace = resolveWorkspace('single-module');
+    const output = matchAction(workspace, 'tes', {
+      why: true,
+    });
+
+    expect(output).toMatchSnapshot();
+  });
+
   it('should show a message when no module has matched the provided string', () => {
     const workspace = resolveWorkspace('single-module');
     try {

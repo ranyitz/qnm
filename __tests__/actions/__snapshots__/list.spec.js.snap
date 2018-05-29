@@ -27,3 +27,9 @@ exports[`list should list the versions of mixed modules 1`] = `
   └── [37m1.0.0[39m
 "
 `;
+
+exports[`list should show why info 1`] = `
+"[4mtest[24m
+└── [37m1.0.0[39m [33m(devDependencies, npm install test)[39m
+"
+`;
