@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const EventEmitter = require('events');
 const chalk = require('chalk');
 const {
