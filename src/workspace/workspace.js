@@ -75,7 +75,18 @@ module.exports = class Workspace {
       throw new Error('could not identify package directory');
     }
 
+    const nodeModulesPath = path.join(root, 'node_modules');
+
+    if (!fs.existsSync(nodeModulesPath)) {
+      throw new Error('could not find node_modules directory');
+    }
+
     const modulesMap = ModulesMap.loadSync(root);
+
+    if (modulesMap.size === 0) {
+      throw new Error('node_modules directory is empty');
+    }
+
     return new Workspace({ root, modulesMap });
   }
 };
