@@ -1,7 +1,8 @@
 /* eslint-disable no-console */
+const { spawn } = require('child_process');
 const program = require('commander');
 const updateNotifier = require('update-notifier');
-
+const { clear } = require('./actions/helpers/console');
 const pkg = require('../package.json');
 const Workspace = require('./workspace/workspace');
 const setupCompletions = require('./completions/setup-completions');
@@ -27,6 +28,16 @@ try {
     .option('-o, --open', 'open editor at the package.json of a chosen module')
     .option('--disable-colors', 'minimize color and styling usage in output')
     .option('--homepage', "open module's homepage using the default browser");
+
+  program
+    .command('install-completions')
+    .description('attempt to install tab completions using tabtab')
+    .action(() => {
+      const tabtabCliPath = require.resolve('tabtab/src/cli');
+      clear();
+
+      return spawn('node', [tabtabCliPath, 'install'], { stdio: 'inherit' });
+    });
 
   program
     .command('list')

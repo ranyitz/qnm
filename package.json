@@ -26,7 +26,6 @@
   "scripts": {
     "test": "jest",
     "lint": "eslint .",
-    "install": "tabtab install --auto",
     "test:watch": "jest --watch",
     "precommit": "lint-staged"
   },
