@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.13.1 (May 30, 2018)
+* Add errors for no `node_modules` case and empty `node_modules` case.
+
 ## 0.13.0 (May 30, 2018)
 * Add an update notifier.
 
