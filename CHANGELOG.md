@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.13.2 (May 30, 2018)
+* Remove the auto installation of tab completions and add a new command `install-completions` instead.
+
 ## 0.13.1 (May 30, 2018)
 * Add errors for no `node_modules` case and empty `node_modules` case.
 
