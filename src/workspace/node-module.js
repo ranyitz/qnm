@@ -1,9 +1,25 @@
 const fs = require('fs');
 const path = require('path');
+const flattenDeep = require('lodash/flattenDeep');
 
+function buildWhyTree(whyInfo, modulesMap) {
+  return flattenDeep(
+    whyInfo.map(whyModuleName => {
+      if (!modulesMap.has(whyModuleName)) {
+        return { name: whyModuleName, whyList: [] };
+      }
+
+      const firstWhyModuleOccurences = modulesMap.get(whyModuleName);
+      return firstWhyModuleOccurences.map(m => {
+        return { name: m.name, whyList: m.whyInfo };
+      });
+    }),
+  );
+}
 module.exports = class NodeModule {
-  constructor({ nodeModulesPath, name, parent }) {
+  constructor({ nodeModulesPath, name, parent, modulesMap }) {
     this.name = name;
+    this.modulesMap = modulesMap;
     this.nodeModulesPath = nodeModulesPath;
     this.parent = parent;
     this._packageJson = null;
@@ -29,7 +45,7 @@ module.exports = class NodeModule {
     const requiredByInfo = this.packageJson._requiredBy;
 
     if (requiredByInfo) {
-      return requiredByInfo.map(modulePath => {
+      const whyInfo = requiredByInfo.map(modulePath => {
         if (modulePath === '/') {
           return 'dependencies';
         } else if (modulePath === '#DEV:/') {
@@ -40,6 +56,8 @@ module.exports = class NodeModule {
 
         return modulePath.slice(1);
       });
+
+      return buildWhyTree(whyInfo, this.modulesMap);
     }
 
     return [];

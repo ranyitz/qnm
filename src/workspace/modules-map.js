@@ -53,6 +53,7 @@ class ModulesMap extends Map {
               return subScopeModules.map(subName => {
                 const fullName = path.join(name, subName);
                 const nodeModule = new NodeModule({
+                  modulesMap,
                   nodeModulesPath,
                   name: fullName,
                   parent,
@@ -65,6 +66,7 @@ class ModulesMap extends Map {
             }
 
             const nodeModule = new NodeModule({
+              modulesMap,
               nodeModulesPath,
               name,
               parent,

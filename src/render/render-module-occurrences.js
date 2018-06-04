@@ -1,6 +1,6 @@
 const archy = require('archy');
 const chalk = require('chalk');
-const isEmpty = require('lodash/isEmpty');
+// const isEmpty = require('lodash/isEmpty');
 const renderVersion = require('./render-version');
 
 const highlightMatch = (str, match) =>
@@ -8,9 +8,10 @@ const highlightMatch = (str, match) =>
 
 const getWhyInfo = m => {
   const { whyInfo } = m;
-  return !isEmpty(whyInfo) && !m.parent
-    ? ` ${chalk.yellow(`(${m.whyInfo.join(', ')})`)}`
-    : '';
+  console.log(JSON.stringify(whyInfo, null, 2));
+  // return !isEmpty(whyInfo) && !m.parent
+  //   ? ` ${chalk.yellow(`(${m.whyInfo.join(', ')})`)}`
+  //   : '';
 };
 
 const buildWithAncestors = (m, { why, noColor }) => {
