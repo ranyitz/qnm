@@ -6,7 +6,7 @@ const NotFoundHomepageError = require('../errors/not-found-homepage-error');
 const renderModuleOccurrences = require('../render/render-module-occurrences');
 const openPackage = require('./helpers/open');
 
-module.exports = (workspace, name, options = {}) => {
+module.exports = async (workspace, name, options = {}) => {
   const moduleOccurrences = workspace.getModuleOccurrences(name);
   const { open, homepage } = options;
 

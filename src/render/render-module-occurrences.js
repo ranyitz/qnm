@@ -2,6 +2,7 @@ const archy = require('archy');
 const chalk = require('chalk');
 const isEmpty = require('lodash/isEmpty');
 const renderVersion = require('./render-version');
+const renderWhyInfo = require('./render-why-info');
 
 const highlightMatch = (str, match) =>
   str.split(match).join(chalk.magenta(match));
@@ -13,10 +14,9 @@ const getWhyInfo = m => {
     : '';
 };
 
-const getWhyDeepInfo = m => {
-  const { deepWhyInfo } = m;
-  console.log(JSON.stringify(deepWhyInfo, null, 2));
-  return chalk.yellow(archy(deepWhyInfo));
+const getWhyDeepInfo = async m => {
+  const deepWhyInfo = m.getDeepWhyInfo();
+  return chalk.yellow(await renderWhyInfo(deepWhyInfo));
 };
 
 const buildWithAncestors = (m, { why, noColor }) => {
@@ -38,11 +38,10 @@ const buildWithAncestors = (m, { why, noColor }) => {
   return hierarchy[0];
 };
 
-module.exports = (moduleOccurrences, { match, why, noColor } = {}) => {
+module.exports = async (moduleOccurrences, { match, why, noColor } = {}) => {
   const moduleName = highlightMatch(moduleOccurrences[0].name, match);
   const buildedOccurrences = moduleOccurrences.map(m =>
     buildWithAncestors(m, {
-      why,
       renderVersion,
       noColor,
     }),
@@ -53,5 +52,11 @@ module.exports = (moduleOccurrences, { match, why, noColor } = {}) => {
     nodes: buildedOccurrences,
   });
 
-  return `${tree}\n${getWhyDeepInfo(moduleOccurrences[0])}`;
+  if (why) {
+    const whyTree = await getWhyDeepInfo(moduleOccurrences[0]);
+
+    return `${tree}\n${whyTree}`;
+  }
+
+  return `${tree}`;
 };

@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const flattenDeep = require('lodash/flattenDeep');
+const uniq = require('lodash/uniq');
+const head = require('lodash/head');
 
 module.exports = class NodeModule {
   constructor({ nodeModulesPath, name, parent, modulesMap }) {
@@ -31,58 +33,85 @@ module.exports = class NodeModule {
     const requiredByInfo = this.packageJson._requiredBy;
 
     if (requiredByInfo) {
-      return requiredByInfo.map(modulePath => {
-        if (modulePath === '/') {
-          return 'dependencies';
-        } else if (modulePath === '#DEV:/') {
-          return 'devDependencies';
-        } else if (modulePath === '#USER') {
-          return `npm install ${this.name}`;
-        }
+      return uniq(
+        requiredByInfo.map(modulePath => {
+          const moduleName = modulePath.slice(1);
+          if (modulePath === '/') {
+            return 'dependencies';
+          } else if (modulePath === '#DEV:/') {
+            return 'devDependencies';
+          } else if (modulePath === '#USER') {
+            return `npm install ${this.name}`;
+          } else if (
+            moduleName.indexOf('/') > 0 &&
+            !moduleName.startsWith('@')
+          ) {
+            return moduleName.slice(moduleName.indexOf('/') + 1);
+          }
 
-        return modulePath.slice(1);
-      });
+          return moduleName;
+        }),
+      );
     }
 
     return [];
   }
 
-  get deepWhyInfo() {
-    const getWhyModules = (whyModulesNames, parentName) => {
+  getDeepWhyInfo(maxDepth = Infinity) {
+    const getWhyModules = (
+      whyModulesNames,
+      parentName,
+      depth = 1,
+      ancestors = [],
+    ) => {
       return flattenDeep(
         whyModulesNames.map(name => {
-          const moduleOccurrences = this.modulesMap.get(name);
-          if (!moduleOccurrences || moduleOccurrences.length === 0) return [];
+          // naivly take only the first one assuming they have the same why info
+          const nodeModule = head(this.modulesMap.get(name));
+          if (!nodeModule) {
+            return [{ label: name, nodes: [], whyInfo: [], depth }];
+          }
 
-          return moduleOccurrences
-            .filter(nodeModule => {
-              // only use modules which are top level or children of the passed parent name
-              return (
-                !nodeModule.parent || nodeModule.parent.name === parentName
-              );
-            })
-            .map(nodeModule => ({
-              label: nodeModule.name,
-              whyInfo: nodeModule.whyInfo,
-            }));
+          return {
+            label: nodeModule.name,
+            whyInfo: nodeModule.whyInfo,
+            ancestors: ancestors.concat(parentName),
+            depth,
+          };
         }),
       );
     };
 
     const nodes = getWhyModules(this.whyInfo, this.name);
-    let modulesQueue = nodes.slice(0);
+    const modulesSet = new Set(nodes.slice(0));
 
-    if (modulesQueue.length === 0) return this.whyInfo;
+    if (modulesSet.length === 0) return this.whyInfo;
 
     // populate rest of the modules
-    for (const m of modulesQueue) {
-      const whyModules = getWhyModules(m.whyInfo, m.label);
-      m.nodes = whyModules;
-      modulesQueue = modulesQueue.concat(whyModules);
+    for (const m of modulesSet) {
+      // do not analyze child when you got to max depth
+      if (m.depth !== maxDepth) {
+        const whyModules = getWhyModules(
+          m.whyInfo,
+          m.label,
+          m.depth + 1,
+          m.ancestors,
+        );
+
+        m.nodes = whyModules.filter(whyModule => {
+          // to avoid circular dependencies
+          if (!m.ancestors.includes(whyModule.label)) {
+            modulesSet.add(whyModule);
+            return true;
+          }
+
+          return false;
+        });
+      }
     }
 
     const whyTree = {
-      name: this.name,
+      label: this.name,
       nodes,
     };
 
