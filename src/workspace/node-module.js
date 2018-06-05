@@ -2,20 +2,6 @@ const fs = require('fs');
 const path = require('path');
 const flattenDeep = require('lodash/flattenDeep');
 
-function buildWhyTree(whyInfo, modulesMap) {
-  return flattenDeep(
-    whyInfo.map(whyModuleName => {
-      if (!modulesMap.has(whyModuleName)) {
-        return { name: whyModuleName, whyList: [] };
-      }
-
-      const firstWhyModuleOccurences = modulesMap.get(whyModuleName);
-      return firstWhyModuleOccurences.map(m => {
-        return { name: m.name, whyList: m.whyInfo };
-      });
-    }),
-  );
-}
 module.exports = class NodeModule {
   constructor({ nodeModulesPath, name, parent, modulesMap }) {
     this.name = name;
@@ -45,7 +31,7 @@ module.exports = class NodeModule {
     const requiredByInfo = this.packageJson._requiredBy;
 
     if (requiredByInfo) {
-      const whyInfo = requiredByInfo.map(modulePath => {
+      return requiredByInfo.map(modulePath => {
         if (modulePath === '/') {
           return 'dependencies';
         } else if (modulePath === '#DEV:/') {
@@ -56,11 +42,51 @@ module.exports = class NodeModule {
 
         return modulePath.slice(1);
       });
-
-      return buildWhyTree(whyInfo, this.modulesMap);
     }
 
     return [];
+  }
+
+  get deepWhyInfo() {
+    const getWhyModules = (whyModulesNames, parentName) => {
+      return flattenDeep(
+        whyModulesNames.map(name => {
+          const moduleOccurrences = this.modulesMap.get(name);
+          if (!moduleOccurrences || moduleOccurrences.length === 0) return [];
+
+          return moduleOccurrences
+            .filter(nodeModule => {
+              // only use modules which are top level or children of the passed parent name
+              return (
+                !nodeModule.parent || nodeModule.parent.name === parentName
+              );
+            })
+            .map(nodeModule => ({
+              label: nodeModule.name,
+              whyInfo: nodeModule.whyInfo,
+            }));
+        }),
+      );
+    };
+
+    const nodes = getWhyModules(this.whyInfo, this.name);
+    let modulesQueue = nodes.slice(0);
+
+    if (modulesQueue.length === 0) return this.whyInfo;
+
+    // populate rest of the modules
+    for (const m of modulesQueue) {
+      const whyModules = getWhyModules(m.whyInfo, m.label);
+      m.nodes = whyModules;
+      modulesQueue = modulesQueue.concat(whyModules);
+    }
+
+    const whyTree = {
+      name: this.name,
+      nodes,
+    };
+
+    return whyTree;
   }
 
   toObject() {

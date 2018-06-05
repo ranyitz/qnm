@@ -1,6 +1,6 @@
 const archy = require('archy');
 const chalk = require('chalk');
-// const isEmpty = require('lodash/isEmpty');
+const isEmpty = require('lodash/isEmpty');
 const renderVersion = require('./render-version');
 
 const highlightMatch = (str, match) =>
@@ -8,10 +8,15 @@ const highlightMatch = (str, match) =>
 
 const getWhyInfo = m => {
   const { whyInfo } = m;
-  console.log(JSON.stringify(whyInfo, null, 2));
-  // return !isEmpty(whyInfo) && !m.parent
-  //   ? ` ${chalk.yellow(`(${m.whyInfo.join(', ')})`)}`
-  //   : '';
+  return !isEmpty(whyInfo) && !m.parent
+    ? ` ${chalk.yellow(`(${m.whyInfo.join(', ')})`)}`
+    : '';
+};
+
+const getWhyDeepInfo = m => {
+  const { deepWhyInfo } = m;
+  console.log(JSON.stringify(deepWhyInfo, null, 2));
+  return chalk.yellow(archy(deepWhyInfo));
 };
 
 const buildWithAncestors = (m, { why, noColor }) => {
@@ -48,5 +53,5 @@ module.exports = (moduleOccurrences, { match, why, noColor } = {}) => {
     nodes: buildedOccurrences,
   });
 
-  return tree;
+  return `${tree}\n${getWhyDeepInfo(moduleOccurrences[0])}`;
 };
