@@ -1,19 +1,8 @@
 const EventEmitter = require('events');
 const chalk = require('chalk');
-const {
-  ctrlC,
-  ctrlD,
-  esc,
-  left,
-  right,
-  up,
-  down,
-  enter,
-  del,
-  backspace,
-  tab,
-  shiftTab,
-} = require('./raw-key-codes');
+const { windows, unix } = require('./raw-key-codes');
+
+const isWin = process.platform === "win32";
 
 module.exports = class Input extends EventEmitter {
   constructor({ stdin }) {
@@ -22,15 +11,15 @@ module.exports = class Input extends EventEmitter {
     this._value = [];
     this.cursorPos = 0;
 
-    stdin.setRawMode(true);
-    stdin.setEncoding('utf8');
-
     stdin.on('error', e => {
       this.end();
       console.error(e);
     });
 
-    stdin.on('data', this.onKeyPress.bind(this));
+    stdin.setRawMode(true);
+    if (!isWin) stdin.setEncoding('utf8');
+
+    stdin.on('data', this.onKeyPress.bind(this))
   }
 
   get value() {
@@ -49,10 +38,83 @@ module.exports = class Input extends EventEmitter {
     return firstChunk + chalk.inverse(corsurChar) + secondChunk;
   }
 
+  onWindowsKeyPress(key) {
+    let changed = false;
+    const code = key.toJSON().data.toString();
+
+    switch (code) {
+      case '3':
+      case '4':
+      case '27':
+        this.emit('exit');
+        process.exit(1);
+        break;
+      case '27,91,68':
+        this.cursorPos = Math.max(0, this.cursorPos - 1);
+        changed = true;
+        break;
+      case '27,91,67':
+        this.cursorPos = Math.min(this._value.length, this.cursorPos + 1);
+        changed = true;
+        break;
+      case '8':
+        if (this.cursorPos !== 0) {
+          this._value.splice(this.cursorPos - 1, 1);
+          this.cursorPos = Math.max(0, this.cursorPos - 1);
+          changed = true;
+        }
+        break;
+      case '27,91,51,126':
+        if (this._value.length > this.cursorPos) {
+          this._value.splice(this.cursorPos, 1);
+          changed = true;
+        }
+        break;
+      case '27,91,65':
+        this.emit('up');
+        break;
+      case '27,91,66':
+        this.emit('down');
+        break;
+      case '13':
+        this.emit('choose');
+        break;
+      case '96':
+        this.emit('tab');
+        break;
+      case '9':
+        this.emit('shiftTab');
+        break;
+      default:
+        this.insertChar(key);
+        changed = true;
+    }
+
+    if (changed) {
+      this.emit('change', this);
+    }
+  }
+
   onKeyPress(key) {
+    let keyMap;
+    let keyCode;
+    let char;
+
+    if (isWin) {
+      keyMap = windows;
+      keyCode = key.toJSON().data.toString();
+      char = key.toString();
+    } else {
+      keyMap = unix;
+      keyCode = key;
+      char = key;
+    }
+
+    const { ctrlC, ctrlD, esc, left, right, backspace, del, up, down, enter, tab, shiftTab } = keyMap;
+
     let changed = false;
 
-    switch (key) {
+    switch (keyCode) {
       case ctrlC:
       case ctrlD:
       case esc:
@@ -96,7 +158,7 @@ module.exports = class Input extends EventEmitter {
         this.emit('shiftTab');
         break;
       default:
-        this.insertChar(key);
+        this.insertChar(char);
         changed = true;
     }
 
