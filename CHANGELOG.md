@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.13.3 (Nov 15, 2019)
+* [#38](https://github.com/ranyitz/qnm/pull/38) Add windows support for interactive fuzzy search.
+
 ## 0.13.2 (May 30, 2018)
 * Remove the auto installation of tab completions and add a new command `install-completions` instead.
 
