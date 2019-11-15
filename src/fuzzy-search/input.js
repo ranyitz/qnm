@@ -2,7 +2,7 @@ const EventEmitter = require('events');
 const chalk = require('chalk');
 const { windows, unix } = require('./raw-key-codes');
 
-const isWin = process.platform === "win32";
+const isWin = process.platform === 'win32';
 
 module.exports = class Input extends EventEmitter {
   constructor({ stdin }) {
@@ -13,13 +13,14 @@ module.exports = class Input extends EventEmitter {
 
     stdin.on('error', e => {
       this.end();
+      // eslint-disable-next-line no-console
       console.error(e);
     });
 
     stdin.setRawMode(true);
     if (!isWin) stdin.setEncoding('utf8');
 
-    stdin.on('data', this.onKeyPress.bind(this))
+    stdin.on('data', this.onKeyPress.bind(this));
   }
 
   get value() {
@@ -110,7 +111,20 @@ module.exports = class Input extends EventEmitter {
       char = key;
     }
 
-    const { ctrlC, ctrlD, esc, left, right, backspace, del, up, down, enter, tab, shiftTab } = keyMap;
+    const {
+      ctrlC,
+      ctrlD,
+      esc,
+      left,
+      right,
+      backspace,
+      del,
+      up,
+      down,
+      enter,
+      tab,
+      shiftTab,
+    } = keyMap;
 
     let changed = false;
 
