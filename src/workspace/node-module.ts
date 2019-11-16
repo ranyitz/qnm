@@ -1,26 +1,33 @@
 import fs from 'fs';
 import path from 'path';
 import { PackageJson } from 'type-fest';
+import Workspace from './workspace';
 
 export default class NodeModule {
   name: string;
   nodeModulesPath: string;
   parent?: NodeModule;
   _packageJson: PackageJson | null;
+  workspace: Workspace;
+  _yarnRequiredBy: Set<string> | null;
 
   constructor({
     nodeModulesPath,
     name,
     parent,
+    workspace,
   }: {
     nodeModulesPath: string;
     name: string;
     parent?: NodeModule;
+    workspace: Workspace;
   }) {
     this.name = name;
     this.nodeModulesPath = nodeModulesPath;
     this.parent = parent;
+    this.workspace = workspace;
     this._packageJson = null;
+    this._yarnRequiredBy = null;
   }
 
   get packageJson(): PackageJson {
@@ -43,8 +50,33 @@ export default class NodeModule {
     return path.join(this.nodeModulesPath, this.name);
   }
 
+  get requiredBy(): Array<string> {
+    if (this.packageJson._requiredBy) {
+      return this.packageJson._requiredBy as Array<string>;
+    }
+
+    // in this case the user is probably using yarn
+    if (this.workspace.yarnLock) {
+      this.workspace.modulesMap.assignYarnRequiredBy();
+
+      if (this._yarnRequiredBy) {
+        return [...this._yarnRequiredBy!];
+      }
+    }
+
+    return [];
+  }
+
+  addYarnRequiredByDependency(moduleName: string) {
+    if (!this._yarnRequiredBy) {
+      this._yarnRequiredBy = new Set();
+    }
+
+    this._yarnRequiredBy.add(moduleName);
+  }
+
   get whyInfo() {
-    const requiredByInfo = this.packageJson._requiredBy as Array<string>;
+    const requiredByInfo = this.requiredBy;
 
     if (requiredByInfo) {
       return requiredByInfo.map(modulePath => {
@@ -56,7 +88,8 @@ export default class NodeModule {
           return `npm install ${this.name}`;
         }
 
-        return modulePath.slice(1);
+        // npm sometimes starts with requiredBy with `/`
+        return modulePath.startsWith('/') ? modulePath.slice(1) : modulePath;
       });
     }
 

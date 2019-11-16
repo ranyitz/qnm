@@ -1,7 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`workspace should throw an error for empty node_modules case 1`] = `[Error: node_modules directory is empty]`;
-
 exports[`workspace should throw an error for no node_modules case 1`] = `[Error: could not find node_modules directory]`;
 
 exports[`workspace should throw an error for no package case 1`] = `[Error: could not identify package directory]`;

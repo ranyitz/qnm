@@ -2,18 +2,38 @@ import fs from 'fs';
 import path from 'path';
 import pkgDir from 'pkg-dir';
 import { PackageJson } from 'type-fest';
+import { parse as parseYarnLock } from '@yarnpkg/lockfile';
 import ModulesMap from './modules-map';
 import NodeModule from './node-module';
 
+type YarnLock = Record<
+  string,
+  { version: string; dependencies: Record<string, string> }
+>;
+
 export default class Workspace {
   root: string;
-  modulesMap: ModulesMap;
+  _modulesMap: ModulesMap | null;
   _packageJson: PackageJson | null;
+  _yarnLock: YarnLock | null;
 
-  constructor({ root, modulesMap }: { root: string; modulesMap: ModulesMap }) {
+  constructor({ root }: { root: string }) {
     this.root = root;
-    this.modulesMap = modulesMap;
+    this._modulesMap = null;
     this._packageJson = null;
+    this._yarnLock = null;
+  }
+
+  get modulesMap(): ModulesMap {
+    if (!this._modulesMap) {
+      this._modulesMap = ModulesMap.loadSync(this.root, this);
+
+      if (this._modulesMap.size === 0) {
+        throw new Error('node_modules directory is empty');
+      }
+    }
+
+    return this._modulesMap;
   }
 
   get packageJson(): PackageJson {
@@ -24,12 +44,27 @@ export default class Workspace {
     return this._packageJson;
   }
 
+  get yarnLock(): YarnLock | null {
+    const yarnLockPath = path.join(this.root, 'yarn.lock');
+
+    try {
+      const rawYarnLock = fs.readFileSync(yarnLockPath, 'utf8');
+      const yarnLock = parseYarnLock(rawYarnLock).object as YarnLock;
+      this._yarnLock = yarnLock;
+      return yarnLock;
+    } catch (e) {
+      console.warn(`cannot get "why" information for ${this.name}`);
+      console.warn(e);
+      return null;
+    }
+  }
+
   get name() {
     return this.packageJson.name;
   }
 
   loadPackageJson(): PackageJson {
-    const packageJsonPath = path.resolve(this.root, 'package.json');
+    const packageJsonPath = path.join(this.root, 'package.json');
 
     try {
       const pkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
@@ -93,12 +128,6 @@ export default class Workspace {
       throw new Error('could not find node_modules directory');
     }
 
-    const modulesMap = ModulesMap.loadSync(root);
-
-    if (modulesMap.size === 0) {
-      throw new Error('node_modules directory is empty');
-    }
-
-    return new Workspace({ root, modulesMap });
+    return new Workspace({ root });
   }
 }

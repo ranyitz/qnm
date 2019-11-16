@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import NodeModule from './node-module';
+import Workspace from './workspace';
 import flattenDeep from 'lodash/flattenDeep';
 
 const isNotHiddenDirectory = (dirname: string) => !dirname.startsWith('.');
@@ -8,10 +9,14 @@ const isScope = (dirname: string) => dirname.startsWith('@');
 
 export default class ModulesMap extends Map<string, Array<NodeModule>> {
   root: string;
+  workspace: Workspace;
+  _yarnRequiredByAssigned: boolean;
 
-  constructor({ root }: { root: string }) {
+  constructor({ root, workspace }: { root: string; workspace: Workspace }) {
     super();
     this.root = root;
+    this.workspace = workspace;
+    this._yarnRequiredByAssigned = false;
   }
 
   addModule(name: string, nodeModule: NodeModule) {
@@ -34,8 +39,81 @@ export default class ModulesMap extends Map<string, Array<NodeModule>> {
     return moduleOccurrences;
   }
 
-  static loadSync(cwd: string): ModulesMap {
-    const modulesMap = new ModulesMap({ root: cwd });
+  assignYarnRequiredBy(): void {
+    if (this._yarnRequiredByAssigned) {
+      return;
+    }
+
+    this._yarnRequiredByAssigned = true;
+    const yarnLock = this.workspace.yarnLock;
+
+    if (!yarnLock) {
+      return;
+    }
+
+    // Assign requiredBy using yarn lock
+    Object.keys(yarnLock).forEach(moduleAndVerison => {
+      const moduleDependencies = yarnLock[moduleAndVerison].dependencies;
+
+      if (!moduleDependencies) return;
+
+      Object.keys(moduleDependencies).forEach(dependency => {
+        const DependencyModuleOccurrences = this.get(dependency);
+
+        if (!DependencyModuleOccurrences) {
+          throw new Error(
+            `The module ${dependency} specified in yarn.lock but is not on the file system`,
+          );
+        }
+
+        // We're only interesetd in requiredBy if the module is on the root
+        DependencyModuleOccurrences.forEach(nodeModule => {
+          if (!nodeModule.parent) {
+            const moduleName = moduleAndVerison.slice(
+              0,
+              moduleAndVerison.lastIndexOf('@'),
+            );
+
+            nodeModule.addYarnRequiredByDependency(moduleName);
+          }
+        });
+      });
+    });
+
+    // Assign requiredBy using package.json dependencies/devDependencies
+    this.forEach((moduleOccurrences, moduleName) => {
+      const workspaceDependencies = this.workspace.packageJson.dependencies;
+      const workspaceDevDependencies = this.workspace.packageJson
+        .devDependencies;
+
+      if (
+        workspaceDependencies &&
+        Object.keys(workspaceDependencies).includes(moduleName)
+      ) {
+        moduleOccurrences.forEach(nodeModule => {
+          // We're only interesetd in requiredBy if the module is on the root
+          if (!nodeModule.parent) {
+            nodeModule.addYarnRequiredByDependency('/');
+          }
+        });
+      }
+
+      if (
+        workspaceDevDependencies &&
+        Object.keys(workspaceDevDependencies).includes(moduleName)
+      ) {
+        moduleOccurrences.forEach(nodeModule => {
+          // We're only interesetd in requiredBy if the module is on the root
+          if (!nodeModule.parent) {
+            nodeModule.addYarnRequiredByDependency('#DEV:/');
+          }
+        });
+      }
+    });
+  }
+
+  static loadSync(cwd: string, workspace: Workspace): ModulesMap {
+    const modulesMap = new ModulesMap({ root: cwd, workspace: workspace });
 
     function traverseNodeModules(root: string, parent?: NodeModule) {
       const nodeModulesPath = path.resolve(root, 'node_modules');
@@ -58,6 +136,7 @@ export default class ModulesMap extends Map<string, Array<NodeModule>> {
                   nodeModulesPath,
                   name: fullName,
                   parent,
+                  workspace,
                 });
 
                 modulesMap.addModule(fullName, nodeModule);
@@ -70,6 +149,7 @@ export default class ModulesMap extends Map<string, Array<NodeModule>> {
               nodeModulesPath,
               name,
               parent,
+              workspace,
             });
 
             modulesMap.addModule(name, nodeModule);
