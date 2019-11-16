@@ -2,7 +2,7 @@
   "name": "qnm",
   "version": "0.13.4",
   "description": "cli utility for querying the node_modules directory",
-  "bin": "build/bin/qnm.js",
+  "bin": "bin/qnm.js",
   "repository": "ranyitz/qnm",
   "engines": {
     "node": ">=8.7"
