@@ -1,7 +1,8 @@
 import { execSync } from 'child_process';
 import { resolveFixture } from './utils';
 
-const qnmBin = require.resolve('../build/bin/qnm');
+const qnmBin = require.resolve('../../bin/qnm');
+
 const runCommand = (
   command: string,
   { cwd, env }: { cwd: string; env?: Record<string, any> },
