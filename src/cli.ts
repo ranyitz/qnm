@@ -1,18 +1,16 @@
 /* eslint-disable no-console */
-const { spawn } = require('child_process');
-const program = require('commander');
-const updateNotifier = require('update-notifier');
-const { clear } = require('./actions/helpers/console');
-const pkg = require('../package.json');
-const Workspace = require('./workspace/workspace');
-const setupCompletions = require('./completions/setup-completions');
-
-const matchAction = require('./actions/match');
-const getAction = require('./actions/get');
-const listAction = require('./actions/list');
-const fuzzySearchAction = require('./actions/fuzzy-search');
-
-const handleError = require('./handler-error');
+import { spawn } from 'child_process';
+import program from 'commander';
+import updateNotifier from 'update-notifier';
+import { clear } from './actions/helpers/console';
+import pkg from '../package.json';
+import Workspace from './workspace/workspace';
+import setupCompletions from './completions/setup-completions';
+import matchAction from './actions/match';
+import getAction from './actions/get';
+import listAction from './actions/list';
+import fuzzySearchAction from './actions/fuzzy-search';
+import handleError from './handler-error';
 
 updateNotifier({ pkg }).notify();
 
@@ -90,7 +88,7 @@ try {
   const { why, deps, disableColors, open, homepage } = program;
   const options = { why, deps, noColor: disableColors, open, homepage };
 
-  if (program.args.length === 0) {
+  if (program.rawArgs.length < 3) {
     fuzzySearchAction(workspace, options);
   } else {
     const firstArg = program.rawArgs[2];

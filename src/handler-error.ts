@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
-const chalk = require('chalk');
+import chalk from 'chalk';
 
-module.exports = (error, debug) => {
+export default (error: Error, debug: boolean) => {
   if (!debug) {
     console.error(chalk.red(error.message.replace('Error: ', '')));
   } else {
