@@ -126,3 +126,14 @@ exports[`CLI qnm with no arguments should show the version on a single module wh
 
 "
 `;
+
+exports[`CLI qnm with no arguments should work in monorepo and print subpackages modules 1`] = `
+"[4mpackage-foo[24m
+└── [37m1.0.0[39m
+
+[1mpackage-a[22m
+└─┬ [4mpackage-foo[24m
+  └── [38;2;157;229;247m2.0.0[39m
+
+"
+`;

@@ -39,6 +39,7 @@ const buildWithAncestors = (m: NodeModule, { why, noColor }: CliOptions) => {
 export default (
   moduleOccurrences: Array<NodeModule>,
   { match, why, noColor }: CliOptions = {},
+  monorepoPackageName?: string,
 ) => {
   const moduleName = highlightMatch(moduleOccurrences[0].name, match!);
   const buildedOccurrences = moduleOccurrences.map(m =>
@@ -48,10 +49,21 @@ export default (
     }),
   );
 
-  const tree = archy({
+  const packageInfo = {
     label: chalk.underline(moduleName),
     nodes: buildedOccurrences,
-  });
+  };
+
+  if (monorepoPackageName) {
+    const tree = archy({
+      label: chalk.bold(monorepoPackageName),
+      nodes: [packageInfo],
+    });
+
+    return tree;
+  }
+
+  const tree = archy(packageInfo);
 
   return tree;
 };

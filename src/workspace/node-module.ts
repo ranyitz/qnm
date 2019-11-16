@@ -55,8 +55,7 @@ export default class NodeModule {
       return this.packageJson._requiredBy as Array<string>;
     }
 
-    // in this case the user is probably using yarn
-    if (this.workspace.yarnLock) {
+    if (this.workspace.isYarn) {
       this.workspace.modulesMap.assignYarnRequiredBy();
 
       if (this._yarnRequiredBy) {

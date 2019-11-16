@@ -52,6 +52,13 @@ describe('CLI', () => {
 
       expect(output).toMatchSnapshot();
     });
+
+    it('should work in monorepo and print subpackages modules', () => {
+      const cwd = resolveFixture('monorepo');
+      const output = runCommand('package-foo', { cwd });
+
+      expect(output).toMatchSnapshot();
+    });
   });
 
   describe('qnm list', () => {
