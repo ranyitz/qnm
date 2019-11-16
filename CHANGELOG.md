@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.13.4 (Nov 16, 2019)
+* [#40](https://github.com/ranyitz/qnm/pull/40) TypeScript migration
+
 ## 0.13.3 (Nov 15, 2019)
 * [#38](https://github.com/ranyitz/qnm/pull/38) Add windows support for interactive fuzzy search.
 
