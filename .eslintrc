@@ -1,20 +1,40 @@
 {
-  "extends": ["airbnb-base", "plugin:jest/recommended", "plugin:prettier/recommended"],
-  "env": {
-      "jest": true,
-      "node": true
+  "extends": "eslint-config-yoshi-base",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "modules": true
+    }
   },
   "rules": {
-    "prettier/prettier": ["error", {
-        "singleQuote": true,
-        "trailingComma": "all"
-      }],
-      "no-console": "warn",
-      "no-plusplus": "off",
-      "no-restricted-syntax": "off",
-      "no-underscore-dangle": "off",
-      "guard-for-in": "off",
-      "no-await-in-loop": "off",
-      "arrow-body-style": "off"
-  }
+    "import/no-extraneous-dependencies": "error",
+    "array-callback-return": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "no-shadow": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "eslint-import-resolver-typescript": true
+    }
+  },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "parser": "@typescript-eslint/parser",
+      "plugins": ["@typescript-eslint/eslint-plugin"],
+      "rules": {
+        "@typescript-eslint/array-type": ["error", { "default": "generic" }],
+        "@typescript-eslint/ban-types": "error",
+        "@typescript-eslint/no-unused-vars": [
+          "error",
+          {"argsIgnorePattern": "^_"}
+        ],
+        "import/order": "error",
+        "no-dupe-class-members": "off",
+        "no-unused-vars": "off",
+        "no-useless-constructor": "off",
+        "default-case": "off"
+    }
+  }]
 }
