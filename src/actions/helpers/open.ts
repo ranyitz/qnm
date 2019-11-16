@@ -1,20 +1,24 @@
-/* eslint-disable no-console */
-const opn = require('opn');
-const path = require('path');
-const prompts = require('prompts');
-const chalk = require('chalk');
-const consoleHelpers = require('./console');
+import path from 'path';
+import open from 'open';
+import chalk from 'chalk';
+import NodeModule from '../../workspace/node-module';
+import { clearTerminal } from './terminal';
+import prompts from 'prompts';
 
-const opnOptions = { wait: false };
-const getPkgJsonPath = (nodeModulesPath, packageName) =>
+const openOptions = { wait: false };
+
+const getPkgJsonPath = (nodeModulesPath: string, packageName: string) =>
   path.join(nodeModulesPath, packageName, 'package.json');
 
-module.exports = function openPackage(moduleOccurrences, root) {
+export default function openPackage(
+  moduleOccurrences: Array<NodeModule>,
+  root: string,
+) {
   if (moduleOccurrences.length === 1) {
     const { nodeModulesPath, name: packageName } = moduleOccurrences[0];
     const packageJsonPath = getPkgJsonPath(nodeModulesPath, packageName);
 
-    return opn(packageJsonPath, opnOptions);
+    return open(packageJsonPath, openOptions);
   }
 
   const choices = moduleOccurrences.map(
@@ -29,7 +33,7 @@ module.exports = function openPackage(moduleOccurrences, root) {
     },
   );
 
-  consoleHelpers.clear();
+  clearTerminal();
 
   return prompts({
     type: 'select',
@@ -39,10 +43,10 @@ module.exports = function openPackage(moduleOccurrences, root) {
     initial: 0,
   })
     .then(({ value: packageJsonPath }) => {
-      return opn(packageJsonPath, opnOptions);
+      return open(packageJsonPath, openOptions);
     })
     .catch(() => {
       console.log('');
       console.log('Operation aborted');
     });
-};
+}

@@ -1,7 +1,7 @@
-const chalk = require('chalk');
-const isEmpty = require('lodash/isEmpty');
+import chalk from 'chalk';
+import isEmpty from 'lodash/isEmpty';
 
-function paintDiffInBold(from, to) {
+function paintDiffInBold(from: string, to: string) {
   return to
     .split('')
     .map((char, index) => {
@@ -14,8 +14,8 @@ function paintDiffInBold(from, to) {
     .join('');
 }
 
-module.exports = class NotFoundModuleError extends Error {
-  constructor(name, suggestions) {
+export default class NotFoundModuleError extends Error {
+  constructor(name: string, suggestions: Array<string>) {
     let message = `Could not find any module by the name "${name}".`;
 
     if (!isEmpty(suggestions)) {
@@ -24,4 +24,4 @@ module.exports = class NotFoundModuleError extends Error {
 
     super(message);
   }
-};
+}

@@ -1,13 +1,16 @@
-const EventEmitter = require('events');
-const chalk = require('chalk');
-const { windows, unix } = require('./raw-key-codes');
+import EventEmitter from 'events';
+import { ReadStream } from 'tty';
+import chalk from 'chalk';
+import { windows, unix } from './raw-key-codes';
 
 const isWin = process.platform === 'win32';
 
-module.exports = class Input extends EventEmitter {
-  constructor({ stdin }) {
-    super();
+export default class Input extends EventEmitter {
+  _value: Array<any>;
+  cursorPos: number;
 
+  constructor({ stdin }: { stdin: ReadStream }) {
+    super();
     this._value = [];
     this.cursorPos = 0;
 
@@ -39,64 +42,7 @@ module.exports = class Input extends EventEmitter {
     return firstChunk + chalk.inverse(corsurChar) + secondChunk;
   }
 
-  onWindowsKeyPress(key) {
-    let changed = false;
-    const code = key.toJSON().data.toString();
-
-    switch (code) {
-      case '3':
-      case '4':
-      case '27':
-        this.emit('exit');
-        process.exit(1);
-        break;
-      case '27,91,68':
-        this.cursorPos = Math.max(0, this.cursorPos - 1);
-        changed = true;
-        break;
-      case '27,91,67':
-        this.cursorPos = Math.min(this._value.length, this.cursorPos + 1);
-        changed = true;
-        break;
-      case '8':
-        if (this.cursorPos !== 0) {
-          this._value.splice(this.cursorPos - 1, 1);
-          this.cursorPos = Math.max(0, this.cursorPos - 1);
-          changed = true;
-        }
-        break;
-      case '27,91,51,126':
-        if (this._value.length > this.cursorPos) {
-          this._value.splice(this.cursorPos, 1);
-          changed = true;
-        }
-        break;
-      case '27,91,65':
-        this.emit('up');
-        break;
-      case '27,91,66':
-        this.emit('down');
-        break;
-      case '13':
-        this.emit('choose');
-        break;
-      case '96':
-        this.emit('tab');
-        break;
-      case '9':
-        this.emit('shiftTab');
-        break;
-      default:
-        this.insertChar(key);
-        changed = true;
-    }
-
-    if (changed) {
-      this.emit('change', this);
-    }
-  }
-
-  onKeyPress(key) {
+  onKeyPress(key: Buffer): void {
     let keyMap;
     let keyCode;
     let char;
@@ -181,12 +127,12 @@ module.exports = class Input extends EventEmitter {
     }
   }
 
-  insertChar(char) {
+  insertChar(char: string | Buffer) {
     this._value.splice(this.cursorPos, 0, char);
     this.cursorPos++;
   }
 
-  end() {
+  end(): void {
     this.removeAllListeners();
   }
-};
+}

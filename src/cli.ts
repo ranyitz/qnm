@@ -1,9 +1,8 @@
 /* eslint-disable no-console */
+import fs from 'fs';
 import { spawn } from 'child_process';
-import program from 'commander';
-import updateNotifier from 'update-notifier';
-import { clear } from './actions/helpers/console';
-import pkg from '../package.json';
+import program, { Command } from 'commander';
+import { clearTerminal } from './actions/helpers/terminal';
 import Workspace from './workspace/workspace';
 import setupCompletions from './completions/setup-completions';
 import matchAction from './actions/match';
@@ -11,12 +10,26 @@ import getAction from './actions/get';
 import listAction from './actions/list';
 import fuzzySearchAction from './actions/fuzzy-search';
 import handleError from './handler-error';
+import updateNotifier from 'update-notifier';
+
+const pkgJsonPath = require.resolve('../package.json');
+const pkg = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf-8'));
 
 updateNotifier({ pkg }).notify();
+
+export type CliOptions = {
+  why?: boolean;
+  deps?: boolean;
+  noColor?: boolean;
+  open?: boolean;
+  homepage?: boolean;
+  match?: string;
+};
 
 try {
   program
     .version(pkg.version)
+    //@ts-ignore
     .arguments('[module]', 'prints module version from the node_modules')
     .option(
       '-w, --why',
@@ -32,7 +45,7 @@ try {
     .description('attempt to install tab completions using tabtab')
     .action(() => {
       const tabtabCliPath = require.resolve('tabtab/src/cli');
-      clear();
+      clearTerminal();
 
       return spawn('node', [tabtabCliPath, 'install'], { stdio: 'inherit' });
     });
@@ -79,14 +92,21 @@ try {
 
   program.parse(process.argv);
 
-  const preDefinedCommands = program.commands.map(c => c._name);
+  const preDefinedCommands = program.commands.map((c: Command) => c._name);
 
   setupCompletions(preDefinedCommands);
 
   const workspace = Workspace.loadSync();
 
   const { why, deps, disableColors, open, homepage } = program;
-  const options = { why, deps, noColor: disableColors, open, homepage };
+
+  const options: CliOptions = {
+    why,
+    deps,
+    noColor: disableColors,
+    open,
+    homepage,
+  };
 
   if (program.rawArgs.length < 3) {
     fuzzySearchAction(workspace, options);

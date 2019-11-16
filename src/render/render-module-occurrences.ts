@@ -1,24 +1,28 @@
-const archy = require('archy');
-const chalk = require('chalk');
-const isEmpty = require('lodash/isEmpty');
-const renderVersion = require('./render-version');
+import chalk from 'chalk';
+import NodeModule from '../workspace/node-module';
+import { CliOptions } from '../cli';
+import renderVersion from './render-version';
+import archy from 'archy';
+import isEmpty from 'lodash/isEmpty';
 
-const highlightMatch = (str, match) =>
+const highlightMatch = (str: string, match: string) =>
   str.split(match).join(chalk.magenta(match));
 
-const getWhyInfo = m => {
+const getWhyInfo = (m: NodeModule) => {
   const { whyInfo } = m;
   return !isEmpty(whyInfo) && !m.parent
     ? ` ${chalk.yellow(`(${m.whyInfo.join(', ')})`)}`
     : '';
 };
 
-const buildWithAncestors = (m, { why, noColor }) => {
+type TreeNode = { label: string; nodes: Array<TreeNode> } | string;
+
+const buildWithAncestors = (m: NodeModule, { why, noColor }: CliOptions) => {
   const whyInfo = why ? getWhyInfo(m) : '';
   const version = noColor ? m.version : renderVersion(m.name, m.version);
   const information = version + whyInfo;
 
-  let hierarchy = [information];
+  let hierarchy: Array<TreeNode> = [information];
 
   if (m.parent) {
     let currentModule = m;
@@ -32,12 +36,14 @@ const buildWithAncestors = (m, { why, noColor }) => {
   return hierarchy[0];
 };
 
-module.exports = (moduleOccurrences, { match, why, noColor } = {}) => {
-  const moduleName = highlightMatch(moduleOccurrences[0].name, match);
+export default (
+  moduleOccurrences: Array<NodeModule>,
+  { match, why, noColor }: CliOptions = {},
+) => {
+  const moduleName = highlightMatch(moduleOccurrences[0].name, match!);
   const buildedOccurrences = moduleOccurrences.map(m =>
     buildWithAncestors(m, {
       why,
-      renderVersion,
       noColor,
     }),
   );

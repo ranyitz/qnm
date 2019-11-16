@@ -1,17 +1,31 @@
-const chalk = require('chalk');
-const figures = require('figures');
-const logUpdate = require('log-update');
-const isEmpty = require('lodash/isEmpty');
-
-const Input = require('../fuzzy-search/input');
-const sortBySimilarity = require('../fuzzy-search/sort-by-similarity');
-const getAction = require('./get');
+import chalk from 'chalk';
+import figures from 'figures';
+import logUpdate from 'log-update';
+import Input from '../fuzzy-search/input';
+import sortBySimilarity from '../fuzzy-search/sort-by-similarity';
+import Workspace from '../workspace/workspace';
+import { CliOptions } from '../cli';
+import getAction from './get';
+import { clearTerminal } from './helpers/terminal';
+import isEmpty from 'lodash/isEmpty';
 
 const HALF_WIDTH_SPACE = '\u2000';
-const consoleHelpers = require('./helpers/console');
 
-const getResultState = ({ chosen, result, i, currentResult }) => {
-  const isMarked = chosen.indexOf(result.value) !== -1;
+type Result = { value: string; highlight: string };
+type State = 'current' | 'marked' | 'plain' | 'current&marked';
+
+const getResultState = ({
+  chosenModules,
+  result,
+  i,
+  currentResult,
+}: {
+  chosenModules: Array<string>;
+  result: Result;
+  i: number;
+  currentResult: number;
+}): State => {
+  const isMarked = chosenModules.indexOf(result.value) !== -1;
   const isCurrent = i === currentResult;
 
   if (isCurrent && isMarked) {
@@ -29,7 +43,7 @@ const getResultState = ({ chosen, result, i, currentResult }) => {
   return 'plain';
 };
 
-const renderItem = ({ state, result }) => {
+const renderItem = ({ state, result }: { state: State; result: Result }) => {
   switch (state) {
     case 'current': {
       return `${chalk.red(figures.pointer)} ${chalk.bold(result.highlight)}`;
@@ -50,15 +64,21 @@ const renderItem = ({ state, result }) => {
   }
 };
 
-const toggleMarking = ({ chosen, value }) => {
-  return chosen.indexOf(value) !== -1
-    ? chosen.filter(moduleName => moduleName !== value)
-    : chosen.concat(value);
+const toggleMarking = ({
+  chosenModules,
+  value,
+}: {
+  chosenModules: Array<string>;
+  value: string;
+}) => {
+  return chosenModules.indexOf(value) !== -1
+    ? chosenModules.filter(moduleName => moduleName !== value)
+    : chosenModules.concat(value);
 };
 
-module.exports = (workspace, options) => {
-  let results = [];
-  let chosen = [];
+export default (workspace: Workspace, options: CliOptions) => {
+  let results: Array<Result> = [];
+  let chosenModules: Array<string> = [];
   let currentResult = 0;
   let currentInputValue = '';
 
@@ -68,7 +88,7 @@ module.exports = (workspace, options) => {
     return results
       .map((result, i) => {
         const state = getResultState({
-          chosen,
+          chosenModules,
           result,
           i,
           currentResult,
@@ -99,14 +119,14 @@ module.exports = (workspace, options) => {
     );
   };
 
-  consoleHelpers.clear();
+  clearTerminal();
   renderUi();
 
   const input = new Input({
     stdin: process.stdin,
   });
 
-  input.on('change', obj => {
+  input.on('change', (obj: Input) => {
     currentInputValue = obj.valueWithCursor;
     results = sortBySimilarity(modulesNames, obj.value);
 
@@ -138,7 +158,7 @@ module.exports = (workspace, options) => {
 
     const { value } = results[currentResult];
 
-    chosen = toggleMarking({ chosen, value });
+    chosenModules = toggleMarking({ chosenModules, value });
 
     if (currentResult < results.length - 1) {
       currentResult++;
@@ -152,7 +172,7 @@ module.exports = (workspace, options) => {
 
     const { value } = results[currentResult];
 
-    chosen = toggleMarking({ chosen, value });
+    chosenModules = toggleMarking({ chosenModules, value });
 
     if (currentResult > 0) {
       currentResult--;
@@ -162,18 +182,18 @@ module.exports = (workspace, options) => {
   });
 
   input.on('choose', () => {
-    if (isEmpty(results) && isEmpty(chosen)) {
+    if (isEmpty(results) && isEmpty(chosenModules)) {
       return;
     }
 
     input.end();
     logUpdate('');
 
-    if (isEmpty(chosen)) {
-      chosen.push(results[currentResult].value);
+    if (isEmpty(chosenModules)) {
+      chosenModules.push(results[currentResult].value);
     }
 
-    chosen.forEach(moduleName => {
+    chosenModules.forEach(moduleName => {
       console.log(getAction(workspace, moduleName, options)); // eslint-disable-line no-console
     });
 

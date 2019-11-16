@@ -1,29 +1,40 @@
-const ModulesMap = require('./modules-map');
-const pkgDir = require('pkg-dir');
-const path = require('path');
-const fs = require('fs');
+import fs from 'fs';
+import path from 'path';
+import pkgDir from 'pkg-dir';
+import { PackageJson } from 'type-fest';
+import ModulesMap from './modules-map';
+import NodeModule from './node-module';
 
-module.exports = class Workspace {
-  constructor({ root, modulesMap }) {
+export default class Workspace {
+  root: string;
+  modulesMap: ModulesMap;
+  _packageJson: PackageJson | null;
+
+  constructor({ root, modulesMap }: { root: string; modulesMap: ModulesMap }) {
     this.root = root;
     this.modulesMap = modulesMap;
     this._packageJson = null;
   }
 
-  get packageJson() {
+  get packageJson(): PackageJson {
     if (!this._packageJson) {
-      this.loadPackageJson();
+      return this.loadPackageJson();
     }
 
     return this._packageJson;
   }
 
-  loadPackageJson() {
+  get name() {
+    return this.packageJson.name;
+  }
+
+  loadPackageJson(): PackageJson {
     const packageJsonPath = path.resolve(this.root, 'package.json');
 
     try {
-      this._packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
-      return this;
+      const pkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+      this._packageJson = pkg;
+      return pkg;
     } catch (error) {
       if (error.code === 'ENOENT') {
         throw new Error(`Couldn't find "package.json" for module ${this.name}`);
@@ -33,7 +44,7 @@ module.exports = class Workspace {
     }
   }
 
-  getModuleOccurrences(packageName) {
+  getModuleOccurrences(packageName: string) {
     try {
       return this.modulesMap.getModuleOccurrences(packageName);
     } catch (err) {
@@ -55,23 +66,24 @@ module.exports = class Workspace {
       this.packageJson.dependencies,
       this.packageJson.devDependencies,
     );
-    const dependenciesMap = new Map();
+
+    const dependenciesMap = new Map<string, Array<NodeModule>>();
 
     for (const dependency in dependencies) {
-      dependenciesMap.set(dependency, this.modulesMap.get(dependency));
+      dependenciesMap.set(dependency, this.modulesMap.get(dependency)!);
     }
 
     return Array.from(dependenciesMap);
   }
 
-  match(str) {
+  match(str: string) {
     return this.list().filter(([name]) => name.includes(str));
   }
 
-  static loadSync(cwd = process.cwd()) {
+  static loadSync(cwd = process.cwd()): Workspace {
     const root = pkgDir.sync(cwd);
 
-    if (root === null) {
+    if (!root) {
       throw new Error('could not identify package directory');
     }
 
@@ -89,4 +101,4 @@ module.exports = class Workspace {
 
     return new Workspace({ root, modulesMap });
   }
-};
+}

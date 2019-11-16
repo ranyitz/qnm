@@ -1,26 +1,28 @@
-const fs = require('fs');
-const path = require('path');
-const NodeModule = require('./node-module');
-const flattenDeep = require('lodash/flattenDeep');
+import fs from 'fs';
+import path from 'path';
+import NodeModule from './node-module';
+import flattenDeep from 'lodash/flattenDeep';
 
-const isNotHiddenDirectory = dirname => !dirname.startsWith('.');
-const isScope = dirname => dirname.startsWith('@');
+const isNotHiddenDirectory = (dirname: string) => !dirname.startsWith('.');
+const isScope = (dirname: string) => dirname.startsWith('@');
 
-class ModulesMap extends Map {
-  constructor({ root }) {
+export default class ModulesMap extends Map<string, Array<NodeModule>> {
+  root: string;
+
+  constructor({ root }: { root: string }) {
     super();
     this.root = root;
   }
 
-  addModule(name, nodeModule) {
+  addModule(name: string, nodeModule: NodeModule) {
     if (!this.has(name)) {
       this.set(name, []);
     }
 
-    this.get(name).push(nodeModule);
+    this.get(name)!.push(nodeModule);
   }
 
-  getModuleOccurrences(name) {
+  getModuleOccurrences(name: string) {
     const moduleOccurrences = this.get(name);
 
     if (!moduleOccurrences) {
@@ -32,10 +34,10 @@ class ModulesMap extends Map {
     return moduleOccurrences;
   }
 
-  static loadSync(cwd) {
+  static loadSync(cwd: string): ModulesMap {
     const modulesMap = new ModulesMap({ root: cwd });
 
-    function traverseNodeModules(root, parent) {
+    function traverseNodeModules(root: string, parent?: NodeModule) {
       const nodeModulesPath = path.resolve(root, 'node_modules');
 
       if (fs.existsSync(nodeModulesPath)) {
@@ -84,5 +86,3 @@ class ModulesMap extends Map {
     return modulesMap;
   }
 }
-
-module.exports = ModulesMap;

@@ -1,5 +1,12 @@
 {
   "extends": "eslint-config-yoshi-base",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "modules": true
+    }
+  },
   "rules": {
     "import/no-extraneous-dependencies": "error",
     "array-callback-return": "off",
@@ -17,7 +24,7 @@
       "parser": "@typescript-eslint/parser",
       "plugins": ["@typescript-eslint/eslint-plugin"],
       "rules": {
-        "@typescript-eslint/array-type": ["error", "generic"],
+        "@typescript-eslint/array-type": ["error", { "default": "generic" }],
         "@typescript-eslint/ban-types": "error",
         "@typescript-eslint/no-unused-vars": [
           "error",

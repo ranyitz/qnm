@@ -1,12 +1,18 @@
-const isEmpty = require('lodash/isEmpty');
-const opn = require('opn');
-const getSuggestions = require('../suggest/get-suggestions');
-const NotFoundModuleError = require('../errors/not-found-module-error');
-const NotFoundHomepageError = require('../errors/not-found-homepage-error');
-const renderModuleOccurrences = require('../render/render-module-occurrences');
-const openPackage = require('./helpers/open');
+import opn from 'open';
+import getSuggestions from '../suggest/get-suggestions';
+import NotFoundModuleError from '../errors/not-found-module-error';
+import NotFoundHomepageError from '../errors/not-found-homepage-error';
+import renderModuleOccurrences from '../render/render-module-occurrences';
+import Workspace from '../workspace/workspace';
+import { CliOptions } from '../cli';
+import openPackage from './helpers/open';
+import isEmpty from 'lodash/isEmpty';
 
-module.exports = (workspace, name, options = {}) => {
+export default (
+  workspace: Workspace,
+  name: string,
+  options: CliOptions = {},
+) => {
   const moduleOccurrences = workspace.getModuleOccurrences(name);
   const { open, homepage } = options;
 

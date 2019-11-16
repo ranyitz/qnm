@@ -1,6 +1,11 @@
-const chalk = require('chalk');
+import chalk, { Chalk } from 'chalk';
+import identity from 'lodash/identity';
 
-const moduleMap = {};
+type Identity<T> = (t: T) => T;
+
+type VersionMap = Record<string, Chalk | Identity<string>>;
+
+const moduleMap: Record<string, VersionMap> = {};
 
 const colors = [
   chalk.white,
@@ -16,20 +21,21 @@ const colors = [
   chalk.hex('#f4a4d0'),
 ];
 
-const renderVersion = (moduleName, version) => {
+const renderVersion = (moduleName: string, version: string | number) => {
   if (!moduleMap[moduleName]) {
     moduleMap[moduleName] = {};
   }
 
   const versionMap = moduleMap[moduleName];
+
   let color = versionMap[version];
 
   if (!color) {
-    color = colors[Object.keys(versionMap).length] || (input => input);
+    color = colors[Object.keys(versionMap).length] || identity;
     versionMap[version] = color;
   }
 
-  return color(version);
+  return color(String(version));
 };
 
-module.exports = renderVersion;
+export default renderVersion;

@@ -1,8 +1,10 @@
-const isEmpty = require('lodash/isEmpty');
-const NoModulesError = require('../errors/no-modules-error');
-const renderModuleList = require('../render/render-module-list');
+import NoModulesError from '../errors/no-modules-error';
+import renderModuleList from '../render/render-module-list';
+import Workspace from '../workspace/workspace';
+import { CliOptions } from '../cli';
+import isEmpty from 'lodash/isEmpty';
 
-module.exports = (workspace, options = {}) => {
+export default (workspace: Workspace, options: CliOptions = {}) => {
   if (options.deps) {
     const moduleOccurrencesList = workspace.listPackageJsonDependencies();
 
