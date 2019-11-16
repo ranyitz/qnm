@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import NodeModule from './node-module';
+import Workspace from './workspace';
 import flattenDeep from 'lodash/flattenDeep';
 
 const isNotHiddenDirectory = (dirname: string) => !dirname.startsWith('.');
@@ -8,10 +9,12 @@ const isScope = (dirname: string) => dirname.startsWith('@');
 
 export default class ModulesMap extends Map<string, Array<NodeModule>> {
   root: string;
+  workspace: Workspace;
 
-  constructor({ root }: { root: string }) {
+  constructor({ root, workspace }: { root: string; workspace: Workspace }) {
     super();
     this.root = root;
+    this.workspace = workspace;
   }
 
   addModule(name: string, nodeModule: NodeModule) {
@@ -34,8 +37,47 @@ export default class ModulesMap extends Map<string, Array<NodeModule>> {
     return moduleOccurrences;
   }
 
-  static loadSync(cwd: string): ModulesMap {
-    const modulesMap = new ModulesMap({ root: cwd });
+  assignRequiredByUsingYarnLock(): void {
+    const yarnLock = this.workspace.yarnLock;
+
+    if (!yarnLock) {
+      return;
+    }
+
+    Object.keys(yarnLock).forEach(moduleAndVerison => {
+      const moduleDependencies = yarnLock[moduleAndVerison].dependencies;
+
+      if (!moduleDependencies) return;
+
+      Object.keys(moduleDependencies).forEach(dependency => {
+        const DependencyModuleOccurrences = this.get(dependency);
+
+        if (!DependencyModuleOccurrences) {
+          throw new Error(
+            `The module ${dependency} specified in yarn.lock but is not on the file system`,
+          );
+        }
+
+        // We're only interesetd in requiredBy if the module is on the root
+        DependencyModuleOccurrences.forEach(nodeModule => {
+          if (!nodeModule.parent) {
+            if (!nodeModule._yarnRequiredBy) {
+              nodeModule._yarnRequiredBy = new Set();
+            }
+
+            const moduleName = moduleAndVerison.slice(
+              0,
+              moduleAndVerison.lastIndexOf('@'),
+            );
+
+            nodeModule._yarnRequiredBy.add(moduleName);
+          }
+        });
+      });
+    });
+  }
+  static loadSync(cwd: string, workspace: Workspace): ModulesMap {
+    const modulesMap = new ModulesMap({ root: cwd, workspace: workspace });
 
     function traverseNodeModules(root: string, parent?: NodeModule) {
       const nodeModulesPath = path.resolve(root, 'node_modules');
@@ -58,6 +100,7 @@ export default class ModulesMap extends Map<string, Array<NodeModule>> {
                   nodeModulesPath,
                   name: fullName,
                   parent,
+                  workspace,
                 });
 
                 modulesMap.addModule(fullName, nodeModule);
@@ -70,6 +113,7 @@ export default class ModulesMap extends Map<string, Array<NodeModule>> {
               nodeModulesPath,
               name,
               parent,
+              workspace,
             });
 
             modulesMap.addModule(name, nodeModule);

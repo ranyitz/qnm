@@ -32,11 +32,19 @@ describe('CLI', () => {
       expect(output).toMatchSnapshot();
     });
 
-    it('should add dependents information when using thw --why option', () => {
+    it('should add dependents information when using the --why option', () => {
       const cwd = resolveFixture('single-module');
       const output = runCommand('--why test', { cwd });
 
       expect(output).toMatchSnapshot();
+    });
+
+    it('should add dependents information when using the --why option on yarn installed package', () => {
+      const cwd = resolveFixture('yarn-install');
+      const output = runCommand('--why import-from', { cwd });
+
+      console.log(output);
+      // expect(output).toMatchSnapshot();
     });
 
     it('should add dependents information when using thw -w option', () => {

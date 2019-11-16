@@ -79,7 +79,7 @@ exports[`CLI qnm list should show modules mentioned in package.json 1`] = `
 "
 `;
 
-exports[`CLI qnm with no arguments should add dependents information when using thw --why option 1`] = `
+exports[`CLI qnm with no arguments should add dependents information when using the --why option 1`] = `
 "[4mtest[24m
 └── [37m1.0.0[39m [33m(devDependencies, npm install test)[39m
 
