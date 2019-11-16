@@ -48,6 +48,19 @@ exports[`CLI qnm list should --disable-colors 1`] = `
 "
 `;
 
+exports[`CLI qnm list should list dependencies in a yarn installed package and show "why" information 1`] = `
+"[4mimport-cwd[24m
+└── [37m3.0.0[39m
+
+[4mimport-from[24m
+└── [37m3.0.0[39m [33m(import-cwd)[39m
+
+[4mresolve-from[24m
+└── [37m5.0.0[39m [33m(import-from)[39m
+
+"
+`;
+
 exports[`CLI qnm list should show all modules in node_modules directory 1`] = `
 "[4m@scope/test[24m
 └── [37m1.0.0[39m
@@ -82,6 +95,13 @@ exports[`CLI qnm list should show modules mentioned in package.json 1`] = `
 exports[`CLI qnm with no arguments should add dependents information when using the --why option 1`] = `
 "[4mtest[24m
 └── [37m1.0.0[39m [33m(devDependencies, npm install test)[39m
+
+"
+`;
+
+exports[`CLI qnm with no arguments should add dependents information when using the --why option on yarn installed package 1`] = `
+"[4mimport-from[24m
+└── [37m3.0.0[39m [33m(import-cwd)[39m
 
 "
 `;

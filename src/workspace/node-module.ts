@@ -55,14 +55,24 @@ export default class NodeModule {
       return this.packageJson._requiredBy as Array<string>;
     }
 
+    // in this case the user is probably using yarn
     if (this.workspace.yarnLock) {
-      this.workspace.modulesMap.assignRequiredByUsingYarnLock();
+      this.workspace.modulesMap.assignYarnRequiredBy();
 
-      return [...this._yarnRequiredBy!];
+      if (this._yarnRequiredBy) {
+        return [...this._yarnRequiredBy!];
+      }
     }
 
     return [];
-    // in this case the user is probably using yarn
+  }
+
+  addYarnRequiredByDependency(moduleName: string) {
+    if (!this._yarnRequiredBy) {
+      this._yarnRequiredBy = new Set();
+    }
+
+    this._yarnRequiredBy.add(moduleName);
   }
 
   get whyInfo() {

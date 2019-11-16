@@ -43,8 +43,7 @@ describe('CLI', () => {
       const cwd = resolveFixture('yarn-install');
       const output = runCommand('--why import-from', { cwd });
 
-      console.log(output);
-      // expect(output).toMatchSnapshot();
+      expect(output).toMatchSnapshot();
     });
 
     it('should add dependents information when using thw -w option', () => {
@@ -78,6 +77,13 @@ describe('CLI', () => {
           FORCE_COLOR: '1',
         },
       });
+
+      expect(output).toMatchSnapshot();
+    });
+
+    it('should list dependencies in a yarn installed package and show "why" information', () => {
+      const cwd = resolveFixture('yarn-install');
+      const output = runCommand('list --why', { cwd });
 
       expect(output).toMatchSnapshot();
     });

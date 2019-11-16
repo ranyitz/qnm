@@ -10,11 +10,13 @@ const isScope = (dirname: string) => dirname.startsWith('@');
 export default class ModulesMap extends Map<string, Array<NodeModule>> {
   root: string;
   workspace: Workspace;
+  _yarnRequiredByAssigned: boolean;
 
   constructor({ root, workspace }: { root: string; workspace: Workspace }) {
     super();
     this.root = root;
     this.workspace = workspace;
+    this._yarnRequiredByAssigned = false;
   }
 
   addModule(name: string, nodeModule: NodeModule) {
@@ -37,13 +39,19 @@ export default class ModulesMap extends Map<string, Array<NodeModule>> {
     return moduleOccurrences;
   }
 
-  assignRequiredByUsingYarnLock(): void {
+  assignYarnRequiredBy(): void {
+    if (this._yarnRequiredByAssigned) {
+      return;
+    }
+
+    this._yarnRequiredByAssigned = true;
     const yarnLock = this.workspace.yarnLock;
 
     if (!yarnLock) {
       return;
     }
 
+    // Assign requiredBy using yarn lock
     Object.keys(yarnLock).forEach(moduleAndVerison => {
       const moduleDependencies = yarnLock[moduleAndVerison].dependencies;
 
@@ -61,21 +69,49 @@ export default class ModulesMap extends Map<string, Array<NodeModule>> {
         // We're only interesetd in requiredBy if the module is on the root
         DependencyModuleOccurrences.forEach(nodeModule => {
           if (!nodeModule.parent) {
-            if (!nodeModule._yarnRequiredBy) {
-              nodeModule._yarnRequiredBy = new Set();
-            }
-
             const moduleName = moduleAndVerison.slice(
               0,
               moduleAndVerison.lastIndexOf('@'),
             );
 
-            nodeModule._yarnRequiredBy.add(moduleName);
+            nodeModule.addYarnRequiredByDependency(moduleName);
           }
         });
       });
     });
+
+    // Assign requiredBy using package.json dependencies/devDependencies
+    this.forEach((moduleOccurrences, moduleName) => {
+      const workspaceDependencies = this.workspace.packageJson.dependencies;
+      const workspaceDevDependencies = this.workspace.packageJson
+        .devDependencies;
+
+      if (
+        workspaceDependencies &&
+        Object.keys(workspaceDependencies).includes(moduleName)
+      ) {
+        moduleOccurrences.forEach(nodeModule => {
+          // We're only interesetd in requiredBy if the module is on the root
+          if (!nodeModule.parent) {
+            nodeModule.addYarnRequiredByDependency('/');
+          }
+        });
+      }
+
+      if (
+        workspaceDevDependencies &&
+        Object.keys(workspaceDevDependencies).includes(moduleName)
+      ) {
+        moduleOccurrences.forEach(nodeModule => {
+          // We're only interesetd in requiredBy if the module is on the root
+          if (!nodeModule.parent) {
+            nodeModule.addYarnRequiredByDependency('#DEV:/');
+          }
+        });
+      }
+    });
   }
+
   static loadSync(cwd: string, workspace: Workspace): ModulesMap {
     const modulesMap = new ModulesMap({ root: cwd, workspace: workspace });
 
