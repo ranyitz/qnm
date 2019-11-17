@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.1 (Nov 16, 2019)
+* Fix a bug when `qnm -w` (single dash option) didn't work
+
 ## 1.0.0 (Nov 16, 2019)
 * [#41](https://github.com/ranyitz/qnm/pull/41) `--why` on yarn installed repositories
 * [#42](https://github.com/ranyitz/qnm/pull/42) Monorepo support (with lerna)
