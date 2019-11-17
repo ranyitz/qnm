@@ -109,7 +109,7 @@ try {
   };
 
   if (
-    program.rawArgs.filter((arg: string) => !arg.startsWith('--')).length < 3
+    program.rawArgs.filter((arg: string) => !arg.startsWith('-')).length < 3
   ) {
     fuzzySearchAction(workspace, options);
   } else {
