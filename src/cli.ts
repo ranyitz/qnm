@@ -11,6 +11,7 @@ import listAction from './actions/list';
 import fuzzySearchAction from './actions/fuzzy-search';
 import handleError from './handler-error';
 import updateNotifier from 'update-notifier';
+import isEmpty from 'lodash/isEmpty';
 
 const pkgJsonPath = require.resolve('../package.json');
 const pkg = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf-8'));
@@ -108,7 +109,7 @@ try {
     homepage,
   };
 
-  if (program.rawArgs.length < 3) {
+  if (isEmpty(program.args)) {
     fuzzySearchAction(workspace, options);
   } else {
     const firstArg = program.rawArgs[2];
