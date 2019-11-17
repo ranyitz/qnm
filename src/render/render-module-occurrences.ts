@@ -55,15 +55,11 @@ export default (
   };
 
   if (monorepoPackageName) {
-    const tree = archy({
+    return archy({
       label: chalk.bold(monorepoPackageName),
       nodes: [packageInfo],
     });
-
-    return tree;
   }
 
-  const tree = archy(packageInfo);
-
-  return tree;
+  return archy(packageInfo);
 };
