@@ -3,7 +3,7 @@ import getSuggestions from '../suggest/get-suggestions';
 import NotFoundModuleError from '../errors/not-found-module-error';
 import NotFoundHomepageError from '../errors/not-found-homepage-error';
 import renderModuleOccurrences from '../render/render-module-occurrences';
-import renderMonorepo from '../render/render-monorepo';
+import { renderMonorepo } from '../render/render-monorepo';
 import Workspace from '../workspace/workspace';
 import { CliOptions } from '../cli';
 import openPackage from './helpers/open';

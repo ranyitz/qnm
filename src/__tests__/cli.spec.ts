@@ -17,7 +17,7 @@ const runCommand = (
   });
 
 describe('CLI', () => {
-  describe('qnm with no arguments', () => {
+  describe('qnm <module>]', () => {
     it('should show the version on a single module when called with a string', () => {
       const cwd = resolveFixture('single-module');
       const output = runCommand('test', { cwd });
@@ -91,6 +91,22 @@ describe('CLI', () => {
     it('should list dependencies in a yarn installed package and show "why" information', () => {
       const cwd = resolveFixture('yarn-install');
       const output = runCommand('list --why', { cwd });
+
+      expect(output).toMatchSnapshot();
+    });
+
+    it('should list a monorepo', () => {
+      const cwd = resolveFixture('monorepo');
+      const output = runCommand('list --why', { cwd });
+
+      expect(output).toMatchSnapshot();
+    });
+  });
+
+  describe('qnm match', () => {
+    it('should match in monorepo and print subpackages modules', () => {
+      const cwd = resolveFixture('monorepo');
+      const output = runCommand('match packa', { cwd });
 
       expect(output).toMatchSnapshot();
     });

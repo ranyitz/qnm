@@ -5,10 +5,11 @@ import renderModuleOccurrences from './render-module-occurrences';
 export default (
   moduleOccurrencesList: Array<[string, Array<NodeModule>]>,
   options: CliOptions,
+  monorepoPackageName?: string,
 ): string => {
   return moduleOccurrencesList
     .map(([, moduleOccurrences]) =>
-      renderModuleOccurrences(moduleOccurrences, options),
+      renderModuleOccurrences(moduleOccurrences, options, monorepoPackageName),
     )
     .join('\n');
 };

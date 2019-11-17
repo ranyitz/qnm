@@ -3,7 +3,6 @@ import path from 'path';
 import pkgDir from 'pkg-dir';
 import { PackageJson } from 'type-fest';
 import { parse as parseYarnLock } from '@yarnpkg/lockfile';
-import { getPackages } from '@lerna/project';
 import globby from 'globby';
 import { isTruthy } from '../utils';
 import ModulesMap from './modules-map';
@@ -128,8 +127,35 @@ export default class Workspace {
       .filter(isTruthy);
   }
 
+  matchPackagesModuleOccurrences(
+    str: string,
+  ): Array<[string, Array<[string, Array<NodeModule>]>]> {
+    return this.packages
+      .map(packageWorkspace => {
+        try {
+          return [packageWorkspace.name, packageWorkspace.match(str)] as [
+            string,
+            Array<[string, Array<NodeModule>]>,
+          ];
+        } catch (error) {
+          return null;
+        }
+      })
+      .filter(isTruthy);
+  }
+
   list() {
     return Array.from(this.modulesMap);
+  }
+
+  listPackagesModuleOccurrences() {
+    return this.packages.map(
+      packageWorkspace =>
+        [packageWorkspace.name!, packageWorkspace.list()] as [
+          string,
+          Array<[string, Array<NodeModule>]>,
+        ],
+    );
   }
 
   getModulesNames() {
