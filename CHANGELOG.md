@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.0 (Nov 16, 2019)
+* [#41](https://github.com/ranyitz/qnm/pull/41) `--why` on yarn installed repositories
+* [#42](https://github.com/ranyitz/qnm/pull/42) Monorepo support (with lerna)
+
 ## 0.13.5 (Nov 16, 2019)
 * [#40](https://github.com/ranyitz/qnm/pull/40) TypeScript migration
 
