@@ -11,6 +11,7 @@ const runCommand = (
     cwd,
     env: {
       ...process.env,
+      FORCE_COLOR: '0',
       ...env,
     },
     encoding: 'utf-8',
