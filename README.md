@@ -71,8 +71,6 @@ Use `qnm` command without arguments to trigger an [`fzf`](https://github.com/jun
 
 ### -w, --why
 
-> currently only works if you installed with npm
-
 Add information regarding why this package was installed in the first place, by showing its dependent packages.
 
 ### -o , --open
