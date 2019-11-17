@@ -149,13 +149,18 @@ export default class Workspace {
   }
 
   listPackagesModuleOccurrences() {
-    return this.packages.map(
-      packageWorkspace =>
-        [packageWorkspace.name!, packageWorkspace.list()] as [
-          string,
-          Array<[string, Array<NodeModule>]>,
-        ],
-    );
+    return this.packages
+      .map(packageWorkspace => {
+        try {
+          return [packageWorkspace.name!, packageWorkspace.list()] as [
+            string,
+            Array<[string, Array<NodeModule>]>,
+          ];
+        } catch (error) {
+          return null;
+        }
+      })
+      .filter(isTruthy);
   }
 
   getModulesNames() {
