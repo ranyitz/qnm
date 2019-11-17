@@ -1,3 +1,3 @@
-const chalk = require('chalk');
+import chalk from 'chalk';
 
 chalk.level = 2;

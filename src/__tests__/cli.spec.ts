@@ -11,13 +11,14 @@ const runCommand = (
     cwd,
     env: {
       ...process.env,
+      FORCE_COLOR: '0',
       ...env,
     },
     encoding: 'utf-8',
   });
 
 describe('CLI', () => {
-  describe('qnm with no arguments', () => {
+  describe('qnm <module>]', () => {
     it('should show the version on a single module when called with a string', () => {
       const cwd = resolveFixture('single-module');
       const output = runCommand('test', { cwd });
@@ -49,6 +50,13 @@ describe('CLI', () => {
     it('should add dependents information when using thw -w option', () => {
       const cwd = resolveFixture('single-module');
       const output = runCommand('-w test', { cwd });
+
+      expect(output).toMatchSnapshot();
+    });
+
+    it('should work in monorepo and print subpackages modules', () => {
+      const cwd = resolveFixture('monorepo');
+      const output = runCommand('package-foo', { cwd });
 
       expect(output).toMatchSnapshot();
     });
@@ -84,6 +92,22 @@ describe('CLI', () => {
     it('should list dependencies in a yarn installed package and show "why" information', () => {
       const cwd = resolveFixture('yarn-install');
       const output = runCommand('list --why', { cwd });
+
+      expect(output).toMatchSnapshot();
+    });
+
+    it('should list a monorepo', () => {
+      const cwd = resolveFixture('monorepo');
+      const output = runCommand('list --why', { cwd });
+
+      expect(output).toMatchSnapshot();
+    });
+  });
+
+  describe('qnm match', () => {
+    it('should match in monorepo and print subpackages modules', () => {
+      const cwd = resolveFixture('monorepo');
+      const output = runCommand('match packa', { cwd });
 
       expect(output).toMatchSnapshot();
     });

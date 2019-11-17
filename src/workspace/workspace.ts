@@ -3,6 +3,8 @@ import path from 'path';
 import pkgDir from 'pkg-dir';
 import { PackageJson } from 'type-fest';
 import { parse as parseYarnLock } from '@yarnpkg/lockfile';
+import globby from 'globby';
+import { isTruthy } from '../utils';
 import ModulesMap from './modules-map';
 import NodeModule from './node-module';
 
@@ -13,15 +15,21 @@ type YarnLock = Record<
 
 export default class Workspace {
   root: string;
+  packages: Array<Workspace>;
   _modulesMap: ModulesMap | null;
   _packageJson: PackageJson | null;
+  _isYarn: boolean | null;
   _yarnLock: YarnLock | null;
+  _isMonorepo: boolean | null;
 
   constructor({ root }: { root: string }) {
     this.root = root;
     this._modulesMap = null;
     this._packageJson = null;
     this._yarnLock = null;
+    this._isYarn = null;
+    this._isMonorepo = null;
+    this.packages = [];
   }
 
   get modulesMap(): ModulesMap {
@@ -44,23 +52,38 @@ export default class Workspace {
     return this._packageJson;
   }
 
-  get yarnLock(): YarnLock | null {
+  get yarnLock(): YarnLock {
     const yarnLockPath = path.join(this.root, 'yarn.lock');
+    const rawYarnLock = fs.readFileSync(yarnLockPath, 'utf8');
+    const yarnLock = parseYarnLock(rawYarnLock).object as YarnLock;
+    this._yarnLock = yarnLock;
 
-    try {
-      const rawYarnLock = fs.readFileSync(yarnLockPath, 'utf8');
-      const yarnLock = parseYarnLock(rawYarnLock).object as YarnLock;
-      this._yarnLock = yarnLock;
-      return yarnLock;
-    } catch (e) {
-      console.warn(`cannot get "why" information for ${this.name}`);
-      console.warn(e);
-      return null;
-    }
+    return yarnLock;
   }
 
   get name() {
     return this.packageJson.name;
+  }
+
+  get isMonorepo(): boolean {
+    if (this._isMonorepo === null) {
+      const lernaJsonPath = path.join(this.root, 'lerna.json');
+      this._isMonorepo = fs.existsSync(lernaJsonPath);
+    }
+
+    return this._isMonorepo;
+  }
+
+  get isYarn(): boolean {
+    try {
+      if (this.yarnLock) {
+        this._isYarn = true;
+      }
+    } catch (error) {
+      this._isYarn = false;
+    }
+
+    return this._isYarn!;
   }
 
   loadPackageJson(): PackageJson {
@@ -87,8 +110,57 @@ export default class Workspace {
     }
   }
 
+  getPackagesModuleOccurrences(
+    packageName: string,
+  ): Array<[string, Array<NodeModule>]> {
+    return this.packages
+      .map(packageWorkspace => {
+        try {
+          return [
+            packageWorkspace.name,
+            packageWorkspace.modulesMap.getModuleOccurrences(packageName),
+          ] as [string, Array<NodeModule>];
+        } catch (error) {
+          return null;
+        }
+      })
+      .filter(isTruthy);
+  }
+
+  matchPackagesModuleOccurrences(
+    str: string,
+  ): Array<[string, Array<[string, Array<NodeModule>]>]> {
+    return this.packages
+      .map(packageWorkspace => {
+        try {
+          return [packageWorkspace.name, packageWorkspace.match(str)] as [
+            string,
+            Array<[string, Array<NodeModule>]>,
+          ];
+        } catch (error) {
+          return null;
+        }
+      })
+      .filter(isTruthy);
+  }
+
   list() {
     return Array.from(this.modulesMap);
+  }
+
+  listPackagesModuleOccurrences() {
+    return this.packages
+      .map(packageWorkspace => {
+        try {
+          return [packageWorkspace.name!, packageWorkspace.list()] as [
+            string,
+            Array<[string, Array<NodeModule>]>,
+          ];
+        } catch (error) {
+          return null;
+        }
+      })
+      .filter(isTruthy);
   }
 
   getModulesNames() {
@@ -115,6 +187,23 @@ export default class Workspace {
     return this.list().filter(([name]) => name.includes(str));
   }
 
+  loadMonorepoPackages(): void {
+    const lernaJsonPath = path.join(this.root, 'lerna.json');
+    const lernaJson = JSON.parse(fs.readFileSync(lernaJsonPath, 'utf8'));
+
+    // TODO - add yarn workspaces support
+    const packages = globby.sync(lernaJson.packages, {
+      absolute: true,
+      onlyDirectories: true,
+    });
+
+    packages.forEach(location => {
+      try {
+        this.packages.push(Workspace.loadSync(location));
+      } catch (error) {}
+    });
+  }
+
   static loadSync(cwd = process.cwd()): Workspace {
     const root = pkgDir.sync(cwd);
 
@@ -128,6 +217,12 @@ export default class Workspace {
       throw new Error('could not find node_modules directory');
     }
 
-    return new Workspace({ root });
+    const workspace = new Workspace({ root });
+
+    if (workspace.isMonorepo) {
+      workspace.loadMonorepoPackages();
+    }
+
+    return workspace;
   }
 }

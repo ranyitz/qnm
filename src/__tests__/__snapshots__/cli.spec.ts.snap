@@ -1,5 +1,51 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`CLI qnm <module>] should add dependents information when using the --why option 1`] = `
+"test
+└── 1.0.0 (devDependencies, npm install test)
+
+"
+`;
+
+exports[`CLI qnm <module>] should add dependents information when using the --why option on yarn installed package 1`] = `
+"import-from
+└── 3.0.0 (import-cwd)
+
+"
+`;
+
+exports[`CLI qnm <module>] should add dependents information when using thw -w option 1`] = `
+"test
+└── 1.0.0 (devDependencies, npm install test)
+
+"
+`;
+
+exports[`CLI qnm <module>] should show get matchs when using the match command 1`] = `
+"test
+└── 1.0.0
+
+"
+`;
+
+exports[`CLI qnm <module>] should show the version on a single module when called with a string 1`] = `
+"test
+└── 1.0.0
+
+"
+`;
+
+exports[`CLI qnm <module>] should work in monorepo and print subpackages modules 1`] = `
+"package-foo
+└── 1.0.0
+
+package-a
+└─┬ package-foo
+  └── 2.0.0
+
+"
+`;
+
 exports[`CLI qnm list should --disable-colors 1`] = `
 "[4manotherDependency[24m
 └── 1.0.0
@@ -48,81 +94,88 @@ exports[`CLI qnm list should --disable-colors 1`] = `
 "
 `;
 
+exports[`CLI qnm list should list a monorepo 1`] = `
+"package-bar
+└── 1.0.0
+
+package-baz
+└── 1.0.0
+
+package-foo
+└── 1.0.0
+
+package-a
+└─┬ package-foo
+  └── 2.0.0
+
+package-b
+└─┬ package-bar
+  └── 3.0.0
+
+"
+`;
+
 exports[`CLI qnm list should list dependencies in a yarn installed package and show "why" information 1`] = `
-"[4mimport-cwd[24m
-└── [37m3.0.0[39m
+"import-cwd
+└── 3.0.0
 
-[4mimport-from[24m
-└── [37m3.0.0[39m [33m(import-cwd)[39m
+import-from
+└── 3.0.0 (import-cwd)
 
-[4mresolve-from[24m
-└── [37m5.0.0[39m [33m(import-from)[39m
+resolve-from
+└── 5.0.0 (import-from)
 
 "
 `;
 
 exports[`CLI qnm list should show all modules in node_modules directory 1`] = `
-"[4m@scope/test[24m
-└── [37m1.0.0[39m
+"@scope/test
+└── 1.0.0
 
-[4manother[24m
-└── [37m1.0.0[39m
+another
+└── 1.0.0
 
-[4mtest[24m
-├── [37m1.0.0[39m
-└─┬ [90manother[39m
-  └── [37m1.0.0[39m
+test
+├── 1.0.0
+└─┬ another
+  └── 1.0.0
 
 "
 `;
 
 exports[`CLI qnm list should show modules mentioned in package.json 1`] = `
-"[4mdependency1[24m
-└── [37m1.0.0[39m
+"dependency1
+└── 1.0.0
 
-[4mdependency2[24m
-└── [37m1.0.0[39m
+dependency2
+└── 1.0.0
 
-[4mdevDependency1[24m
-└── [37m1.0.0[39m
+devDependency1
+└── 1.0.0
 
-[4mdevDependency2[24m
-└── [37m1.0.0[39m
-
-"
-`;
-
-exports[`CLI qnm with no arguments should add dependents information when using the --why option 1`] = `
-"[4mtest[24m
-└── [37m1.0.0[39m [33m(devDependencies, npm install test)[39m
+devDependency2
+└── 1.0.0
 
 "
 `;
 
-exports[`CLI qnm with no arguments should add dependents information when using the --why option on yarn installed package 1`] = `
-"[4mimport-from[24m
-└── [37m3.0.0[39m [33m(import-cwd)[39m
+exports[`CLI qnm match should match in monorepo and print subpackages modules 1`] = `
+"package-bar
+└── 1.0.0
 
-"
-`;
+package-baz
+└── 1.0.0
 
-exports[`CLI qnm with no arguments should add dependents information when using thw -w option 1`] = `
-"[4mtest[24m
-└── [37m1.0.0[39m [33m(devDependencies, npm install test)[39m
+package-foo
+└── 1.0.0
 
-"
-`;
+package-a
+└─┬ package-foo
+  └── 2.0.0
 
-exports[`CLI qnm with no arguments should show get matchs when using the match command 1`] = `
-"[4m[35mte[39mst[24m
-└── [37m1.0.0[39m
-
-"
-`;
-
-exports[`CLI qnm with no arguments should show the version on a single module when called with a string 1`] = `
-"[4mtest[24m
-└── [37m1.0.0[39m
+package-b
+└─┬ package-bar
+  └── 3.0.0
 
 "
 `;

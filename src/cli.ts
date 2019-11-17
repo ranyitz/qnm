@@ -108,7 +108,9 @@ try {
     homepage,
   };
 
-  if (program.rawArgs.length < 3) {
+  if (
+    program.rawArgs.filter((arg: string) => !arg.startsWith('--')).length < 3
+  ) {
     fuzzySearchAction(workspace, options);
   } else {
     const firstArg = program.rawArgs[2];
