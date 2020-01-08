@@ -199,13 +199,13 @@ export default class Workspace {
 
     packages.forEach(location => {
       try {
-        this.packages.push(Workspace.loadSync(location));
+        this.packages.push(Workspace.loadSync(location, false));
       } catch (error) {}
     });
   }
 
-  static loadSync(cwd = process.cwd()): Workspace {
-    const root = pkgDir.sync(cwd);
+  static loadSync(cwd = process.cwd(), traverse = true): Workspace {
+    const root = traverse ? pkgDir.sync(cwd) : cwd;
 
     if (!root) {
       throw new Error('could not identify package directory');
