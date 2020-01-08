@@ -1,7 +1,10 @@
 # Changelog
 
+## 1.1.0 (Jan 8, 2020)
+* [#45](https://github.com/ranyitz/qnm/pull/45) Add `yarn workspaces` support
+
 ## 1.0.2 (Jan 8, 2020)
-* Fix a bug when running `qnm` in a monorepo doesn't return
+* [#44](https://github.com/ranyitz/qnm/pull/44) Fix a bug when running `qnm` in a monorepo doesn't return
 
 ## 1.0.1 (Nov 16, 2019)
 * Fix a bug when `qnm -w` (single dash option) didn't work
