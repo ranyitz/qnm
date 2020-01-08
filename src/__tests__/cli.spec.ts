@@ -60,6 +60,13 @@ describe('CLI', () => {
 
       expect(output).toMatchSnapshot();
     });
+
+    it.only('should work in monorepo with yarn workspaces', () => {
+      const cwd = resolveFixture('monorepo-with-workspaces');
+      const output = runCommand('package-foo', { cwd });
+
+      expect(output).toMatchSnapshot();
+    });
   });
 
   describe('qnm list', () => {

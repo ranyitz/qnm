@@ -8,6 +8,11 @@ import { isTruthy } from '../utils';
 import ModulesMap from './modules-map';
 import NodeModule from './node-module';
 
+type Workspaces =
+  | Array<string>
+  | { packages: Array<string> | undefined }
+  | undefined;
+
 type YarnLock = Record<
   string,
   { version: string; dependencies: Record<string, string> }
@@ -191,17 +196,33 @@ export default class Workspace {
     const lernaJsonPath = path.join(this.root, 'lerna.json');
     const lernaJson = JSON.parse(fs.readFileSync(lernaJsonPath, 'utf8'));
 
-    // TODO - add yarn workspaces support
-    const packages = globby.sync(lernaJson.packages, {
-      absolute: true,
-      onlyDirectories: true,
-    });
+    let packages = lernaJson.packages;
 
-    packages.forEach(location => {
-      try {
-        this.packages.push(Workspace.loadSync(location, false));
-      } catch (error) {}
-    });
+    if (lernaJson.useWorkspaces === true) {
+      const workspaces = this.packageJson.workspaces as Workspaces;
+
+      if (!Array.isArray(workspaces)) {
+        packages = workspaces?.packages;
+      } else {
+        packages = workspaces;
+      }
+    }
+
+    if (!packages) {
+      console.warn('No packages found for monorepo');
+      console.warn(`packages data wasn't loaded`);
+    }
+
+    globby
+      .sync(packages, {
+        absolute: true,
+        onlyDirectories: true,
+      })
+      .forEach(location => {
+        try {
+          this.packages.push(Workspace.loadSync(location, false));
+        } catch (error) {}
+      });
   }
 
   static loadSync(cwd = process.cwd(), traverse = true): Workspace {
