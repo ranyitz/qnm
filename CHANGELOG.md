@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.2 (Jan 8, 2020)
+* Fix a bug when running `qnm` in a monorepo doesn't return
+
 ## 1.0.1 (Nov 16, 2019)
 * Fix a bug when `qnm -w` (single dash option) didn't work
 
