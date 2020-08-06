@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="https://gist.githubusercontent.com/ranyitz/ede5da04d74ccd9d40fc8a804d9a7a1a/raw/ec90fd0b74827aef834d4819ba2243b61a5dd022/qnm-logo.svg" alt="qnm-logo"/>
+  <img src="https://gist.githubusercontent.com/ranyitz/ede5da04d74ccd9d40fc8a804d9a7a1a/raw/644d69caaa3145ede932a67c86b27f1c051eb3c6/qnm-logo.svg" alt="qnm-logo"/>
 </p>
 
 <p align="center">:mag: A simple cli utility for querying the <code>node_modules</code> directory</p>
