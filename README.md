@@ -6,13 +6,13 @@
 <p align="center">:mag: A simple cli utility for querying the <code>node_modules</code> directory</p>
 <p align="center">
   <a href="https://circleci.com/gh/ranyitz/qnm">
-   <img src="https://img.shields.io/circleci/build/github/ranyitz/qnm?token=44b1fb1aa4b5bd58b977bda99d94d1be137ecbc3&style=for-the-badge&labelColor=000000" alt="Build Status" />
+   <img src="https://img.shields.io/circleci/build/github/ranyitz/qnm?token=44b1fb1aa4b5bd58b977bda99d94d1be137ecbc3&style=for-the-badge" alt="Build Status" />
   </a>
   <a aria-label="NPM version" href="https://www.npmjs.com/package/qnm">
-    <img alt="NPM version" src="https://img.shields.io/npm/v/qnm.svg?style=for-the-badge&labelColor=000000">
+    <img alt="NPM version" src="https://img.shields.io/npm/v/qnm.svg?style=for-the-badge">
   </a>
   <a aria-label="License" href="https://github.com/ranyitz/qnm/blob/master/LICENSE">
-    <img alt="License" src="https://img.shields.io/npm/l/qnm.svg?style=for-the-badge&labelColor=000000">
+    <img alt="License" src="https://img.shields.io/npm/l/qnm.svg?style=for-the-badge">
   </a>
   <p align="center">
     <img src="./assets/fuzzy-search.gif" alt="fuzzy-search" width="400px" height="400px" />
