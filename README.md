@@ -1,12 +1,23 @@
-# qnm
 
-> query node_modules
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/11733036/89578687-34479d00-d83b-11ea-836c-0d74d3eaa314.jpg" alt="qnm-logo"/>
+</p>
 
-:mag: A simple cli utility for querying the `node_modules` directory
-
-[![Build Status](https://circleci.com/gh/ranyitz/qnm/tree/master.svg?style=shield&circle-token=44b1fb1aa4b5bd58b977bda99d94d1be137ecbc3)](https://circleci.com/gh/ranyitz/qnm)
-
-<img src="./assets/fuzzy-search.gif" alt="fuzzy-search" width="400px" height="400px" />
+<p align="center">:mag: A simple cli utility for querying the <code>node_modules</code> directory</p>
+<p align="center">
+  <a href="https://circleci.com/gh/ranyitz/qnm">
+   <img src="https://img.shields.io/circleci/build/github/ranyitz/qnm?token=44b1fb1aa4b5bd58b977bda99d94d1be137ecbc3&style=for-the-badge&labelColor=000000" alt="Build Status" />
+  </a>
+  <a aria-label="NPM version" href="https://www.npmjs.com/package/next">
+    <img alt="" src="https://img.shields.io/npm/v/qnm.svg?style=for-the-badge&labelColor=000000">
+  </a>
+  <a aria-label="License" href="https://github.com/vercel/next.js/blob/canary/license.md">
+    <img alt="" src="https://img.shields.io/npm/l/qnm.svg?style=for-the-badge&labelColor=000000">
+  </a>
+  <p align="center">
+    <img src="./assets/fuzzy-search.gif" alt="fuzzy-search" width="400px" height="400px" />
+  </p>
+</p>
 
 ## Why?
 
@@ -22,6 +33,7 @@ _qnm_ aims to get this information **fast** and tries to filter only the importa
 *   :sparkles: Interactive fuzzy-search
 *   :abc: Match all packages with a specific string
 *   :interrobang: Explain why a package was installed
+*   :books: Supports monorepos
 
 ## Installation
 
