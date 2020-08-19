@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.1.1 (Jan 8, 2020)
+* [#52](https://github.com/ranyitz/qnm/pull/52) Do not throw in case module wasn't found on the fs when performing `qnm --why` on a yarn installed package.
+
 ## 1.1.0 (Jan 8, 2020)
 * [#45](https://github.com/ranyitz/qnm/pull/45) Add `yarn workspaces` support
 
