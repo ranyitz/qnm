@@ -61,9 +61,13 @@ export default class ModulesMap extends Map<string, Array<NodeModule>> {
         const DependencyModuleOccurrences = this.get(dependency);
 
         if (!DependencyModuleOccurrences) {
-          throw new Error(
+          console.error(
             `The module ${dependency} specified in yarn.lock but is not on the file system`,
           );
+
+          // Do not fail in this case, maybe the user is intereseted in a different module
+          // and this information doesn't interesting to them
+          return;
         }
 
         // We're only interesetd in requiredBy if the module is on the root
