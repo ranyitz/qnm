@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import chalk from 'chalk';
 import NodeModule from './node-module';
 import Workspace from './workspace';
 import flattenDeep from 'lodash/flattenDeep';
@@ -62,7 +63,9 @@ export default class ModulesMap extends Map<string, Array<NodeModule>> {
 
         if (!DependencyModuleOccurrences) {
           console.error(
-            `The module ${dependency} specified in yarn.lock but is not on the file system`,
+            chalk.dim(
+              `Warning: The module ${dependency} specified in yarn.lock but is not on the file system`,
+            ),
           );
 
           // Do not fail in this case, maybe the user is intereseted in a different module
