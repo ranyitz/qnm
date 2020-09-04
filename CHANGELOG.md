@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.2.0 (Jan 8, 2020)
+* [#53](https://github.com/ranyitz/qnm/pull/53) Add symlink indication.
+
+```
+❯ qnm @jest/console
+@jest/console
+├── 26.3.0 -> ../../packages/jest-console
+├─┬ jest-silent-reporter
+│ └── 24.9.0
+├─┬ metro
+│ └── 24.9.0
+└─┬ metro-core
+  └── 24.9.0
+  ```
+
 ## 1.1.1 (Jan 8, 2020)
 * [#52](https://github.com/ranyitz/qnm/pull/52) Do not throw in case module wasn't found on the fs when performing `qnm --why` on a yarn installed package.
 
