@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { PackageJson } from 'type-fest';
+import { readLinkSilent } from '../utils';
 import Workspace from './workspace';
 
 export default class NodeModule {
@@ -10,6 +11,7 @@ export default class NodeModule {
   _packageJson: PackageJson | null;
   workspace: Workspace;
   _yarnRequiredBy: Set<string> | null;
+  _symlink: string | null;
 
   constructor({
     nodeModulesPath,
@@ -28,6 +30,7 @@ export default class NodeModule {
     this.workspace = workspace;
     this._packageJson = null;
     this._yarnRequiredBy = null;
+    this._symlink = null;
   }
 
   get packageJson(): PackageJson {
@@ -48,6 +51,15 @@ export default class NodeModule {
 
   get path() {
     return path.join(this.nodeModulesPath, this.name);
+  }
+
+  get symlink() {
+    if (!this._symlink) {
+      const modulePath = path.join(this.nodeModulesPath, this.name);
+      this._symlink = readLinkSilent(modulePath);
+    }
+
+    return this._symlink;
   }
 
   get requiredBy(): Array<string> {
@@ -105,15 +117,13 @@ export default class NodeModule {
   }
 
   load(): PackageJson {
-    const packageJsonPath = path.resolve(
-      this.nodeModulesPath,
-      this.name,
-      'package.json',
-    );
+    const modulePath = path.join(this.nodeModulesPath, this.name);
+    const packageJsonPath = path.join(modulePath, 'package.json');
 
     try {
       const pkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
       this._packageJson = pkg;
+
       return pkg;
     } catch (error) {
       if (error.code === 'ENOENT') {

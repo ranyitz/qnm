@@ -20,7 +20,8 @@ type TreeNode = { label: string; nodes: Array<TreeNode> } | string;
 const buildWithAncestors = (m: NodeModule, { why, noColor }: CliOptions) => {
   const whyInfo = why ? getWhyInfo(m) : '';
   const version = noColor ? m.version : renderVersion(m.name, m.version);
-  const information = version + whyInfo;
+  const symlink = m.symlink ? chalk.magenta(` -> ${m.symlink}`) : '';
+  const information = version + symlink + whyInfo;
 
   let hierarchy: Array<TreeNode> = [information];
 
