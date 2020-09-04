@@ -21,6 +21,13 @@ exports[`CLI qnm <module>] should add dependents information when using thw -w o
 "
 `;
 
+exports[`CLI qnm <module>] should show an indication in case there is a symlink 1`] = `
+"test
+└── 1.0.0 -> ../../symlink-origin/node_modules/test
+
+"
+`;
+
 exports[`CLI qnm <module>] should show get matchs when using the match command 1`] = `
 "test
 └── 1.0.0

@@ -54,6 +54,13 @@ describe('CLI', () => {
       expect(output).toMatchSnapshot();
     });
 
+    it('should show an indication in case there is a symlink', () => {
+      const cwd = resolveFixture('symlink');
+      const output = runCommand('test', { cwd });
+
+      expect(output).toMatchSnapshot();
+    });
+
     it('should work in monorepo and print subpackages modules', () => {
       const cwd = resolveFixture('monorepo');
       const output = runCommand('package-foo', { cwd });
@@ -61,7 +68,7 @@ describe('CLI', () => {
       expect(output).toMatchSnapshot();
     });
 
-    it.only('should work in monorepo with yarn workspaces', () => {
+    it('should work in monorepo with yarn workspaces', () => {
       const cwd = resolveFixture('monorepo-with-workspaces');
       const output = runCommand('package-foo', { cwd });
 
