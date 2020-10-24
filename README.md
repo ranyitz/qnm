@@ -81,10 +81,6 @@ Use `qnm` command without arguments to trigger an [`fzf`](https://github.com/jun
 
 ## Options
 
-### -w, --why
-
-Add information regarding why this package was installed in the first place, by showing its dependent packages.
-
 ### -o , --open
 
 Open the module's `package.json` file with the default editor.

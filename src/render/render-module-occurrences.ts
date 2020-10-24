@@ -17,8 +17,8 @@ const getWhyInfo = (m: NodeModule) => {
 
 type TreeNode = { label: string; nodes: Array<TreeNode> } | string;
 
-const buildWithAncestors = (m: NodeModule, { why, noColor }: CliOptions) => {
-  const whyInfo = why ? getWhyInfo(m) : '';
+const buildWithAncestors = (m: NodeModule, { noColor }: CliOptions) => {
+  const whyInfo = getWhyInfo(m);
   const version = noColor ? m.version : renderVersion(m.name, m.version);
   const symlink = m.symlink ? chalk.magenta(` -> ${m.symlink}`) : '';
   const information = version + symlink + whyInfo;
@@ -39,13 +39,12 @@ const buildWithAncestors = (m: NodeModule, { why, noColor }: CliOptions) => {
 
 export default (
   moduleOccurrences: Array<NodeModule>,
-  { match, why, noColor }: CliOptions = {},
-  monorepoPackageName?: string,
+  { match, noColor }: CliOptions = {},
+  monorepoPackageName?: string
 ) => {
   const moduleName = highlightMatch(moduleOccurrences[0].name, match!);
   const buildedOccurrences = moduleOccurrences.map(m =>
     buildWithAncestors(m, {
-      why,
       noColor,
     }),
   );

@@ -19,37 +19,23 @@ const runCommand = (
 
 describe('CLI', () => {
   describe('qnm <module>]', () => {
-    it('should show the version on a single module when called with a string', () => {
+    it('should show the version and dependents info on a single module when called with a string', () => {
       const cwd = resolveFixture('single-module');
       const output = runCommand('test', { cwd });
 
       expect(output).toMatchSnapshot();
     });
 
-    it('should show get matchs when using the match command', () => {
+    it('should show get matches when using the match command', () => {
       const cwd = resolveFixture('single-module');
       const output = runCommand('match te', { cwd });
 
       expect(output).toMatchSnapshot();
     });
 
-    it('should add dependents information when using the --why option', () => {
-      const cwd = resolveFixture('single-module');
-      const output = runCommand('--why test', { cwd });
-
-      expect(output).toMatchSnapshot();
-    });
-
-    it('should add dependents information when using the --why option on yarn installed package', () => {
+    it('should add dependents information on yarn installed package', () => {
       const cwd = resolveFixture('yarn-install');
-      const output = runCommand('--why import-from', { cwd });
-
-      expect(output).toMatchSnapshot();
-    });
-
-    it('should add dependents information when using thw -w option', () => {
-      const cwd = resolveFixture('single-module');
-      const output = runCommand('-w test', { cwd });
+      const output = runCommand('import-from', { cwd });
 
       expect(output).toMatchSnapshot();
     });
@@ -105,14 +91,14 @@ describe('CLI', () => {
 
     it('should list dependencies in a yarn installed package and show "why" information', () => {
       const cwd = resolveFixture('yarn-install');
-      const output = runCommand('list --why', { cwd });
+      const output = runCommand('list', { cwd });
 
       expect(output).toMatchSnapshot();
     });
 
     it('should list a monorepo', () => {
       const cwd = resolveFixture('monorepo');
-      const output = runCommand('list --why', { cwd });
+      const output = runCommand('list', { cwd });
 
       expect(output).toMatchSnapshot();
     });

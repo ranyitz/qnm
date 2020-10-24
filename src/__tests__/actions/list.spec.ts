@@ -17,13 +17,4 @@ describe('list', () => {
 
     expect(output).toMatchSnapshot();
   });
-
-  it('should show why info', () => {
-    const workspace = resolveWorkspace('single-module');
-    const output = listAction(workspace, {
-      why: true,
-    });
-
-    expect(output).toMatchSnapshot();
-  });
 });

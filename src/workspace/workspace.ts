@@ -58,12 +58,14 @@ export default class Workspace {
   }
 
   get yarnLock(): YarnLock {
-    const yarnLockPath = path.join(this.root, 'yarn.lock');
-    const rawYarnLock = fs.readFileSync(yarnLockPath, 'utf8');
-    const yarnLock = parseYarnLock(rawYarnLock).object as YarnLock;
-    this._yarnLock = yarnLock;
+    if (!this._yarnLock) {
+      const yarnLockPath = path.join(this.root, 'yarn.lock');
+      const rawYarnLock = fs.readFileSync(yarnLockPath, 'utf8');
+      const yarnLock = parseYarnLock(rawYarnLock).object as YarnLock;
+      this._yarnLock = yarnLock;
+    }
 
-    return yarnLock;
+    return this._yarnLock;
   }
 
   get name() {

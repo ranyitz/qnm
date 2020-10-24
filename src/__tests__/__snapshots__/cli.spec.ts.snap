@@ -1,43 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CLI qnm <module>] should add dependents information when using the --why option 1`] = `
-"test
-└── 1.0.0 (devDependencies, npm install test)
-
-"
-`;
-
-exports[`CLI qnm <module>] should add dependents information when using the --why option on yarn installed package 1`] = `
+exports[`CLI qnm <module>] should add dependents information on yarn installed package 1`] = `
 "import-from
 └── 3.0.0 (import-cwd)
 
 "
 `;
 
-exports[`CLI qnm <module>] should add dependents information when using thw -w option 1`] = `
+exports[`CLI qnm <module>] should show an indication in case there is a symlink 1`] = `
+"test
+└── 1.0.0 -> ../../symlink-origin/node_modules/test (devDependencies, npm install test)
+
+"
+`;
+
+exports[`CLI qnm <module>] should show get matches when using the match command 1`] = `
 "test
 └── 1.0.0 (devDependencies, npm install test)
 
 "
 `;
 
-exports[`CLI qnm <module>] should show an indication in case there is a symlink 1`] = `
+exports[`CLI qnm <module>] should show the version and dependents info on a single module when called with a string 1`] = `
 "test
-└── 1.0.0 -> ../../symlink-origin/node_modules/test
-
-"
-`;
-
-exports[`CLI qnm <module>] should show get matchs when using the match command 1`] = `
-"test
-└── 1.0.0
-
-"
-`;
-
-exports[`CLI qnm <module>] should show the version on a single module when called with a string 1`] = `
-"test
-└── 1.0.0
+└── 1.0.0 (devDependencies, npm install test)
 
 "
 `;
