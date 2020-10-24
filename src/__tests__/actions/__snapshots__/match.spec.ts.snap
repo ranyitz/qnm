@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`match should disable colors 1`] = `
-"[4m[35manot[39mher[24m
-└── 1.0.0
+"[4m[35mtes[39mt[24m
+└── 1.0.0 [33m(devDependencies, npm install test)[39m
 "
 `;
 
@@ -13,9 +13,3 @@ exports[`match should print the matched modules according to passed string 1`] =
 `;
 
 exports[`match should show a message when no module has matched the provided string 1`] = `"Could not find any module that matches \\"bla\\""`;
-
-exports[`match should show why info 1`] = `
-"[4m[35mtes[39mt[24m
-└── [37m1.0.0[39m [33m(devDependencies, npm install test)[39m
-"
-`;

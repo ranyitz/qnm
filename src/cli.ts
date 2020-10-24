@@ -18,7 +18,6 @@ const pkg = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf-8'));
 updateNotifier({ pkg }).notify();
 
 export type CliOptions = {
-  why?: boolean;
   deps?: boolean;
   noColor?: boolean;
   open?: boolean;
@@ -31,10 +30,6 @@ try {
     .version(pkg.version)
     //@ts-ignore
     .arguments('[module]', 'prints module version from the node_modules')
-    .option(
-      '-w, --why',
-      'add information regarding why this package was installed',
-    )
     .option('-d, --debug', 'see full error messages, mostly for debugging')
     .option('-o, --open', 'open editor at the package.json of a chosen module')
     .option('--disable-colors', 'minimize color and styling usage in output')
@@ -55,21 +50,16 @@ try {
     .description('list all node_modules with their versions')
     .option(
       '--deps',
-      'list dependencies and devDependencies based on package.json.',
+      'list dependencies and devDependencies based on package.json.'
     )
-    .option(
-      '-w, --why',
-      'add information regarding why packages were installed',
-    )
-    .action(cmd => {
-      const { disableColors, why } = program;
+    .action((cmd) => {
+      const { disableColors } = program;
       const workspace = Workspace.loadSync();
 
       console.log(
         listAction(workspace, {
           deps: cmd.deps,
           noColor: disableColors,
-          why,
         }),
       );
     });
@@ -77,17 +67,11 @@ try {
   program
     .command('match <string>')
     .description('prints modules which matches the provided string')
-    .option(
-      '-w, --why',
-      'add information regarding why packages were installed',
-    )
-    .action(string => {
-      const { disableColors, why } = program;
+    .action((string) => {
+      const { disableColors } = program;
       const workspace = Workspace.loadSync();
 
-      console.log(
-        matchAction(workspace, string, { noColor: disableColors, why }),
-      );
+      console.log(matchAction(workspace, string, { noColor: disableColors }));
     });
 
   program.parse(process.argv);
@@ -98,10 +82,9 @@ try {
 
   const workspace = Workspace.loadSync();
 
-  const { why, deps, disableColors, open, homepage } = program;
+  const { deps, disableColors, open, homepage } = program;
 
   const options: CliOptions = {
-    why,
     deps,
     noColor: disableColors,
     open,

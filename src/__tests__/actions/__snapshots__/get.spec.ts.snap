@@ -18,7 +18,7 @@ exports[`get should get the version of a module in depth 1`] = `
 
 exports[`get should get the version of a single module 1`] = `
 "[4mtest[24m
-└── [37m1.0.0[39m
+└── [37m1.0.0[39m [33m(devDependencies, npm install test)[39m
 "
 `;
 
@@ -30,7 +30,7 @@ exports[`get should get the version of a single module when in a scoped package 
 
 exports[`get should get the version of a single module when not starting at the root 1`] = `
 "[4mtest[24m
-└── [37m1.0.0[39m
+└── [37m1.0.0[39m [33m(devDependencies, npm install test)[39m
 "
 `;
 

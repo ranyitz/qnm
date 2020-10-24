@@ -10,18 +10,9 @@ describe('match', () => {
   });
 
   it('should disable colors', () => {
-    const workspace = resolveWorkspace('mix-modules');
-    const output = matchAction(workspace, 'anot', {
-      noColor: true,
-    });
-
-    expect(output).toMatchSnapshot();
-  });
-
-  it('should show why info', () => {
     const workspace = resolveWorkspace('single-module');
     const output = matchAction(workspace, 'tes', {
-      why: true,
+      noColor: true,
     });
 
     expect(output).toMatchSnapshot();
