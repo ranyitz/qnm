@@ -1,9 +1,9 @@
+import isEmpty from 'lodash/isEmpty';
 import NotMatchModuleError from '../errors/not-match-module-error';
 import renderModuleList from '../render/render-module-list';
 import { renderMonorepoList } from '../render/render-monorepo';
 import Workspace from '../workspace/workspace';
 import { CliOptions } from '../cli';
-import isEmpty from 'lodash/isEmpty';
 
 export default (
   workspace: Workspace,

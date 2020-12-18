@@ -6,13 +6,16 @@ export default (preDefinedCommands: Array<string>) => {
 
   tab.on(
     'qnm',
-    (data: { words: number }, done: (a?: null, b?: Array<string>) => {}) => {
+    (
+      data: { words: number },
+      done: (a?: null, b?: Array<string>) => unknown,
+    ) => {
       if (data.words !== 1) {
         return done();
       }
 
       const tabtabCommands = preDefinedCommands.map(
-        command => `${command}:command`,
+        (command) => `${command}:command`,
       );
 
       try {
