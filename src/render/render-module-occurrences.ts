@@ -1,6 +1,6 @@
 import chalk from 'chalk';
-import archy from 'archy';
 import isEmpty from 'lodash/isEmpty';
+import archy from 'archy';
 import NodeModule from '../workspace/node-module';
 import { CliOptions } from '../cli';
 import renderVersion from './render-version';
