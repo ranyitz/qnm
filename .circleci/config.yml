@@ -36,9 +36,9 @@ jobs:
       - run: yarn build
       - run: yarn test
 
-  test-node-15:
+  test-node-latest:
     docker:
-      - image: circleci/node:14
+      - image: circleci/node:latest
     steps:
       - checkout
       - run: yarn
@@ -53,4 +53,4 @@ workflows:
       - test-node-10
       - test-node-12
       - test-node-14
-      - test-node-15
+      - test-node-latest
