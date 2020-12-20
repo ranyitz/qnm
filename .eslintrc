@@ -8,10 +8,7 @@
     }
   },
   "rules": {
-    "import/no-extraneous-dependencies": "error",
-    "array-callback-return": "off",
-    "react-hooks/exhaustive-deps": "off",
-    "no-shadow": "off"
+    "import/no-extraneous-dependencies": "error"
   },
   "settings": {
     "import/resolver": {
@@ -30,11 +27,7 @@
           "error",
           {"argsIgnorePattern": "^_"}
         ],
-        "import/order": "error",
-        "no-dupe-class-members": "off",
-        "no-unused-vars": "off",
-        "no-useless-constructor": "off",
-        "default-case": "off"
+        "import/order": "error"
     }
   }]
 }

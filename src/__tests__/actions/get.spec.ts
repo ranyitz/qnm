@@ -4,9 +4,9 @@ jest.mock('prompts', () => {
 });
 
 import open from 'open';
+import prompts from 'prompts';
 import getAction from '../../actions/get';
 import { resolveWorkspace } from '../utils';
-import prompts from 'prompts';
 
 describe('get', () => {
   it('should get the version of a single module', () => {

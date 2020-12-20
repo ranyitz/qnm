@@ -1,9 +1,9 @@
 import fs from 'fs';
 import path from 'path';
 import chalk from 'chalk';
+import flattenDeep from 'lodash/flattenDeep';
 import NodeModule from './node-module';
 import Workspace from './workspace';
-import flattenDeep from 'lodash/flattenDeep';
 
 const isNotHiddenDirectory = (dirname: string) => !dirname.startsWith('.');
 const isScope = (dirname: string) => dirname.startsWith('@');
@@ -53,12 +53,14 @@ export default class ModulesMap extends Map<string, Array<NodeModule>> {
     }
 
     // Assign requiredBy using yarn lock
-    Object.keys(yarnLock).forEach(moduleAndVerison => {
+    Object.keys(yarnLock).forEach((moduleAndVerison) => {
       const moduleDependencies = yarnLock[moduleAndVerison].dependencies;
 
-      if (!moduleDependencies) return;
+      if (!moduleDependencies) {
+        return;
+      }
 
-      Object.keys(moduleDependencies).forEach(dependency => {
+      Object.keys(moduleDependencies).forEach((dependency) => {
         const DependencyModuleOccurrences = this.get(dependency);
 
         if (!DependencyModuleOccurrences) {
@@ -74,7 +76,7 @@ export default class ModulesMap extends Map<string, Array<NodeModule>> {
         }
 
         // We're only interesetd in requiredBy if the module is on the root
-        DependencyModuleOccurrences.forEach(nodeModule => {
+        DependencyModuleOccurrences.forEach((nodeModule) => {
           if (!nodeModule.parent) {
             const moduleName = moduleAndVerison.slice(
               0,
@@ -97,7 +99,7 @@ export default class ModulesMap extends Map<string, Array<NodeModule>> {
         workspaceDependencies &&
         Object.keys(workspaceDependencies).includes(moduleName)
       ) {
-        moduleOccurrences.forEach(nodeModule => {
+        moduleOccurrences.forEach((nodeModule) => {
           // We're only interesetd in requiredBy if the module is on the root
           if (!nodeModule.parent) {
             nodeModule.addYarnRequiredByDependency('/');
@@ -109,7 +111,7 @@ export default class ModulesMap extends Map<string, Array<NodeModule>> {
         workspaceDevDependencies &&
         Object.keys(workspaceDevDependencies).includes(moduleName)
       ) {
-        moduleOccurrences.forEach(nodeModule => {
+        moduleOccurrences.forEach((nodeModule) => {
           // We're only interesetd in requiredBy if the module is on the root
           if (!nodeModule.parent) {
             nodeModule.addYarnRequiredByDependency('#DEV:/');
@@ -120,7 +122,7 @@ export default class ModulesMap extends Map<string, Array<NodeModule>> {
   }
 
   static loadSync(cwd: string, workspace: Workspace): ModulesMap {
-    const modulesMap = new ModulesMap({ root: cwd, workspace: workspace });
+    const modulesMap = new ModulesMap({ root: cwd, workspace });
 
     function traverseNodeModules(root: string, parent?: NodeModule) {
       const nodeModulesPath = path.resolve(root, 'node_modules');
@@ -131,13 +133,13 @@ export default class ModulesMap extends Map<string, Array<NodeModule>> {
           .filter(isNotHiddenDirectory);
 
         flattenDeep(
-          modulesNames.map(name => {
+          modulesNames.map((name) => {
             if (isScope(name)) {
               const subScopeModules = fs.readdirSync(
                 path.join(nodeModulesPath, name),
               );
 
-              return subScopeModules.map(subName => {
+              return subScopeModules.map((subName) => {
                 const fullName = path.join(name, subName);
                 const nodeModule = new NodeModule({
                   nodeModulesPath,
@@ -163,7 +165,7 @@ export default class ModulesMap extends Map<string, Array<NodeModule>> {
 
             return nodeModule;
           }),
-        ).forEach(nodeModule =>
+        ).forEach((nodeModule) =>
           traverseNodeModules(nodeModule.path, nodeModule),
         );
       }

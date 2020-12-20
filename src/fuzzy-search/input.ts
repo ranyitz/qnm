@@ -1,4 +1,4 @@
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 import { ReadStream } from 'tty';
 import chalk from 'chalk';
 import { windows, unix } from './raw-key-codes';
@@ -14,14 +14,16 @@ export default class Input extends EventEmitter {
     this._value = [];
     this.cursorPos = 0;
 
-    stdin.on('error', e => {
+    stdin.on('error', (e) => {
       this.end();
       // eslint-disable-next-line no-console
       console.error(e);
     });
 
     stdin.setRawMode(true);
-    if (!isWin) stdin.setEncoding('utf8');
+    if (!isWin) {
+      stdin.setEncoding('utf8');
+    }
 
     stdin.on('data', this.onKeyPress.bind(this));
   }

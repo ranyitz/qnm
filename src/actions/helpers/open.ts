@@ -1,9 +1,9 @@
 import path from 'path';
 import open from 'open';
 import chalk from 'chalk';
+import prompts from 'prompts';
 import NodeModule from '../../workspace/node-module';
 import { clearTerminal } from './terminal';
-import prompts from 'prompts';
 
 const openOptions = { wait: false };
 

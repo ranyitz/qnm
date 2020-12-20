@@ -1,7 +1,8 @@
 /* eslint-disable no-console */
 import fs from 'fs';
 import { spawn } from 'child_process';
-import program, { Command } from 'commander';
+import program from 'commander';
+import updateNotifier from 'update-notifier';
 import { clearTerminal } from './actions/helpers/terminal';
 import Workspace from './workspace/workspace';
 import setupCompletions from './completions/setup-completions';
@@ -10,7 +11,6 @@ import getAction from './actions/get';
 import listAction from './actions/list';
 import fuzzySearchAction from './actions/fuzzy-search';
 import handleError from './handler-error';
-import updateNotifier from 'update-notifier';
 
 const pkgJsonPath = require.resolve('../package.json');
 const pkg = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf-8'));
@@ -26,14 +26,21 @@ export type CliOptions = {
 };
 
 try {
+  // global program options goes here
   program
-    .version(pkg.version)
-    //@ts-ignore
-    .arguments('[module]', 'prints module version from the node_modules')
+    .version(pkg.version, '-v, --version', 'output the current version')
     .option('-d, --debug', 'see full error messages, mostly for debugging')
     .option('-o, --open', 'open editor at the package.json of a chosen module')
     .option('--disable-colors', 'minimize color and styling usage in output')
     .option('--homepage', "open module's homepage using the default browser");
+
+  program
+    .command('default', { isDefault: true })
+    .allowUnknownOption()
+    .arguments('[module]')
+    .description('prints module version from the node_modules', {
+      module: 'name of the npm package to search for',
+    });
 
   program
     .command('install-completions')
@@ -42,7 +49,7 @@ try {
       const tabtabCliPath = require.resolve('tabtab/src/cli');
       clearTerminal();
 
-      return spawn('node', [tabtabCliPath, 'install'], { stdio: 'inherit' });
+      spawn('node', [tabtabCliPath, 'install'], { stdio: 'inherit' });
     });
 
   program
@@ -50,12 +57,11 @@ try {
     .description('list all node_modules with their versions')
     .option(
       '--deps',
-      'list dependencies and devDependencies based on package.json.'
+      'list dependencies and devDependencies based on package.json.',
     )
     .action((cmd) => {
       const { disableColors } = program;
       const workspace = Workspace.loadSync();
-
       console.log(
         listAction(workspace, {
           deps: cmd.deps,
@@ -76,7 +82,7 @@ try {
 
   program.parse(process.argv);
 
-  const preDefinedCommands = program.commands.map((c: Command) => c._name);
+  const preDefinedCommands = program.commands.map((c) => c._name as string);
 
   setupCompletions(preDefinedCommands);
 

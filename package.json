@@ -5,7 +5,7 @@
   "bin": "bin/qnm.js",
   "repository": "ranyitz/qnm",
   "engines": {
-    "node": ">=8.7"
+    "node": ">=10"
   },
   "author": "Ran Yitzhaki",
   "license": "MIT",
@@ -20,62 +20,55 @@
     "lint": "eslint .",
     "build": "tsc",
     "watch": "tsc --watch",
-    "test:watch": "jest --watch",
-    "precommit": "lint-staged"
+    "test:watch": "jest --watch"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
     "@types/archy": "^0.0.31",
-    "@types/jest": "^24.0.23",
+    "@types/jest": "^26.0.19",
     "@types/js-levenshtein": "^1.1.0",
     "@types/lodash": "^4.14.148",
-    "@types/node": "^12.12.8",
+    "@types/node": "^14.14.14",
     "@types/prompts": "^2.0.3",
-    "@types/tabtab": "^3.0.0",
-    "@types/update-notifier": "^2.5.0",
-    "@typescript-eslint/eslint-plugin": "^2.7.0",
-    "@typescript-eslint/parser": "^2.7.0",
+    "@types/update-notifier": "^5.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.10.0",
+    "@typescript-eslint/parser": "^4.10.0",
     "babel-eslint": "^10.0.3",
-    "eslint": "^6.6.0",
-    "eslint-config-prettier": "^2.9.0",
+    "eslint": "^7.15.0",
+    "eslint-config-prettier": "^7.0.0",
     "eslint-config-yoshi-base": "^4.4.2",
     "eslint-import-resolver-typescript": "^2.0.0",
     "eslint-plugin-import": "^2.12.0",
-    "eslint-plugin-jest": "^21.15.2",
-    "eslint-plugin-prettier": "^2.6.0",
-    "husky": "^0.14.3",
-    "jest": "^24.9.0",
-    "lint-staged": "^7.1.2",
-    "prettier": "^1.11.1",
-    "ts-jest": "^24.1.0",
-    "type-fest": "^0.8.1",
-    "typescript": "^3.7.2"
+    "eslint-plugin-jest": "^24.1.3",
+    "eslint-plugin-prettier": "^3.3.0",
+    "husky": "^4.3.6",
+    "jest": "^26.6.3",
+    "lint-staged": "^10.5.3",
+    "prettier": "^2.2.1",
+    "ts-jest": "^26.4.4",
+    "type-fest": "^0.20.2",
+    "typescript": "^4.1.3"
   },
   "dependencies": {
     "@yarnpkg/lockfile": "^1.1.0",
     "archy": "^1.0.0",
-    "chalk": "^2.4.1",
-    "commander": "^4.0.1",
+    "chalk": "^4.1.0",
+    "commander": "^6.2.1",
     "figures": "^3.1.0",
     "fuzzysort": "^1.1.1",
-    "globby": "^10.0.1",
+    "globby": "^11.0.1",
     "js-levenshtein": "^1.1.3",
     "lodash": "^4.17.5",
-    "log-update": "^3.3.0",
+    "log-update": "^4.0.0",
     "open": "^7.0.0",
-    "pkg-dir": "^4.2.0",
+    "pkg-dir": "^5.0.0",
     "prompts": "^2.3.0",
     "tabtab": "2",
-    "update-notifier": "^3.0.1"
+    "update-notifier": "^5.0.1"
   },
   "files": [
     "bin",
-    "src",
-    "build",
-    "CHANGELOG.md",
-    "LICENSE",
-    "package.json",
-    "README.md"
+    "build"
   ],
   "lint-staged": {
     "*.js": [
@@ -84,5 +77,10 @@
     "*.{md,json}": [
       "prettier"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }

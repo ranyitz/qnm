@@ -121,7 +121,7 @@ export default class Workspace {
     packageName: string,
   ): Array<[string, Array<NodeModule>]> {
     return this.packages
-      .map(packageWorkspace => {
+      .map((packageWorkspace) => {
         try {
           return [
             packageWorkspace.name,
@@ -138,7 +138,7 @@ export default class Workspace {
     str: string,
   ): Array<[string, Array<[string, Array<NodeModule>]>]> {
     return this.packages
-      .map(packageWorkspace => {
+      .map((packageWorkspace) => {
         try {
           return [packageWorkspace.name, packageWorkspace.match(str)] as [
             string,
@@ -157,7 +157,7 @@ export default class Workspace {
 
   listPackagesModuleOccurrences() {
     return this.packages
-      .map(packageWorkspace => {
+      .map((packageWorkspace) => {
         try {
           return [packageWorkspace.name!, packageWorkspace.list()] as [
             string,
@@ -175,11 +175,10 @@ export default class Workspace {
   }
 
   listPackageJsonDependencies() {
-    const dependencies = Object.assign(
-      {},
-      this.packageJson.dependencies,
-      this.packageJson.devDependencies,
-    );
+    const dependencies = {
+      ...this.packageJson.dependencies,
+      ...this.packageJson.devDependencies,
+    };
 
     const dependenciesMap = new Map<string, Array<NodeModule>>();
 
@@ -220,7 +219,7 @@ export default class Workspace {
         absolute: true,
         onlyDirectories: true,
       })
-      .forEach(location => {
+      .forEach((location) => {
         try {
           this.packages.push(Workspace.loadSync(location, false));
         } catch (error) {}

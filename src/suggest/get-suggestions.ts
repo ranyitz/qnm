@@ -6,7 +6,7 @@ export default (
   maxDistance: number = 2,
 ): Array<string> => {
   return options
-    .map(opt => {
+    .map((opt) => {
       return [opt, levenshtein(input, opt)] as [string, number];
     })
     .filter(([, distance]) => distance <= maxDistance)

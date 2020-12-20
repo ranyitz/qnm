@@ -1,13 +1,13 @@
 import chalk from 'chalk';
 import figures from 'figures';
 import logUpdate from 'log-update';
+import isEmpty from 'lodash/isEmpty';
 import Input from '../fuzzy-search/input';
 import sortBySimilarity from '../fuzzy-search/sort-by-similarity';
 import Workspace from '../workspace/workspace';
 import { CliOptions } from '../cli';
 import getAction from './get';
 import { clearTerminal } from './helpers/terminal';
-import isEmpty from 'lodash/isEmpty';
 
 const HALF_WIDTH_SPACE = '\u2000';
 
@@ -72,7 +72,7 @@ const toggleMarking = ({
   value: string;
 }) => {
   return chosenModules.indexOf(value) !== -1
-    ? chosenModules.filter(moduleName => moduleName !== value)
+    ? chosenModules.filter((moduleName) => moduleName !== value)
     : chosenModules.concat(value);
 };
 
@@ -154,7 +154,9 @@ export default (workspace: Workspace, options: CliOptions) => {
   });
 
   input.on('tab', () => {
-    if (isEmpty(results)) return;
+    if (isEmpty(results)) {
+      return;
+    }
 
     const { value } = results[currentResult];
 
@@ -168,7 +170,9 @@ export default (workspace: Workspace, options: CliOptions) => {
   });
 
   input.on('shiftTab', () => {
-    if (isEmpty(results)) return;
+    if (isEmpty(results)) {
+      return;
+    }
 
     const { value } = results[currentResult];
 
@@ -193,7 +197,7 @@ export default (workspace: Workspace, options: CliOptions) => {
       chosenModules.push(results[currentResult].value);
     }
 
-    chosenModules.forEach(moduleName => {
+    chosenModules.forEach((moduleName) => {
       console.log(getAction(workspace, moduleName, options)); // eslint-disable-line no-console
     });
 

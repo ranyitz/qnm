@@ -63,8 +63,8 @@ export default class NodeModule {
   }
 
   get requiredBy(): Array<string> {
-    if (this.packageJson._requiredBy) {
-      return this.packageJson._requiredBy as Array<string>;
+    if ((this.packageJson as any)._requiredBy) {
+      return (this.packageJson as any)._requiredBy as Array<string>;
     }
 
     if (this.workspace.isYarn) {
@@ -90,7 +90,7 @@ export default class NodeModule {
     const requiredByInfo = this.requiredBy;
 
     if (requiredByInfo) {
-      return requiredByInfo.map(modulePath => {
+      return requiredByInfo.map((modulePath) => {
         if (modulePath === '/') {
           return 'dependencies';
         } else if (modulePath === '#DEV:/') {

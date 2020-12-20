@@ -1,9 +1,9 @@
 import chalk from 'chalk';
+import isEmpty from 'lodash/isEmpty';
+import archy from 'archy';
 import NodeModule from '../workspace/node-module';
 import { CliOptions } from '../cli';
 import renderVersion from './render-version';
-import archy from 'archy';
-import isEmpty from 'lodash/isEmpty';
 
 const highlightMatch = (str: string, match: string) =>
   str.split(match).join(chalk.magenta(match));
@@ -40,10 +40,10 @@ const buildWithAncestors = (m: NodeModule, { noColor }: CliOptions) => {
 export default (
   moduleOccurrences: Array<NodeModule>,
   { match, noColor }: CliOptions = {},
-  monorepoPackageName?: string
+  monorepoPackageName?: string,
 ) => {
   const moduleName = highlightMatch(moduleOccurrences[0].name, match!);
-  const buildedOccurrences = moduleOccurrences.map(m =>
+  const buildedOccurrences = moduleOccurrences.map((m) =>
     buildWithAncestors(m, {
       noColor,
     }),

@@ -1,4 +1,5 @@
 import opn from 'open';
+import isEmpty from 'lodash/isEmpty';
 import getSuggestions from '../suggest/get-suggestions';
 import NotFoundModuleError from '../errors/not-found-module-error';
 import NotFoundHomepageError from '../errors/not-found-homepage-error';
@@ -7,7 +8,6 @@ import { renderMonorepo } from '../render/render-monorepo';
 import Workspace from '../workspace/workspace';
 import { CliOptions } from '../cli';
 import openPackage from './helpers/open';
-import isEmpty from 'lodash/isEmpty';
 
 export default (
   workspace: Workspace,
@@ -33,7 +33,9 @@ export default (
     const [nodeModule] = workspace.getModuleOccurrences(name);
     const homepageUrl = nodeModule.packageJson.homepage;
 
-    if (!homepageUrl) throw new NotFoundHomepageError(name);
+    if (!homepageUrl) {
+      throw new NotFoundHomepageError(name);
+    }
     return opn(homepageUrl, { wait: false });
   }
 
