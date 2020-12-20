@@ -1,8 +1,10 @@
 # Changelog
 
+## 1.4.0 (Dec 20, 2020)
+* [#59](https://github.com/ranyitz/qnm/pull/59) Update major dependencies.
+
 ## 1.3.0 (Oct 24, 2020)
 * [#56](https://github.com/ranyitz/qnm/pull/56) Show `--why` information by default. Improve performance with yarn by caching `yarn.lock`.
-
 
 ## 1.2.0 (Jan 8, 2020)
 * [#53](https://github.com/ranyitz/qnm/pull/53) Add symlink indication.
