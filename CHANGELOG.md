@@ -1,5 +1,7 @@
 # Changelog
 
+## 1.7.0 (Mar 12, 2021)
+* [#60](https://github.com/ranyitz/qnm/pull/60) Package With ncc to reduce install time
 ## 1.4.0 (Dec 20, 2020)
 * [#59](https://github.com/ranyitz/qnm/pull/59) Update major dependencies.
 
