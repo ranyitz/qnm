@@ -5,6 +5,16 @@ export default (
   options: Array<string>,
   maxDistance: number = 2,
 ): Array<string> => {
+  for (const option of options) {
+    if (
+      option.startsWith('@') &&
+      option.indexOf('/') &&
+      option.slice(option.indexOf('/') + 1) === input
+    ) {
+      return [option];
+    }
+  }
+
   return options
     .map((opt) => {
       return [opt, levenshtein(input, opt)] as [string, number];

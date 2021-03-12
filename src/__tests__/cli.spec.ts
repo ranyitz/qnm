@@ -1,11 +1,15 @@
-import { execSync } from 'child_process';
+import { execSync, StdioOptions } from 'child_process';
 import { resolveFixture } from './utils';
 
 const qnmBin = require.resolve('../../bin/qnm');
 
 const runCommand = (
   command: string,
-  { cwd, env }: { cwd: string; env?: Record<string, any> },
+  {
+    cwd,
+    env,
+    stdio,
+  }: { cwd: string; env?: Record<string, any>; stdio?: StdioOptions },
 ) =>
   execSync(`${qnmBin} ${command}`, {
     cwd,
@@ -14,6 +18,7 @@ const runCommand = (
       FORCE_COLOR: '0',
       ...env,
     },
+    stdio,
     encoding: 'utf-8',
   });
 
@@ -59,6 +64,17 @@ describe('CLI', () => {
       const output = runCommand('package-foo', { cwd });
 
       expect(output).toMatchSnapshot();
+    });
+
+    it('should provide suggestion for scoped package with the same name', () => {
+      const cwd = resolveFixture('scoped-package');
+      expect.assertions(1);
+
+      try {
+        runCommand('test', { cwd, stdio: 'pipe' });
+      } catch (error) {
+        expect(error.message).toMatch('Did you mean "@scope/test"');
+      }
     });
   });
 
