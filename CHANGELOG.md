@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.8.0 (Mar 12, 2021)
+## 1.7.1 (Mar 12, 2021)
 * [#61](https://github.com/ranyitz/qnm/pull/61) Suggest if you see a scoped package with the same name
 
 ## 1.7.0 (Mar 12, 2021)
