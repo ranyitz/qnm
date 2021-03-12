@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.8.0 (Mar 12, 2021)
+* [#61](https://github.com/ranyitz/qnm/pull/61) Suggest if you see a scoped package with the same name
+
 ## 1.7.0 (Mar 12, 2021)
 * [#60](https://github.com/ranyitz/qnm/pull/60) Package With ncc to reduce install time
 ## 1.4.0 (Dec 20, 2020)
