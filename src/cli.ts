@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-import fs from 'fs';
 import { spawn } from 'child_process';
 import program from 'commander';
 import updateNotifier from 'update-notifier';
@@ -12,8 +11,7 @@ import listAction from './actions/list';
 import fuzzySearchAction from './actions/fuzzy-search';
 import handleError from './handler-error';
 
-const pkgJsonPath = require.resolve('../package.json');
-const pkg = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf-8'));
+const pkg = require('../package.json');
 
 updateNotifier({ pkg }).notify();
 

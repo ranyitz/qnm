@@ -7,6 +7,10 @@
   "engines": {
     "node": ">=10"
   },
+  "files": [
+    "dist/**",
+    "bin"
+  ],
   "author": "Ran Yitzhaki",
   "license": "MIT",
   "keywords": [
@@ -74,10 +78,6 @@
   "bundledDependencies": [
     "update-notifier",
     "tabtab"
-  ],
-  "files": [
-    "dist",
-    "bin"
   ],
   "lint-staged": {
     "*.js": [
