@@ -47,6 +47,7 @@ try {
     .description('attempt to install tab completions using tabtab')
     .action(() => {
       const tabtabCliPath = require.resolve('tabtab/src/cli');
+
       clearTerminal();
 
       spawn('node', [tabtabCliPath, 'install'], { stdio: 'inherit' });
