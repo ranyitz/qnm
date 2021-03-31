@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.8.0 (Mar 31, 2021)
+* [#62](https://github.com/ranyitz/qnm/pull/62) Add a terminal link to a package location if supported
+
 ## 1.7.1 (Mar 12, 2021)
 * [#61](https://github.com/ranyitz/qnm/pull/61) Suggest if you see a scoped package with the same name
 
