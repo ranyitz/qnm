@@ -1,6 +1,10 @@
+import path from 'path';
 import chalk from 'chalk';
 import isEmpty from 'lodash/isEmpty';
 import archy from 'archy';
+import terminalLink, {
+  isSupported as isTerminalLinkSupported,
+} from 'terminal-link';
 import NodeModule from '../workspace/node-module';
 import { CliOptions } from '../cli';
 import renderVersion from './render-version';
@@ -20,8 +24,11 @@ type TreeNode = { label: string; nodes: Array<TreeNode> } | string;
 const buildWithAncestors = (m: NodeModule, { noColor }: CliOptions) => {
   const whyInfo = getWhyInfo(m);
   const version = noColor ? m.version : renderVersion(m.name, m.version);
+  const versionWithLink = isTerminalLinkSupported
+    ? terminalLink(version, path.join('File:///', m.path, 'package.json'))
+    : version;
   const symlink = m.symlink ? chalk.magenta(` -> ${m.symlink}`) : '';
-  const information = version + symlink + whyInfo;
+  const information = versionWithLink + symlink + whyInfo;
 
   let hierarchy: Array<TreeNode> = [information];
 
