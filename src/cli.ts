@@ -32,7 +32,7 @@ try {
     .option('-o, --open', 'open editor at the package.json of a chosen module')
     .option('--disable-colors', 'minimize color and styling usage in output')
     .option('--homepage', "open module's homepage using the default browser")
-    .option('--repo', 'open module's repository in the default browser if present');
+    .option('--repo', "open module's repository in the default browser if present");
 
   program
     .command('default', { isDefault: true })
