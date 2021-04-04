@@ -3,6 +3,7 @@ import isEmpty from 'lodash/isEmpty';
 import getSuggestions from '../suggest/get-suggestions';
 import NotFoundModuleError from '../errors/not-found-module-error';
 import NotFoundHomepageError from '../errors/not-found-homepage-error';
+import NotFoundRepositoryError from '../errors/not-found-repository-error';
 import renderModuleOccurrences from '../render/render-module-occurrences';
 import { renderMonorepo } from '../render/render-monorepo';
 import Workspace from '../workspace/workspace';
@@ -15,7 +16,7 @@ export default (
   options: CliOptions = {},
 ) => {
   const moduleOccurrences = workspace.getModuleOccurrences(name);
-  const { open, homepage } = options;
+  const { open, homepage, repo } = options;
 
   if (isEmpty(moduleOccurrences)) {
     const modulesNames = workspace.getModulesNames();
@@ -28,15 +29,30 @@ export default (
     return openPackage(moduleOccurrences, workspace.root);
   }
 
-  if (homepage) {
-    // take only the first option
+  if (homepage || repo) {
     const [nodeModule] = workspace.getModuleOccurrences(name);
-    const homepageUrl = nodeModule.packageJson.homepage;
+    const packageJson = nodeModule.packageJson;
 
-    if (!homepageUrl) {
-      throw new NotFoundHomepageError(name);
+    if (homepage) {
+      if (!packageJson?.homepage) {
+        throw new NotFoundHomepageError(name);
+      }
+      return opn(packageJson.homepage, { wait: false });
     }
-    return opn(homepageUrl, { wait: false });
+
+    if (repo) {
+      const repositoryUrl =
+        typeof packageJson?.repository === 'object'
+          ? packageJson?.repository?.url
+          : packageJson?.repository;
+
+      if (!repositoryUrl?.startsWith('http')) {
+        // Here we should probably use a better url validation
+        throw new NotFoundRepositoryError(name);
+      }
+
+      return opn(repositoryUrl, { wait: false });
+    }
   }
 
   if (workspace.isMonorepo) {
