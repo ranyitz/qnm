@@ -2,6 +2,8 @@
 
 exports[`get --homepage should throw NotFoundHomepageError if there is no "homepage" in package.json 1`] = `"Could not find homepage link for module \\"test\\"."`;
 
+exports[`get --repo should throw NotFoundRepositoryError if there is no "repository" in package.json 1`] = `"Could not find repository link for module \\"test\\"."`;
+
 exports[`get should disable colors 1`] = `
 "[4mtest[24m
 └─┬ [90manother[39m

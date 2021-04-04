@@ -82,6 +82,16 @@ describe('get', () => {
     }
   });
 
+  it('--repo should throw NotFoundRepositoryError if there is no "repository" in package.json', () => {
+    const workspace = resolveWorkspace('single-module');
+
+    try {
+      getAction(workspace, 'test', { repo: true });
+    } catch (e) {
+      expect(e.message).toMatchSnapshot();
+    }
+  });
+
   describe('--open', () => {
     it('should open module file directory when --open flag used', () => {
       const workspace = resolveWorkspace('three-levels-deep');

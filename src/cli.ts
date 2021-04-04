@@ -20,6 +20,7 @@ export type CliOptions = {
   noColor?: boolean;
   open?: boolean;
   homepage?: boolean;
+  repo?: boolean;
   match?: string;
 };
 
@@ -30,7 +31,8 @@ try {
     .option('-d, --debug', 'see full error messages, mostly for debugging')
     .option('-o, --open', 'open editor at the package.json of a chosen module')
     .option('--disable-colors', 'minimize color and styling usage in output')
-    .option('--homepage', "open module's homepage using the default browser");
+    .option('--homepage', "open module's homepage using the default browser")
+    .option('--repo', 'open repository in browser if present');
 
   program
     .command('default', { isDefault: true })
@@ -87,13 +89,14 @@ try {
 
   const workspace = Workspace.loadSync();
 
-  const { deps, disableColors, open, homepage } = program;
+  const { deps, disableColors, open, homepage, repo } = program;
 
   const options: CliOptions = {
     deps,
     noColor: disableColors,
     open,
     homepage,
+    repo,
   };
 
   if (
@@ -107,7 +110,7 @@ try {
       const [arg] = program.args;
       const output = getAction(workspace, arg, options);
 
-      if (!options.open && !options.homepage) {
+      if (!options.open && !options.homepage && !options.repo) {
         console.log(output);
       }
     }
