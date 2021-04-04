@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.8.1 (Apr 4, 2021)
+* [#64](https://github.com/ranyitz/qnm/pull/64) Add `--repo` option
+
 ## 1.8.0 (Mar 31, 2021)
 * [#62](https://github.com/ranyitz/qnm/pull/62) Add a terminal link to a package location if supported
 
