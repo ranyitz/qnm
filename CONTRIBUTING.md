@@ -18,8 +18,9 @@ Fork the repo, clone, install dependencies and run the tests:
 ```
 git clone git@github.com:<username>/qnm.git
 cd qnm
-npm install
-npm test
+yarn
+yarn build
+yarn test
 ```
 
 To test the `qnm` command, run the following from the project root:
@@ -35,7 +36,7 @@ Now you should be able to run `qnm` from anywhare, and it will be linked to your
 In order to run the tests in watch mode ([jest](https://github.com/facebook/jest)), run the following command:
 
 ```
-npm run test:watch
+yarn test:watch
 ``` 
 
 ### Lint
@@ -43,7 +44,7 @@ npm run test:watch
 In order to run the linter ([eslint](https://github.com/eslint/eslint)), run the following command:
 
 ```
-npm run lint
+yarn lint
 ``` 
 
 * The linter will run before commit on staged files, using [husky](https://github.com/typicode/husky) and [lint-stage](https://github.com/okonet/lint-staged).
