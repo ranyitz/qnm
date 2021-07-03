@@ -8,10 +8,10 @@ import fuzzySearchAction from './actions/fuzzy-search';
 
 type Options = Pick<CliOptions, 'deps' | 'match'>;
 
-export function match(match: string, cwd?: string, options?: Options) {
+export function match(matchPattern: string, cwd?: string, options?: Options) {
   const workspace = Workspace.loadSync(cwd);
 
-  return matchAction(workspace, match, options);
+  return matchAction(workspace, matchPattern, options);
 }
 
 export function get(name: string, cwd?: string, options?: Options) {

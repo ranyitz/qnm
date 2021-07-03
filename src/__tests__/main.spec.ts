@@ -1,5 +1,4 @@
-// @ts-ignore
-import * as qnm from '../..';
+import * as qnm from '../..'; // eslint-disable-line import/no-useless-path-segments
 import { resolveFixture } from './utils';
 
 describe('Node API', () => {
@@ -20,14 +19,14 @@ describe('Node API', () => {
 
     it('should add dependents information on yarn installed package', () => {
       const cwd = resolveFixture('yarn-install');
-      const output = qnm.match('import-from', cwd );
+      const output = qnm.match('import-from', cwd);
 
       expect(output).toMatchSnapshot();
     });
 
     it('should show an indication in case there is a symlink', () => {
       const cwd = resolveFixture('symlink');
-      const output = qnm.match('test', cwd );
+      const output = qnm.match('test', cwd);
 
       expect(output).toMatchSnapshot();
     });
@@ -41,7 +40,7 @@ describe('Node API', () => {
 
     it('should work in monorepo with yarn workspaces', () => {
       const cwd = resolveFixture('monorepo-with-workspaces');
-      const output = qnm.match('package-foo', cwd );
+      const output = qnm.match('package-foo', cwd);
 
       expect(output).toMatchSnapshot();
     });
@@ -60,7 +59,7 @@ describe('Node API', () => {
   describe('qnm list', () => {
     it('should show all modules in node_modules directory', () => {
       const cwd = resolveFixture('mix-modules');
-      const output = qnm.list(  cwd );
+      const output = qnm.list(cwd);
 
       expect(output).toMatchSnapshot();
     });
@@ -74,14 +73,14 @@ describe('Node API', () => {
 
     it('should list dependencies in a yarn installed package and show "why" information', () => {
       const cwd = resolveFixture('yarn-install');
-      const output = qnm.list( cwd );
+      const output = qnm.list(cwd);
 
       expect(output).toMatchSnapshot();
     });
 
     it('should list a monorepo', () => {
       const cwd = resolveFixture('monorepo');
-      const output = qnm.list(cwd );
+      const output = qnm.list(cwd);
 
       expect(output).toMatchSnapshot();
     });
@@ -90,7 +89,7 @@ describe('Node API', () => {
   describe('qnm match', () => {
     it('should match in monorepo and print subpackages modules', () => {
       const cwd = resolveFixture('monorepo');
-      const output = qnm.match('packa', cwd );
+      const output = qnm.match('packa', cwd);
 
       expect(output).toMatchSnapshot();
     });
