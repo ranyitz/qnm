@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Node API qnm <module>] should add dependents information on yarn installed package 1`] = `
+"[4m[35mimport-from[39m[24m
+└── ]8;;File:/Users/deansh/Projects/qnm/src/__tests__/fixtures/yarn-install/node_modules/import-from/package.json3.0.0]8;; [33m(import-cwd)[39m
+"
+`;
+
+exports[`Node API qnm <module>] should show an indication in case there is a symlink 1`] = `
+"[4m[35mtest[39m[24m
+└── ]8;;File:/Users/deansh/Projects/qnm/src/__tests__/fixtures/symlink/node_modules/test/package.json1.0.0]8;;[35m -> ../../symlink-origin/node_modules/test[39m [33m(devDependencies, npm install test)[39m
+"
+`;
+
+exports[`Node API qnm <module>] should show get matches when using the match command 1`] = `
+"[4m[35mte[39mst[24m
+└── ]8;;File:/Users/deansh/Projects/qnm/src/__tests__/fixtures/single-module/node_modules/test/package.json1.0.0]8;; [33m(devDependencies, npm install test)[39m
+"
+`;
+
+exports[`Node API qnm <module>] should show the version and dependents info on a single module when called with a string 1`] = `
+"[4m[35mtest[39m[24m
+└── ]8;;File:/Users/deansh/Projects/qnm/src/__tests__/fixtures/single-module/node_modules/test/package.json1.0.0]8;; [33m(devDependencies, npm install test)[39m
+"
+`;
+
+exports[`Node API qnm <module>] should work in monorepo and print subpackages modules 1`] = `
+"[4m[35mpackage-foo[39m[24m
+└── ]8;;File:/Users/deansh/Projects/qnm/src/__tests__/fixtures/monorepo/node_modules/package-foo/package.json1.0.0]8;;
+"
+`;
+
+exports[`Node API qnm <module>] should work in monorepo with yarn workspaces 1`] = `
+"[4m[35mpackage-foo[39m[24m
+└── ]8;;File:/Users/deansh/Projects/qnm/src/__tests__/fixtures/monorepo-with-workspaces/node_modules/package-foo/package.json1.0.0]8;;
+"
+`;
+
+exports[`Node API qnm list should list a monorepo 1`] = `""`;
+
+exports[`Node API qnm list should list dependencies in a yarn installed package and show "why" information 1`] = `""`;
+
+exports[`Node API qnm list should show all modules in node_modules directory 1`] = `
+"[4m@scope/test[24m
+└── ]8;;File:/Users/deansh/Projects/qnm/src/__tests__/fixtures/mix-modules/node_modules/@scope/test/package.json1.0.0]8;;
+
+[4manother[24m
+└── ]8;;File:/Users/deansh/Projects/qnm/src/__tests__/fixtures/mix-modules/node_modules/another/package.json1.0.0]8;;
+
+[4mtest[24m
+├── ]8;;File:/Users/deansh/Projects/qnm/src/__tests__/fixtures/mix-modules/node_modules/test/package.json1.0.0]8;;
+└─┬ [90manother[39m
+  └── ]8;;File:/Users/deansh/Projects/qnm/src/__tests__/fixtures/mix-modules/node_modules/another/node_modules/test/package.json1.0.0]8;;
+"
+`;
+
+exports[`Node API qnm list should show modules mentioned in package.json 1`] = `
+"[4mdependency1[24m
+└── ]8;;File:/Users/deansh/Projects/qnm/src/__tests__/fixtures/indirect-dependencies/node_modules/dependency1/package.json1.0.0]8;;
+
+[4mdependency2[24m
+└── ]8;;File:/Users/deansh/Projects/qnm/src/__tests__/fixtures/indirect-dependencies/node_modules/dependency2/package.json1.0.0]8;;
+
+[4mdevDependency1[24m
+└── ]8;;File:/Users/deansh/Projects/qnm/src/__tests__/fixtures/indirect-dependencies/node_modules/devDependency1/package.json1.0.0]8;;
+
+[4mdevDependency2[24m
+└── ]8;;File:/Users/deansh/Projects/qnm/src/__tests__/fixtures/indirect-dependencies/node_modules/devDependency2/package.json1.0.0]8;;
+"
+`;
+
+exports[`Node API qnm match should match in monorepo and print subpackages modules 1`] = `
+"[4m[35mpacka[39mge-bar[24m
+└── ]8;;File:/Users/deansh/Projects/qnm/src/__tests__/fixtures/monorepo/node_modules/package-bar/package.json1.0.0]8;;
+
+[4m[35mpacka[39mge-baz[24m
+└── ]8;;File:/Users/deansh/Projects/qnm/src/__tests__/fixtures/monorepo/node_modules/package-baz/package.json1.0.0]8;;
+
+[4m[35mpacka[39mge-foo[24m
+└── ]8;;File:/Users/deansh/Projects/qnm/src/__tests__/fixtures/monorepo/node_modules/package-foo/package.json1.0.0]8;;
+"
+`;

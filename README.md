@@ -64,6 +64,17 @@ lodash
   └── 3.10.1
 ```
 
+## Usage in node
+Each function can also receive optional CWD and optional Options (deps, match)
+```js
+import * as qnm from 'qnm'
+qnm.match('module')
+qnm.get('module')
+qnm.list()
+qnm.search()
+```
+
+
 Which means you have 3 occurrences of lodash in your `node_modules`:
 
 1.  `./node_module/lodash`
@@ -132,7 +143,7 @@ eslint-plugin-react
 ```
 ### homepage
 
-Opens package "homepage" property in your browser. 
+Opens package "homepage" property in your browser.
 
 ### install-completions
 
