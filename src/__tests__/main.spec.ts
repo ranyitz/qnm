@@ -1,4 +1,4 @@
-import * as qnm from '../..'; // eslint-disable-line import/no-useless-path-segments
+import * as qnm from '../main';
 import { resolveFixture } from './utils';
 
 describe('Node API', () => {
