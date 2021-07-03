@@ -1,6 +1,6 @@
+import merge from 'lodash/merge';
 import Workspace from './workspace/workspace';
 import { CliOptions } from './cli';
-import merge from 'lodash/merge'
 
 import matchAction from './actions/match';
 import getAction from './actions/get';
@@ -11,7 +11,7 @@ type Options = Pick<CliOptions, 'deps' | 'match'>;
 
 const defaultOptions = {
   noColor: true,
-}
+};
 
 export function match(matchPattern: string, cwd?: string, options?: Options) {
   const workspace = Workspace.loadSync(cwd);
