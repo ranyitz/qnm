@@ -2,6 +2,8 @@
   "name": "qnm",
   "version": "1.8.1",
   "description": "cli utility for querying the node_modules directory",
+  "main": "build/main.js",
+  "module": "src/main.ts",
   "bin": "bin/qnm.js",
   "repository": "ranyitz/qnm",
   "engines": {
@@ -24,7 +26,8 @@
     "lint": "eslint .",
     "watch": "newsh --split 'yarn tsc --watch' && yarn pkg --watch",
     "pkg": "ncc build build/cli.js -o dist --external tabtab",
-    "build": "yarn tsc && yarn pkg",
+    "build": "yarn clean && yarn tsc && yarn pkg",
+    "clean": "rm -rf build/ dist/",
     "test:watch": "jest --watch",
     "createVersion": "np"
   },
