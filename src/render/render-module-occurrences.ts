@@ -10,6 +10,14 @@ import NodeModule from '../workspace/node-module';
 import { CliOptions } from '../cli';
 import renderVersion from './render-version';
 
+const formatTime = (date: Date): string => {
+  if (process.env.NODE_ENV === 'test') {
+    return 'just now';
+  }
+
+  return timeago.format(date);
+};
+
 const highlightMatch = (str: string, match: string) =>
   str.split(match).join(chalk.magenta(match));
 
@@ -29,7 +37,7 @@ const buildWithAncestors = (m: NodeModule, { noColor }: CliOptions) => {
     ? terminalLink(version, path.join('File:///', m.path, 'package.json'))
     : version;
   const symlink = m.symlink ? chalk.magenta(` -> ${m.symlink}`) : '';
-  const lastModified = chalk.dim(` (${timeago.format(m.lastModified)})`);
+  const lastModified = chalk.dim(` (${formatTime(m.lastModified)})`);
   const information = versionWithLink + symlink + whyInfo + lastModified;
   let hierarchy: Array<TreeNode> = [information];
 

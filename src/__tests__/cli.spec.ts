@@ -17,6 +17,7 @@ const runCommand = (
       ...process.env,
       FORCE_COLOR: '0',
       ...env,
+      NODE_ENV: 'test',
     },
     stdio,
     encoding: 'utf-8',
