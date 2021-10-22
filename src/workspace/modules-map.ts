@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-import chalk from 'chalk';
 import flattenDeep from 'lodash/flattenDeep';
 import { parseDate } from 'chrono-node';
 import NodeModule from './node-module';

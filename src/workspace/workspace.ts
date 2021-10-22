@@ -5,7 +5,6 @@ import { PackageJson } from 'type-fest';
 import { parse as parseYarnLock } from '@yarnpkg/lockfile';
 import globby from 'globby';
 import { isTruthy } from '../utils';
-import { CliOptions } from '../cli';
 import ModulesMap from './modules-map';
 import NodeModule from './node-module';
 
