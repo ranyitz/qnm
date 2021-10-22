@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs, { Stats } from 'fs';
 import path from 'path';
 import { PackageJson } from 'type-fest';
 import { readLinkSilent } from '../utils';
@@ -8,8 +8,9 @@ export default class NodeModule {
   name: string;
   nodeModulesPath: string;
   parent?: NodeModule;
-  _packageJson: PackageJson | null;
   workspace: Workspace;
+  _packageJson: PackageJson | null;
+  _stats: Stats | null;
   _yarnRequiredBy: Set<string> | null;
   _symlink: string | null;
 
@@ -28,6 +29,7 @@ export default class NodeModule {
     this.nodeModulesPath = nodeModulesPath;
     this.parent = parent;
     this.workspace = workspace;
+    this._stats = null;
     this._packageJson = null;
     this._yarnRequiredBy = null;
     this._symlink = null;
@@ -51,6 +53,14 @@ export default class NodeModule {
 
   get path() {
     return path.join(this.nodeModulesPath, this.name);
+  }
+
+  get stats() {
+    if (!this._stats) {
+      this._stats = fs.statSync(this.path);
+    }
+
+    return this._stats;
   }
 
   get symlink() {
@@ -108,8 +118,7 @@ export default class NodeModule {
   }
 
   get lastModified() {
-    const stats = fs.statSync(this.path);
-    return stats.mtime;
+    return this.stats.mtime;
   }
 
   toObject(): Record<string, any> {
@@ -130,7 +139,7 @@ export default class NodeModule {
       this._packageJson = pkg;
 
       return pkg;
-    } catch (error) {
+    } catch (error: any) {
       if (error.code === 'ENOENT') {
         throw new Error(`Couldn't find "package.json" for module ${this.name}`);
       }
