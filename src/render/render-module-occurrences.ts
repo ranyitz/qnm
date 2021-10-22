@@ -5,6 +5,7 @@ import archy from 'archy';
 import terminalLink, {
   isSupported as isTerminalLinkSupported,
 } from 'terminal-link';
+import * as timeago from 'timeago.js';
 import NodeModule from '../workspace/node-module';
 import { CliOptions } from '../cli';
 import renderVersion from './render-version';
@@ -28,8 +29,8 @@ const buildWithAncestors = (m: NodeModule, { noColor }: CliOptions) => {
     ? terminalLink(version, path.join('File:///', m.path, 'package.json'))
     : version;
   const symlink = m.symlink ? chalk.magenta(` -> ${m.symlink}`) : '';
-  const information = versionWithLink + symlink + whyInfo;
-
+  const lastModified = chalk.dim(` (${timeago.format(m.lastModified)})`);
+  const information = versionWithLink + symlink + whyInfo + lastModified;
   let hierarchy: Array<TreeNode> = [information];
 
   if (m.parent) {

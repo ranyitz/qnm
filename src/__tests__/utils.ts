@@ -5,4 +5,4 @@ export const resolveFixture = (fixure: string) =>
   path.resolve(__dirname, './fixtures', fixure);
 
 export const resolveWorkspace = (fixure: string) =>
-  Workespace.loadSync(exports.resolveFixture(fixure));
+  Workespace.loadSync({ cwd: exports.resolveFixture(fixure) });

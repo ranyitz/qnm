@@ -22,6 +22,7 @@ export type CliOptions = {
   homepage?: boolean;
   repo?: boolean;
   match?: string;
+  lastModifiedFilter?: string;
 };
 
 try {
@@ -32,7 +33,14 @@ try {
     .option('-o, --open', 'open editor at the package.json of a chosen module')
     .option('--disable-colors', 'minimize color and styling usage in output')
     .option('--homepage', "open module's homepage using the default browser")
-    .option('--repo', "open module's repository in the default browser if present");
+    .option(
+      '--repo',
+      "open module's repository in the default browser if present",
+    )
+    .option(
+      '--last-modified <date>',
+      'filter by last modified "--last-modified=2 days ago"',
+    );
 
   program
     .command('default', { isDefault: true })
@@ -40,7 +48,11 @@ try {
     .arguments('[module]')
     .description('prints module version from the node_modules', {
       module: 'name of the npm package to search for',
-    });
+    })
+    .option(
+      '--last-modified <date>',
+      'filter by last modified "--last-modified=2 days ago"',
+    );
 
   program
     .command('install-completions')
@@ -60,12 +72,21 @@ try {
       '--deps',
       'list dependencies and devDependencies based on package.json.',
     )
-    .action((cmd) => {
+    .option(
+      '--last-modified <date>',
+      'filter by last modified "--last-modified=2 days ago"',
+    )
+    .action(() => {
       const { disableColors } = program;
-      const workspace = Workspace.loadSync();
+      const options = program.opts();
+
+      const workspace = Workspace.loadSync({
+        lastModifiedFilter: options.lastModified,
+      });
+
       console.log(
         listAction(workspace, {
-          deps: cmd.deps,
+          deps: options.deps,
           noColor: disableColors,
         }),
       );
@@ -74,9 +95,15 @@ try {
   program
     .command('match <string>')
     .description('prints modules which matches the provided string')
+    .option(
+      '--last-modified <date>',
+      'filter by last modified "--last-modified=2 days ago"',
+    )
     .action((string) => {
       const { disableColors } = program;
-      const workspace = Workspace.loadSync();
+      const workspace = Workspace.loadSync({
+        lastModifiedFilter: program.opts().lastModified,
+      });
 
       console.log(matchAction(workspace, string, { noColor: disableColors }));
     });
@@ -86,8 +113,9 @@ try {
   const preDefinedCommands = program.commands.map((c) => c._name as string);
 
   setupCompletions(preDefinedCommands);
-
-  const workspace = Workspace.loadSync();
+  const workspace = Workspace.loadSync({
+    lastModifiedFilter: program.opts().lastModified,
+  });
 
   const { deps, disableColors, open, homepage, repo } = program;
 
@@ -97,6 +125,7 @@ try {
     open,
     homepage,
     repo,
+    lastModifiedFilter: program.opts().lastModified,
   };
 
   if (
@@ -115,6 +144,6 @@ try {
       }
     }
   }
-} catch (error) {
+} catch (error: any) {
   handleError(error, program.debug);
 }

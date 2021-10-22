@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import chalk from 'chalk';
 import flattenDeep from 'lodash/flattenDeep';
+import { parseDate } from 'chrono-node';
 import NodeModule from './node-module';
 import Workspace from './workspace';
 
@@ -21,6 +22,15 @@ export default class ModulesMap extends Map<string, Array<NodeModule>> {
   }
 
   addModule(name: string, nodeModule: NodeModule) {
+    if (this.workspace.lastModifiedFilter) {
+      if (
+        nodeModule.lastModified < parseDate(this.workspace.lastModifiedFilter)
+      ) {
+        // Do not add the module if it was modified after the provided filter
+        return;
+      }
+    }
+
     if (!this.has(name)) {
       this.set(name, []);
     }
@@ -64,12 +74,6 @@ export default class ModulesMap extends Map<string, Array<NodeModule>> {
         const DependencyModuleOccurrences = this.get(dependency);
 
         if (!DependencyModuleOccurrences) {
-          console.error(
-            chalk.dim(
-              `Warning: The module ${dependency} specified in yarn.lock but is not on the file system`,
-            ),
-          );
-
           // Do not fail in this case, maybe the user is intereseted in a different module
           // and this information doesn't interesting to them
           return;

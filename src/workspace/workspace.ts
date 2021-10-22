@@ -5,6 +5,7 @@ import { PackageJson } from 'type-fest';
 import { parse as parseYarnLock } from '@yarnpkg/lockfile';
 import globby from 'globby';
 import { isTruthy } from '../utils';
+import { CliOptions } from '../cli';
 import ModulesMap from './modules-map';
 import NodeModule from './node-module';
 
@@ -20,6 +21,7 @@ type YarnLock = Record<
 
 export default class Workspace {
   root: string;
+  lastModifiedFilter: string | undefined;
   packages: Array<Workspace>;
   _modulesMap: ModulesMap | null;
   _packageJson: PackageJson | null;
@@ -27,8 +29,15 @@ export default class Workspace {
   _yarnLock: YarnLock | null;
   _isMonorepo: boolean | null;
 
-  constructor({ root }: { root: string }) {
+  constructor({
+    root,
+    lastModifiedFilter,
+  }: {
+    root: string;
+    lastModifiedFilter?: string;
+  }) {
     this.root = root;
+    this.lastModifiedFilter = lastModifiedFilter;
     this._modulesMap = null;
     this._packageJson = null;
     this._yarnLock = null;
@@ -42,6 +51,12 @@ export default class Workspace {
       this._modulesMap = ModulesMap.loadSync(this.root, this);
 
       if (this._modulesMap.size === 0) {
+        if (this.lastModifiedFilter) {
+          throw new Error(
+            `no modules found for the current filter: "${this.lastModifiedFilter}"`,
+          );
+        }
+
         throw new Error('node_modules directory is empty');
       }
     }
@@ -100,7 +115,7 @@ export default class Workspace {
       const pkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
       this._packageJson = pkg;
       return pkg;
-    } catch (error) {
+    } catch (error: any) {
       if (error.code === 'ENOENT') {
         throw new Error(`Couldn't find "package.json" for module ${this.name}`);
       }
@@ -221,12 +236,22 @@ export default class Workspace {
       })
       .forEach((location) => {
         try {
-          this.packages.push(Workspace.loadSync(location, false));
+          this.packages.push(
+            Workspace.loadSync({ cwd: location, traverse: false }),
+          );
         } catch (error) {}
       });
   }
 
-  static loadSync(cwd = process.cwd(), traverse = true): Workspace {
+  static loadSync({
+    cwd = process.cwd(),
+    traverse = true,
+    lastModifiedFilter,
+  }: {
+    cwd?: string;
+    traverse?: boolean;
+    lastModifiedFilter?: string;
+  } = {}): Workspace {
     const root = traverse ? pkgDir.sync(cwd) : cwd;
 
     if (!root) {
@@ -239,7 +264,7 @@ export default class Workspace {
       throw new Error('could not find node_modules directory');
     }
 
-    const workspace = new Workspace({ root });
+    const workspace = new Workspace({ root, lastModifiedFilter });
 
     if (workspace.isMonorepo) {
       workspace.loadMonorepoPackages();

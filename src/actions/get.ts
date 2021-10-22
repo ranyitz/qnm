@@ -16,13 +16,13 @@ export default (
   options: CliOptions = {},
 ) => {
   const moduleOccurrences = workspace.getModuleOccurrences(name);
-  const { open, homepage, repo } = options;
+  const { open, homepage, repo, lastModifiedFilter } = options;
 
   if (isEmpty(moduleOccurrences)) {
     const modulesNames = workspace.getModulesNames();
     const suggestions = getSuggestions(name, modulesNames);
 
-    throw new NotFoundModuleError(name, suggestions);
+    throw new NotFoundModuleError(name, suggestions, lastModifiedFilter);
   }
 
   if (open) {

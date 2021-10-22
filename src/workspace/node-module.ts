@@ -107,6 +107,11 @@ export default class NodeModule {
     return [];
   }
 
+  get lastModified() {
+    const stats = fs.statSync(this.path);
+    return stats.mtime;
+  }
+
   toObject(): Record<string, any> {
     return {
       name: this.name,
