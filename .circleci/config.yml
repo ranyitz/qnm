@@ -9,15 +9,6 @@ jobs:
       - run: yarn build
       - run: yarn lint
 
-  test-node-10:
-    docker:
-      - image: circleci/node:10
-    steps:
-      - checkout
-      - run: yarn
-      - run: yarn build
-      - run: yarn test
-
   test-node-12:
     docker:
       - image: circleci/node:12
@@ -30,6 +21,15 @@ jobs:
   test-node-14:
     docker:
       - image: circleci/node:14
+    steps:
+      - checkout
+      - run: yarn
+      - run: yarn build
+      - run: yarn test
+
+  test-node-16:
+    docker:
+      - image: circleci/node:16
     steps:
       - checkout
       - run: yarn
