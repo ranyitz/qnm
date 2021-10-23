@@ -34,6 +34,7 @@ _qnm_ aims to get this information **fast** and tries to filter only the importa
 *   :abc: Match all packages with a specific string
 *   :interrobang: Explain why a package was installed
 *   :books: Supports monorepos
+*   :clock12: Show when a version was release and what is the latest version
 
 ## Installation
 
@@ -56,12 +57,12 @@ qnm lodash
 And you'll see something like that:
 
 ```bash
-lodash
-├── 4.17.5
+lodash 4.17.21 ↰ 2 days ago
+├── 4.17.21 ✓
 ├─┬ cli-table2
-│ └── 3.10.1
+│ └── 3.10.1 ⇡ 1 year ago
 └─┬ karma
-  └── 3.10.1
+  └── 3.10.1 ⇡ 1 year ago
 ```
 
 Which means you have 3 occurrences of lodash in your `node_modules`:
@@ -69,6 +70,9 @@ Which means you have 3 occurrences of lodash in your `node_modules`:
 1.  `./node_module/lodash`
 2.  `./node_module/cli-table2/node_modules/lodash`
 3.  `./node_module/karma/node_modules/lodash`
+
+* The latest version of lodash is 4.17.21, it was published 2 days ago.
+* The other 2 occurrences of lodash (3.10.1) were released a year ago.
 
 ### Fuzzy-search
 
@@ -80,6 +84,9 @@ Use `qnm` command without arguments to trigger an [`fzf`](https://github.com/jun
 * `TAB` and `Shift-TAB` to mark multiple items
 
 ## Options
+
+### --no-remote
+do not fetch remote data from npm, use this if you want qnm to run faster. qnm will show limited view.
 
 ### -o , --open
 
@@ -108,6 +115,7 @@ qnm list
 | Optional arguments |                          Description                          |
 | ------------------ | :-----------------------------------------------------------: |
 | `--deps`           | List the versions of direct dependencies and devDependencies. |
+| `--remote`         | Fetch remote data, this may be very slow for many packages due to many network requests |
 
 ### match
 
@@ -130,6 +138,11 @@ eslint-plugin-mocha
 eslint-plugin-react
 └── 6.10.3
 ```
+
+| Optional arguments |                          Description                          |
+| ------------------ | :-----------------------------------------------------------: |
+| `--remote`         | Fetch remote data, this may be very slow for many packages due to many network requests |
+
 ### homepage
 
 Opens package "homepage" property in your browser. 

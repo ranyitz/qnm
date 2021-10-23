@@ -32,6 +32,13 @@ describe('CLI', () => {
       expect(output).toMatchSnapshot();
     });
 
+    it('should not show remote info when used with --no-remote', () => {
+      const cwd = resolveFixture('single-module');
+      const output = runCommand('test --no-remote', { cwd });
+
+      expect(output).toMatchSnapshot();
+    });
+
     it('should show get matches when using the match command', () => {
       const cwd = resolveFixture('single-module');
       const output = runCommand('match te', { cwd });

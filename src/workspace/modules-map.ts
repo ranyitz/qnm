@@ -21,15 +21,6 @@ export default class ModulesMap extends Map<string, Array<NodeModule>> {
   }
 
   addModule(name: string, nodeModule: NodeModule) {
-    if (this.workspace.lastModifiedFilter) {
-      if (
-        nodeModule.lastModified < parseDate(this.workspace.lastModifiedFilter)
-      ) {
-        // Do not add the module if it was modified after the provided filter
-        return;
-      }
-    }
-
     if (!this.has(name)) {
       this.set(name, []);
     }

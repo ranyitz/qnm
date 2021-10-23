@@ -2,28 +2,28 @@
 
 exports[`list should disable colors 1`] = `
 "[4m@scope/test[24m
-└── 1.0.0[2m (just now)[22m
+└── 1.0.0
 
 [4manother[24m
-└── 1.0.0[2m (just now)[22m
+└── 1.0.0
 
 [4mtest[24m
-├── 1.0.0[2m (just now)[22m
-└─┬ [90manother[39m
-  └── 1.0.0[2m (just now)[22m
+├── 1.0.0
+└─┬ [2manother[22m
+  └── 1.0.0
 "
 `;
 
 exports[`list should list the versions of mixed modules 1`] = `
 "[4m@scope/test[24m
-└── [37m1.0.0[39m[2m (just now)[22m
+└── [37m1.0.0[39m
 
 [4manother[24m
-└── [37m1.0.0[39m[2m (just now)[22m
+└── [37m1.0.0[39m
 
 [4mtest[24m
-├── [37m1.0.0[39m[2m (just now)[22m
-└─┬ [90manother[39m
-  └── [37m1.0.0[39m[2m (just now)[22m
+├── [37m1.0.0[39m
+└─┬ [2manother[22m
+  └── [37m1.0.0[39m
 "
 `;

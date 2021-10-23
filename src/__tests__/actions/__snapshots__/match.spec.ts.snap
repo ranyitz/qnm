@@ -2,13 +2,13 @@
 
 exports[`match should disable colors 1`] = `
 "[4m[35mtes[39mt[24m
-└── 1.0.0 [33m(devDependencies, npm install test)[39m[2m (just now)[22m
+└── 1.0.0 [2m[33m(devDependencies, npm install test)[39m[22m
 "
 `;
 
 exports[`match should print the matched modules according to passed string 1`] = `
 "[4m[35manot[39mher[24m
-└── [37m1.0.0[39m[2m (just now)[22m
+└── [37m1.0.0[39m
 "
 `;
 

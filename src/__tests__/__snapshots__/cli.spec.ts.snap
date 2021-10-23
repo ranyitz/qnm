@@ -1,217 +1,216 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CLI qnm <module>] should add dependents information on yarn installed package 1`] = `
-"import-from
-└── 3.0.0 (import-cwd) (just now)
+"import-from 4.0.0 ↰ just now
+└── 3.0.0 ⇡ just now (import-cwd)
+"
+`;
 
+exports[`CLI qnm <module>] should not show remote info when used with --no-remote 1`] = `
+"test
+└── 1.0.0 (devDependencies, npm install test)
 "
 `;
 
 exports[`CLI qnm <module>] should show an indication in case there is a symlink 1`] = `
-"test
-└── 1.0.0 -> ../../symlink-origin/node_modules/test (devDependencies, npm install test) (just now)
-
+"test 0.6.0 ↰ just now
+└── 1.0.0 -> ../../symlink-origin/node_modules/test ⇡ just now (devDependencies, npm install test)
 "
 `;
 
 exports[`CLI qnm <module>] should show get matches when using the match command 1`] = `
 "test
-└── 1.0.0 (devDependencies, npm install test) (just now)
-
+└── 1.0.0 (devDependencies, npm install test)
 "
 `;
 
 exports[`CLI qnm <module>] should show the version and dependents info on a single module when called with a string 1`] = `
-"test
-└── 1.0.0 (devDependencies, npm install test) (just now)
-
+"test 0.6.0 ↰ just now
+└── 1.0.0 ⇡ just now (devDependencies, npm install test)
 "
 `;
 
 exports[`CLI qnm <module>] should work in monorepo and print subpackages modules 1`] = `
-"package-foo
-└── 1.0.0 (just now)
+"package-foo 1.0.0 ↰ just now
+└── 1.0.0 ✓
 
 package-a
-└─┬ package-foo
-  └── 2.0.0 (just now)
-
+└─┬ package-foo 1.0.0 ↰ just now
+  └── 2.0.0 ⇡ just now
 "
 `;
 
 exports[`CLI qnm <module>] should work in monorepo with yarn workspaces 1`] = `
-"package-foo
-└── 1.0.0 (just now)
+"package-foo 1.0.0 ↰ just now
+└── 1.0.0 ✓
 
 package-a
-└─┬ package-foo
-  └── 2.0.0 (just now)
-
+└─┬ package-foo 1.0.0 ↰ just now
+  └── 2.0.0 ⇡ just now
 "
 `;
 
 exports[`CLI qnm list should --disable-colors 1`] = `
 "[4manotherDependency[24m
-└── 1.0.0[2m (just now)[22m
+└── 1.0.0
 
 [4mdependency1[24m
-└── 1.0.0[2m (just now)[22m
+└── 1.0.0
 
 [4mdependency2[24m
-└── 1.0.0[2m (just now)[22m
+└── 1.0.0
 
 [4mdevDependency1[24m
-└── 1.0.0[2m (just now)[22m
+└── 1.0.0
 
 [4mdevDependency2[24m
-└── 1.0.0[2m (just now)[22m
+└── 1.0.0
 
 [4mdep-of-dep[24m
-├─┬ [90manotherDependency[39m
-│ └── 1.0.0[2m (just now)[22m
-├─┬ [90mdependency1[39m
-│ └── 1.0.0[2m (just now)[22m
-├─┬ [90mdependency2[39m
-│ └── 1.0.0[2m (just now)[22m
-├─┬ [90mdevDependency1[39m
-│ └── 1.0.0[2m (just now)[22m
-└─┬ [90mdevDependency2[39m
-  └── 1.0.0[2m (just now)[22m
+├─┬ [2manotherDependency[22m
+│ └── 1.0.0
+├─┬ [2mdependency1[22m
+│ └── 1.0.0
+├─┬ [2mdependency2[22m
+│ └── 1.0.0
+├─┬ [2mdevDependency1[22m
+│ └── 1.0.0
+└─┬ [2mdevDependency2[22m
+  └── 1.0.0
 
 [4mdep-of-dep-of-dep[24m
-├─┬ [90manotherDependency[39m
-│ └─┬ [90mdep-of-dep[39m
-│   └── 1.0.0[2m (just now)[22m
-├─┬ [90mdependency1[39m
-│ └─┬ [90mdep-of-dep[39m
-│   └── 1.0.0[2m (just now)[22m
-├─┬ [90mdependency2[39m
-│ └─┬ [90mdep-of-dep[39m
-│   └── 1.0.0[2m (just now)[22m
-├─┬ [90mdevDependency1[39m
-│ └─┬ [90mdep-of-dep[39m
-│   └── 1.0.0[2m (just now)[22m
-└─┬ [90mdevDependency2[39m
-  └─┬ [90mdep-of-dep[39m
-    └── 1.0.0[2m (just now)[22m
+├─┬ [2manotherDependency[22m
+│ └─┬ [2mdep-of-dep[22m
+│   └── 1.0.0
+├─┬ [2mdependency1[22m
+│ └─┬ [2mdep-of-dep[22m
+│   └── 1.0.0
+├─┬ [2mdependency2[22m
+│ └─┬ [2mdep-of-dep[22m
+│   └── 1.0.0
+├─┬ [2mdevDependency1[22m
+│ └─┬ [2mdep-of-dep[22m
+│   └── 1.0.0
+└─┬ [2mdevDependency2[22m
+  └─┬ [2mdep-of-dep[22m
+    └── 1.0.0
 
 "
 `;
 
 exports[`CLI qnm list should list a monorepo 1`] = `
 "package-bar
-└── 1.0.0 (just now)
+└── 1.0.0
 
 package-baz
-└── 1.0.0 (just now)
+└── 1.0.0
 
 package-foo
-└── 1.0.0 (just now)
+└── 1.0.0
 
 package-a
 └─┬ package-foo
-  └── 2.0.0 (just now)
+  └── 2.0.0
 
 package-b
 └─┬ package-bar
-  └── 3.0.0 (just now)
+  └── 3.0.0
 
 "
 `;
 
 exports[`CLI qnm list should list dependencies in a yarn installed package and show "why" information 1`] = `
 "import-cwd
-└── 3.0.0 (just now)
+└── 3.0.0
 
 import-from
-└── 3.0.0 (import-cwd) (just now)
+└── 3.0.0 (import-cwd)
 
 resolve-from
-└── 5.0.0 (import-from) (just now)
+└── 5.0.0 (import-from)
 
 "
 `;
 
 exports[`CLI qnm list should show all modules in node_modules directory 1`] = `
 "@scope/test
-└── 1.0.0 (just now)
+└── 1.0.0
 
 another
-└── 1.0.0 (just now)
+└── 1.0.0
 
 test
-├── 1.0.0 (just now)
+├── 1.0.0
 └─┬ another
-  └── 1.0.0 (just now)
+  └── 1.0.0
 
 "
 `;
 
 exports[`CLI qnm list should show modules mentioned in package.json 1`] = `
 "anotherDependency
-└── 1.0.0 (just now)
+└── 1.0.0
 
 dependency1
-└── 1.0.0 (just now)
+└── 1.0.0
 
 dependency2
-└── 1.0.0 (just now)
+└── 1.0.0
 
 devDependency1
-└── 1.0.0 (just now)
+└── 1.0.0
 
 devDependency2
-└── 1.0.0 (just now)
+└── 1.0.0
 
 dep-of-dep
 ├─┬ anotherDependency
-│ └── 1.0.0 (just now)
+│ └── 1.0.0
 ├─┬ dependency1
-│ └── 1.0.0 (just now)
+│ └── 1.0.0
 ├─┬ dependency2
-│ └── 1.0.0 (just now)
+│ └── 1.0.0
 ├─┬ devDependency1
-│ └── 1.0.0 (just now)
+│ └── 1.0.0
 └─┬ devDependency2
-  └── 1.0.0 (just now)
+  └── 1.0.0
 
 dep-of-dep-of-dep
 ├─┬ anotherDependency
 │ └─┬ dep-of-dep
-│   └── 1.0.0 (just now)
+│   └── 1.0.0
 ├─┬ dependency1
 │ └─┬ dep-of-dep
-│   └── 1.0.0 (just now)
+│   └── 1.0.0
 ├─┬ dependency2
 │ └─┬ dep-of-dep
-│   └── 1.0.0 (just now)
+│   └── 1.0.0
 ├─┬ devDependency1
 │ └─┬ dep-of-dep
-│   └── 1.0.0 (just now)
+│   └── 1.0.0
 └─┬ devDependency2
   └─┬ dep-of-dep
-    └── 1.0.0 (just now)
+    └── 1.0.0
 
 "
 `;
 
 exports[`CLI qnm match should match in monorepo and print subpackages modules 1`] = `
 "package-bar
-└── 1.0.0 (just now)
+└── 1.0.0
 
 package-baz
-└── 1.0.0 (just now)
+└── 1.0.0
 
 package-foo
-└── 1.0.0 (just now)
+└── 1.0.0
 
 package-a
 └─┬ package-foo
-  └── 2.0.0 (just now)
+  └── 2.0.0
 
 package-b
 └─┬ package-bar
-  └── 3.0.0 (just now)
-
+  └── 3.0.0
 "
 `;

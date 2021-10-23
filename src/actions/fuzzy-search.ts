@@ -197,8 +197,15 @@ export default (workspace: Workspace, options: CliOptions) => {
       chosenModules.push(results[currentResult].value);
     }
 
-    chosenModules.forEach((moduleName) => {
-      console.log(getAction(workspace, moduleName, options)); // eslint-disable-line no-console
+    chosenModules.forEach((moduleName, i) => {
+      let output = getAction(workspace, moduleName, options);
+
+      if (chosenModules.length === i + 1) {
+        // remove extra space from last line
+        output = output?.slice(0, -1);
+      }
+
+      console.log(output);
     });
 
     process.exit(0);

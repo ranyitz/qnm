@@ -20,7 +20,6 @@ type YarnLock = Record<
 
 export default class Workspace {
   root: string;
-  lastModifiedFilter: string | undefined;
   packages: Array<Workspace>;
   _modulesMap: ModulesMap | null;
   _packageJson: PackageJson | null;
@@ -28,15 +27,8 @@ export default class Workspace {
   _yarnLock: YarnLock | null;
   _isMonorepo: boolean | null;
 
-  constructor({
-    root,
-    lastModifiedFilter,
-  }: {
-    root: string;
-    lastModifiedFilter?: string;
-  }) {
+  constructor({ root }: { root: string }) {
     this.root = root;
-    this.lastModifiedFilter = lastModifiedFilter;
     this._modulesMap = null;
     this._packageJson = null;
     this._yarnLock = null;
@@ -50,12 +42,6 @@ export default class Workspace {
       this._modulesMap = ModulesMap.loadSync(this.root, this);
 
       if (this._modulesMap.size === 0) {
-        if (this.lastModifiedFilter) {
-          throw new Error(
-            `no modules found for the current filter: "${this.lastModifiedFilter}"`,
-          );
-        }
-
         throw new Error('node_modules directory is empty');
       }
     }
@@ -245,11 +231,9 @@ export default class Workspace {
   static loadSync({
     cwd = process.cwd(),
     traverse = true,
-    lastModifiedFilter,
   }: {
     cwd?: string;
     traverse?: boolean;
-    lastModifiedFilter?: string;
   } = {}): Workspace {
     const root = traverse ? pkgDir.sync(cwd) : cwd;
 
@@ -263,7 +247,7 @@ export default class Workspace {
       throw new Error('could not find node_modules directory');
     }
 
-    const workspace = new Workspace({ root, lastModifiedFilter });
+    const workspace = new Workspace({ root });
 
     if (workspace.isMonorepo) {
       workspace.loadMonorepoPackages();

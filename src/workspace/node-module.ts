@@ -1,14 +1,20 @@
 import fs, { Stats } from 'fs';
 import path from 'path';
 import { PackageJson } from 'type-fest';
-import { readLinkSilent } from '../utils';
+import { readLinkSilent, npmView } from '../utils';
 import Workspace from './workspace';
+
+export type RemoteData = {
+  time: Record<string | 'modified' | 'created', string>;
+  'dist-tags': Record<'latest' | string, string>;
+};
 
 export default class NodeModule {
   name: string;
   nodeModulesPath: string;
   parent?: NodeModule;
   workspace: Workspace;
+  _remoteData: RemoteData | null;
   _packageJson: PackageJson | null;
   _stats: Stats | null;
   _yarnRequiredBy: Set<string> | null;
@@ -30,6 +36,7 @@ export default class NodeModule {
     this.parent = parent;
     this.workspace = workspace;
     this._stats = null;
+    this._remoteData = null;
     this._packageJson = null;
     this._yarnRequiredBy = null;
     this._symlink = null;
@@ -41,6 +48,14 @@ export default class NodeModule {
     }
 
     return this._packageJson;
+  }
+
+  get remoteData(): RemoteData {
+    if (!this._remoteData) {
+      return this.loadRemoteData();
+    }
+
+    return this._remoteData;
   }
 
   get version(): string {
@@ -88,6 +103,29 @@ export default class NodeModule {
     return [];
   }
 
+  get latestVersion(): string {
+    return this.remoteData['dist-tags'].latest;
+  }
+
+  get lastModified(): Date {
+    return new Date(this.remoteData.time.modified);
+  }
+
+  get releaseDate(): Date {
+    if (!this.packageJson.version) {
+      throw new Error(
+        `missing "version" in package.json for module: ${this.path}`,
+      );
+    }
+
+    return new Date(this.remoteData.time[this.packageJson.version]);
+  }
+
+  loadRemoteData() {
+    this._remoteData = npmView(this.name);
+    return this._remoteData;
+  }
+
   addYarnRequiredByDependency(moduleName: string) {
     if (!this._yarnRequiredBy) {
       this._yarnRequiredBy = new Set();
@@ -115,10 +153,6 @@ export default class NodeModule {
     }
 
     return [];
-  }
-
-  get lastModified() {
-    return this.stats.mtime;
   }
 
   toObject(): Record<string, any> {

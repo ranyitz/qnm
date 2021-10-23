@@ -14,19 +14,19 @@ export default (
   workspace: Workspace,
   name: string,
   options: CliOptions = {},
-) => {
+): string | undefined => {
   const moduleOccurrences = workspace.getModuleOccurrences(name);
-  const { open, homepage, repo, lastModifiedFilter } = options;
+  const { open, homepage, repo } = options;
 
   if (isEmpty(moduleOccurrences)) {
     const modulesNames = workspace.getModulesNames();
     const suggestions = getSuggestions(name, modulesNames);
 
-    throw new NotFoundModuleError(name, suggestions, lastModifiedFilter);
+    throw new NotFoundModuleError(name, suggestions);
   }
 
   if (open) {
-    return openPackage(moduleOccurrences, workspace.root);
+    openPackage(moduleOccurrences, workspace.root);
   }
 
   if (homepage || repo) {
@@ -37,7 +37,8 @@ export default (
       if (!packageJson?.homepage) {
         throw new NotFoundHomepageError(name);
       }
-      return opn(packageJson.homepage, { wait: false });
+
+      opn(packageJson.homepage, { wait: false });
     }
 
     if (repo) {
@@ -51,7 +52,7 @@ export default (
         throw new NotFoundRepositoryError(name);
       }
 
-      return opn(repositoryUrl, { wait: false });
+      opn(repositoryUrl, { wait: false });
     }
   }
 
