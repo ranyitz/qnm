@@ -14,7 +14,7 @@ ${underline("How to read qnm's output?")}
                            ${underline('camelcase')} ${green.dim(
     '6.2.0 ↰ 11 months ago',
   )}                 
-${cyan('node_modules/camelcase ->')}  ├── 5.3.1 ${red.dim('⇡')} ${grey(
+${cyan(' node_modules/camelcase →')}  ├── 5.3.1 ${red.dim('⇡')} ${grey(
     '2 years ago',
   )} ${yellow.dim('(boxen, yargs-parser)')}
                            └─┬ ${dim(
@@ -28,5 +28,5 @@ ${cyan('node_modules/camelcase ->')}  ├── 5.3.1 ${red.dim('⇡')} ${grey(
     'dependency of',
   )}
                             ${cyan('↗')}            ${cyan('↖ equal to latest')}
-${cyan('node_modules/jest/node_modules/camelcase')}`;
+${cyan(' node_modules/jest/node_modules/camelcase')}`;
 };

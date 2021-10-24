@@ -10,7 +10,7 @@ import getAction from './actions/get';
 import listAction from './actions/list';
 import fuzzySearchAction from './actions/fuzzy-search';
 import handleError from './handler-error';
-import { getCustomHelp } from './workspace/custom-help';
+import { getCustomHelp } from './custom-help';
 
 const pkg = require('../package.json');
 
