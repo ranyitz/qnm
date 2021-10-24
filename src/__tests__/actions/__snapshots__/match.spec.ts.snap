@@ -2,7 +2,7 @@
 
 exports[`match should disable colors 1`] = `
 "[4m[35mtes[39mt[24m
-└── 1.0.0 [33m(devDependencies, npm install test)[39m
+└── 1.0.0 [2m[33m(devDependencies, npm install test)[39m[22m
 "
 `;
 

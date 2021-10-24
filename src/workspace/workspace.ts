@@ -100,7 +100,7 @@ export default class Workspace {
       const pkg = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
       this._packageJson = pkg;
       return pkg;
-    } catch (error) {
+    } catch (error: any) {
       if (error.code === 'ENOENT') {
         throw new Error(`Couldn't find "package.json" for module ${this.name}`);
       }
@@ -221,12 +221,20 @@ export default class Workspace {
       })
       .forEach((location) => {
         try {
-          this.packages.push(Workspace.loadSync(location, false));
+          this.packages.push(
+            Workspace.loadSync({ cwd: location, traverse: false }),
+          );
         } catch (error) {}
       });
   }
 
-  static loadSync(cwd = process.cwd(), traverse = true): Workspace {
+  static loadSync({
+    cwd = process.cwd(),
+    traverse = true,
+  }: {
+    cwd?: string;
+    traverse?: boolean;
+  } = {}): Workspace {
     const root = traverse ? pkgDir.sync(cwd) : cwd;
 
     if (!root) {

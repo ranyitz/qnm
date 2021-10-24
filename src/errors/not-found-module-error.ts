@@ -16,7 +16,7 @@ function paintDiffInBold(from: string, to: string) {
 
 export default class NotFoundModuleError extends Error {
   constructor(name: string, suggestions: Array<string>) {
-    let message = `Could not find any module by the name "${name}".`;
+    let message = `Could not find any module by the name: "${name}".`;
 
     if (!isEmpty(suggestions)) {
       message += ` Did you mean "${paintDiffInBold(name, suggestions[0])}"?`;

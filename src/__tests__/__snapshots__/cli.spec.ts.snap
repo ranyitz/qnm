@@ -1,52 +1,52 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CLI qnm <module>] should add dependents information on yarn installed package 1`] = `
-"import-from
-└── 3.0.0 (import-cwd)
+"import-from 4.0.0 ↰ just now
+└── 3.0.0 ⇡ just now (import-cwd)
+"
+`;
 
+exports[`CLI qnm <module>] should not show remote info when used with --no-remote 1`] = `
+"test
+└── 1.0.0 (devDependencies, npm install test)
 "
 `;
 
 exports[`CLI qnm <module>] should show an indication in case there is a symlink 1`] = `
-"test
-└── 1.0.0 -> ../../symlink-origin/node_modules/test (devDependencies, npm install test)
-
+"test 0.6.0 ↰ just now
+└── 1.0.0 -> ../../symlink-origin/node_modules/test ⇡ just now (devDependencies, npm install test)
 "
 `;
 
 exports[`CLI qnm <module>] should show get matches when using the match command 1`] = `
 "test
 └── 1.0.0 (devDependencies, npm install test)
-
 "
 `;
 
 exports[`CLI qnm <module>] should show the version and dependents info on a single module when called with a string 1`] = `
-"test
-└── 1.0.0 (devDependencies, npm install test)
-
+"test 0.6.0 ↰ just now
+└── 1.0.0 ⇡ just now (devDependencies, npm install test)
 "
 `;
 
 exports[`CLI qnm <module>] should work in monorepo and print subpackages modules 1`] = `
-"package-foo
-└── 1.0.0
+"package-foo 1.0.0 ↰ just now
+└── 1.0.0 ✓
 
 package-a
-└─┬ package-foo
-  └── 2.0.0
-
+└─┬ package-foo 1.0.0 ↰ just now
+  └── 2.0.0 ⇡ just now
 "
 `;
 
 exports[`CLI qnm <module>] should work in monorepo with yarn workspaces 1`] = `
-"package-foo
-└── 1.0.0
+"package-foo 1.0.0 ↰ just now
+└── 1.0.0 ✓
 
 package-a
-└─┬ package-foo
-  └── 2.0.0
-
+└─┬ package-foo 1.0.0 ↰ just now
+  └── 2.0.0 ⇡ just now
 "
 `;
 
@@ -67,32 +67,32 @@ exports[`CLI qnm list should --disable-colors 1`] = `
 └── 1.0.0
 
 [4mdep-of-dep[24m
-├─┬ [90manotherDependency[39m
+├─┬ [2manotherDependency[22m
 │ └── 1.0.0
-├─┬ [90mdependency1[39m
+├─┬ [2mdependency1[22m
 │ └── 1.0.0
-├─┬ [90mdependency2[39m
+├─┬ [2mdependency2[22m
 │ └── 1.0.0
-├─┬ [90mdevDependency1[39m
+├─┬ [2mdevDependency1[22m
 │ └── 1.0.0
-└─┬ [90mdevDependency2[39m
+└─┬ [2mdevDependency2[22m
   └── 1.0.0
 
 [4mdep-of-dep-of-dep[24m
-├─┬ [90manotherDependency[39m
-│ └─┬ [90mdep-of-dep[39m
+├─┬ [2manotherDependency[22m
+│ └─┬ [2mdep-of-dep[22m
 │   └── 1.0.0
-├─┬ [90mdependency1[39m
-│ └─┬ [90mdep-of-dep[39m
+├─┬ [2mdependency1[22m
+│ └─┬ [2mdep-of-dep[22m
 │   └── 1.0.0
-├─┬ [90mdependency2[39m
-│ └─┬ [90mdep-of-dep[39m
+├─┬ [2mdependency2[22m
+│ └─┬ [2mdep-of-dep[22m
 │   └── 1.0.0
-├─┬ [90mdevDependency1[39m
-│ └─┬ [90mdep-of-dep[39m
+├─┬ [2mdevDependency1[22m
+│ └─┬ [2mdep-of-dep[22m
 │   └── 1.0.0
-└─┬ [90mdevDependency2[39m
-  └─┬ [90mdep-of-dep[39m
+└─┬ [2mdevDependency2[22m
+  └─┬ [2mdep-of-dep[22m
     └── 1.0.0
 
 "
@@ -148,7 +148,10 @@ test
 `;
 
 exports[`CLI qnm list should show modules mentioned in package.json 1`] = `
-"dependency1
+"anotherDependency
+└── 1.0.0
+
+dependency1
 └── 1.0.0
 
 dependency2
@@ -159,6 +162,35 @@ devDependency1
 
 devDependency2
 └── 1.0.0
+
+dep-of-dep
+├─┬ anotherDependency
+│ └── 1.0.0
+├─┬ dependency1
+│ └── 1.0.0
+├─┬ dependency2
+│ └── 1.0.0
+├─┬ devDependency1
+│ └── 1.0.0
+└─┬ devDependency2
+  └── 1.0.0
+
+dep-of-dep-of-dep
+├─┬ anotherDependency
+│ └─┬ dep-of-dep
+│   └── 1.0.0
+├─┬ dependency1
+│ └─┬ dep-of-dep
+│   └── 1.0.0
+├─┬ dependency2
+│ └─┬ dep-of-dep
+│   └── 1.0.0
+├─┬ devDependency1
+│ └─┬ dep-of-dep
+│   └── 1.0.0
+└─┬ devDependency2
+  └─┬ dep-of-dep
+    └── 1.0.0
 
 "
 `;
@@ -180,6 +212,5 @@ package-a
 package-b
 └─┬ package-bar
   └── 3.0.0
-
 "
 `;

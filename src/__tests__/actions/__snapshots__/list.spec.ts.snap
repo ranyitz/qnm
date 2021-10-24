@@ -9,7 +9,7 @@ exports[`list should disable colors 1`] = `
 
 [4mtest[24m
 ├── 1.0.0
-└─┬ [90manother[39m
+└─┬ [2manother[22m
   └── 1.0.0
 "
 `;
@@ -23,7 +23,7 @@ exports[`list should list the versions of mixed modules 1`] = `
 
 [4mtest[24m
 ├── [37m1.0.0[39m
-└─┬ [90manother[39m
+└─┬ [2manother[22m
   └── [37m1.0.0[39m
 "
 `;

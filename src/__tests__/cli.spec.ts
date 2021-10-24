@@ -17,6 +17,7 @@ const runCommand = (
       ...process.env,
       FORCE_COLOR: '0',
       ...env,
+      NODE_ENV: 'test',
     },
     stdio,
     encoding: 'utf-8',
@@ -27,6 +28,13 @@ describe('CLI', () => {
     it('should show the version and dependents info on a single module when called with a string', () => {
       const cwd = resolveFixture('single-module');
       const output = runCommand('test', { cwd });
+
+      expect(output).toMatchSnapshot();
+    });
+
+    it('should not show remote info when used with --no-remote', () => {
+      const cwd = resolveFixture('single-module');
+      const output = runCommand('test --no-remote', { cwd });
 
       expect(output).toMatchSnapshot();
     });
