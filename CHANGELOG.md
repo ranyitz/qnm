@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.0 (Oct 24, 2021)
+* [#76](https://github.com/ranyitz/qnm/pull/76) Show when each package was published, and what is the latest version
+* Drop support for node 10
+
+This is a big change for qnm, we now query the registry and add useful data about the package. This is a tradeoff, since the default behavior now take 2 seconds instead of 200 miliseconds, but it provides a lot of data in a clear way.
+
 ## 1.8.1 (Apr 4, 2021)
 * [#64](https://github.com/ranyitz/qnm/pull/64) Add `--repo` option
 
