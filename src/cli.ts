@@ -92,10 +92,6 @@ try {
   program
     .command('match <string>')
     .description('prints modules which matches the provided string')
-    .option(
-      '--last-modified <date>',
-      'filter by last modified "--last-modified=2 days ago"',
-    )
     .option('--remote', 'fetch remote data')
     .action((string) => {
       const workspace = Workspace.loadSync();

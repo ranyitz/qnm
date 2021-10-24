@@ -45,7 +45,6 @@
     "archy": "^1.0.0",
     "babel-eslint": "^10.0.3",
     "chalk": "^4.1.0",
-    "chrono-node": "^2.3.2",
     "commander": "8",
     "eslint": "^7.15.0",
     "eslint-config-prettier": "^7.0.0",
