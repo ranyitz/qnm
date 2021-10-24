@@ -15,7 +15,7 @@
     <img alt="License" src="https://img.shields.io/npm/l/qnm.svg?style=for-the-badge">
   </a>
   <p align="center">
-    <img src="https://user-images.githubusercontent.com/11733036/138601095-42b34ac7-6fc6-4664-9dfa-a2f2283794ef.png" alt="qnm-help" />
+    <img src="https://user-images.githubusercontent.com/11733036/138602697-29b9f00b-b35b-4db6-9005-e2bba7bd9398.png" alt="qnm-help" />
   </p>
 </p>
 
