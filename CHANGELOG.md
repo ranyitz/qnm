@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.2 (Oct 24, 2021)
+* [#77](https://github.com/ranyitz/qnm/pull/77) Fix CLI help right arrow
+
 ## 2.0.0 (Oct 24, 2021)
 * [#76](https://github.com/ranyitz/qnm/pull/76) Show when each package was published, and what is the latest version
 * Drop support for node 10
