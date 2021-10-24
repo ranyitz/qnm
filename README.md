@@ -15,7 +15,7 @@
     <img alt="License" src="https://img.shields.io/npm/l/qnm.svg?style=for-the-badge">
   </a>
   <p align="center">
-    <img src="./assets/fuzzy-search.gif" alt="fuzzy-search" width="400px" height="400px" />
+    <img src="https://user-images.githubusercontent.com/11733036/138601095-42b34ac7-6fc6-4664-9dfa-a2f2283794ef.png" alt="qnm-help" />
   </p>
 </p>
 
@@ -75,7 +75,7 @@ Which means you have 3 occurrences of lodash in your `node_modules`:
 * The other 2 occurrences of lodash (3.10.1) were released a year ago.
 
 ### Fuzzy-search
-
+<img src="./assets/fuzzy-search.gif" alt="fuzzy-search" width="400px" height="400px" />
 Use `qnm` command without arguments to trigger an [`fzf`](https://github.com/junegunn/fzf) like fuzzy search.
 
 * Start typing to filter the matches from your `node_modules`
