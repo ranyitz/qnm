@@ -20,7 +20,7 @@ describe('get', () => {
     const workspace = resolveWorkspace('single-module');
     try {
       getAction(workspace, 'not-exist');
-    } catch (e) {
+    } catch (e: any) {
       expect(e.message).toMatchSnapshot();
     }
   });
@@ -29,7 +29,7 @@ describe('get', () => {
     const workspace = resolveWorkspace('single-module');
     try {
       getAction(workspace, 'dest');
-    } catch (e) {
+    } catch (e: any) {
       expect(e.message).toMatchSnapshot();
       expect(e.message).toMatchSnapshot();
     }
@@ -77,7 +77,7 @@ describe('get', () => {
 
     try {
       getAction(workspace, 'test', { homepage: true });
-    } catch (e) {
+    } catch (e: any) {
       expect(e.message).toMatchSnapshot();
     }
   });
@@ -87,7 +87,7 @@ describe('get', () => {
 
     try {
       getAction(workspace, 'test', { repo: true });
-    } catch (e) {
+    } catch (e: any) {
       expect(e.message).toMatchSnapshot();
     }
   });

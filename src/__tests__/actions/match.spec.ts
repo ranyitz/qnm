@@ -22,7 +22,7 @@ describe('match', () => {
     const workspace = resolveWorkspace('single-module');
     try {
       matchAction(workspace, 'bla');
-    } catch (e) {
+    } catch (e: any) {
       expect(e.message).toMatchSnapshot();
     }
   });
