@@ -23,7 +23,7 @@
     "test": "jest",
     "lint": "eslint .",
     "watch": "newsh --split 'yarn tsc --watch' && yarn pkg --watch",
-    "pkg": "ncc build build/cli.js -o dist --external tabtab",
+    "pkg": "ncc build build/cli.js -o dist",
     "build": "yarn tsc && yarn pkg",
     "test:watch": "jest --watch",
     "createVersion": "np"
@@ -77,12 +77,10 @@
     "typescript": "^4.1.3"
   },
   "dependencies": {
-    "tabtab": "2",
     "update-notifier": "^5.0.1"
   },
   "bundledDependencies": [
-    "update-notifier",
-    "tabtab"
+    "update-notifier"
   ],
   "lint-staged": {
     "*.js": [

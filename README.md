@@ -29,7 +29,6 @@ _qnm_ aims to get this information **fast** and tries to filter only the importa
 
 ## Features
 
-*   :speech_balloon: Tab completions
 *   :sparkles: Interactive fuzzy-search
 *   :abc: Match all packages with a specific string
 *   :interrobang: Explain why a package was installed
@@ -146,10 +145,6 @@ eslint-plugin-react
 ### homepage
 
 Opens package "homepage" property in your browser. 
-
-### install-completions
-
-Run to install tab completions using [tabtab](https://github.com/mklabs/node-tabtab) (Setup only once)
 
 ## Contributing
 
