@@ -1,10 +1,7 @@
 /* eslint-disable no-console */
-import { spawn } from 'child_process';
 import { program } from 'commander';
 import updateNotifier from 'update-notifier';
-import { clearTerminal } from './actions/helpers/terminal';
 import Workspace from './workspace/workspace';
-import setupCompletions from './completions/setup-completions';
 import matchAction from './actions/match';
 import getAction from './actions/get';
 import listAction from './actions/list';
@@ -54,18 +51,6 @@ try {
     .option('--no-remote', 'do not fetch remote data');
 
   program
-    .command('install-completions')
-    .description('attempt to install tab completions using tabtab')
-    .action(() => {
-      const tabtabCliPath = require.resolve('tabtab/src/cli');
-
-      clearTerminal();
-
-      spawn('node', [tabtabCliPath, 'install'], { stdio: 'inherit' });
-      process.exit(0);
-    });
-
-  program
     .command('list')
     .description('list all node_modules with their versions')
     .option(
@@ -110,8 +95,6 @@ try {
 
   const preDefinedCommands = program.commands.map((c) => c.name());
 
-  setupCompletions(preDefinedCommands);
-
   const workspace = Workspace.loadSync();
 
   const { deps, disableColors, open, homepage, repo, remote } = program.opts();
@@ -130,7 +113,7 @@ try {
   } else {
     const firstArg = program.args[2];
 
-    if (!preDefinedCommands.includes(firstArg) && firstArg !== 'completion') {
+    if (!preDefinedCommands.includes(firstArg)) {
       const [arg] = program.args;
       const output = getAction(workspace, arg, options);
 
