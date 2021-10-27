@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { program } from 'commander';
-import updateNotifier from 'update-notifier';
+import updateNotifier from 'update-notifier-webpack';
 import Workspace from './workspace/workspace';
 import matchAction from './actions/match';
 import getAction from './actions/get';

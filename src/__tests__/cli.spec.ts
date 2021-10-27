@@ -80,7 +80,7 @@ describe('CLI', () => {
 
       try {
         runCommand('test', { cwd, stdio: 'pipe' });
-      } catch (error) {
+      } catch (error: any) {
         expect(error.message).toMatch('Did you mean "@scope/test"');
       }
     });
