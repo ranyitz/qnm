@@ -1,8 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CLI qnm <module>] should add dependents information on yarn installed package 1`] = `
-"import-from 4.0.0 ↰ just now
-└── 3.0.0 ⇡ just now (import-cwd)
+"import-from 3.0.0 ↰ just now
+└── 3.0.0 ✓ (import-cwd)
+"
+`;
+
+exports[`CLI qnm <module>] should mark bundleDependencies 1`] = `
+"test 3.0.0 ↰ just now
+└─┬ dep
+  └── 1.0.0 (bundledDependencies) ⇡ just now
+"
+`;
+
+exports[`CLI qnm <module>] should mark bundledDependencies 1`] = `
+"test 3.0.0 ↰ just now
+└─┬ dep
+  └── 1.0.0 (bundledDependencies) ⇡ just now
 "
 `;
 
@@ -13,7 +27,7 @@ exports[`CLI qnm <module>] should not show remote info when used with --no-remot
 `;
 
 exports[`CLI qnm <module>] should show an indication in case there is a symlink 1`] = `
-"test 0.6.0 ↰ just now
+"test 3.0.0 ↰ just now
 └── 1.0.0 -> ../../symlink-origin/node_modules/test ⇡ just now (devDependencies, npm install test)
 "
 `;
@@ -25,27 +39,27 @@ exports[`CLI qnm <module>] should show get matches when using the match command 
 `;
 
 exports[`CLI qnm <module>] should show the version and dependents info on a single module when called with a string 1`] = `
-"test 0.6.0 ↰ just now
+"test 3.0.0 ↰ just now
 └── 1.0.0 ⇡ just now (devDependencies, npm install test)
 "
 `;
 
 exports[`CLI qnm <module>] should work in monorepo and print subpackages modules 1`] = `
-"package-foo 1.0.0 ↰ just now
-└── 1.0.0 ✓
+"package-foo 3.0.0 ↰ just now
+└── 1.0.0 ⇡ just now
 
 package-a
-└─┬ package-foo 1.0.0 ↰ just now
+└─┬ package-foo 3.0.0 ↰ just now
   └── 2.0.0 ⇡ just now
 "
 `;
 
 exports[`CLI qnm <module>] should work in monorepo with yarn workspaces 1`] = `
-"package-foo 1.0.0 ↰ just now
-└── 1.0.0 ✓
+"package-foo 3.0.0 ↰ just now
+└── 1.0.0 ⇡ just now
 
 package-a
-└─┬ package-foo 1.0.0 ↰ just now
+└─┬ package-foo 3.0.0 ↰ just now
   └── 2.0.0 ⇡ just now
 "
 `;

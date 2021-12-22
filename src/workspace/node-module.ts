@@ -134,6 +134,20 @@ export default class NodeModule {
     this._yarnRequiredBy.add(moduleName);
   }
 
+  get isbundledDependency() {
+    if (
+      !Array.isArray(this.parent?.packageJson.bundledDependencies) &&
+      !Array.isArray(this.parent?.packageJson.bundleDependencies)
+    ) {
+      return false;
+    }
+
+    return (
+      this.parent?.packageJson.bundledDependencies?.includes(this.name) ||
+      this.parent?.packageJson.bundleDependencies?.includes(this.name)
+    );
+  }
+
   get whyInfo() {
     const requiredByInfo = this.requiredBy;
 

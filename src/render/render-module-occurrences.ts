@@ -33,6 +33,7 @@ const getVersionDiffSymbol = (
       return '';
   }
 };
+
 const formatTime = (date: Date): string => {
   if (process.env.NODE_ENV === 'test') {
     return 'just now';
@@ -60,6 +61,10 @@ const buildWithAncestors = (m: NodeModule, { noColor, remote }: CliOptions) => {
     ? terminalLink(version, path.join('File:///', m.path, 'package.json'))
     : version;
   const symlink = m.symlink ? chalk.magenta(` -> ${m.symlink}`) : '';
+  // const bundledDependencies = '';
+  const bundledDependencies = m.isbundledDependency
+    ? chalk.dim.cyan(' (bundledDependencies)')
+    : '';
 
   let releaseDate = '';
   let versionDiffSymbol = '';
@@ -74,7 +79,12 @@ const buildWithAncestors = (m: NodeModule, { noColor, remote }: CliOptions) => {
   }
 
   const information =
-    versionWithLink + symlink + versionDiffSymbol + releaseDate + whyInfo;
+    versionWithLink +
+    bundledDependencies +
+    symlink +
+    versionDiffSymbol +
+    releaseDate +
+    whyInfo;
 
   let hierarchy: Array<TreeNode> = [information];
 
