@@ -61,7 +61,7 @@ const buildWithAncestors = (m: NodeModule, { noColor, remote }: CliOptions) => {
     ? terminalLink(version, path.join('File:///', m.path, 'package.json'))
     : version;
   const symlink = m.symlink ? chalk.magenta(` -> ${m.symlink}`) : '';
-  // const bundledDependencies = '';
+
   const bundledDependencies = m.isbundledDependency
     ? chalk.dim.cyan(' (bundledDependencies)')
     : '';

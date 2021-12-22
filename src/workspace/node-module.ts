@@ -135,16 +135,19 @@ export default class NodeModule {
   }
 
   get isbundledDependency() {
+    const bundledDependencies = this.parent?.packageJson.bundledDependencies;
+    const bundleDependencies = this.parent?.packageJson.bundleDependencies;
+
     if (
-      !Array.isArray(this.parent?.packageJson.bundledDependencies) &&
-      !Array.isArray(this.parent?.packageJson.bundleDependencies)
+      !Array.isArray(bundledDependencies) &&
+      !Array.isArray(bundleDependencies)
     ) {
       return false;
     }
 
     return (
-      this.parent?.packageJson.bundledDependencies?.includes(this.name) ||
-      this.parent?.packageJson.bundleDependencies?.includes(this.name)
+      bundledDependencies?.includes(this.name) ||
+      bundleDependencies?.includes(this.name)
     );
   }
 
