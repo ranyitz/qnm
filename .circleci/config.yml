@@ -39,9 +39,10 @@ jobs:
   test-node-latest:
     docker:
       - image: circleci/node:latest
+    environment:
+      - NODE_OPTIONS: --openssl-legacy-provider
     steps:
       - checkout
-      - run: export NODE_OPTIONS=--openssl-legacy-provider
       - run: yarn
       - run: yarn build
       - run: yarn test
