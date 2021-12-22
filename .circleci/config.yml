@@ -41,6 +41,7 @@ jobs:
       - image: circleci/node:latest
     steps:
       - checkout
+      - run: export NODE_OPTIONS=--openssl-legacy-provider
       - run: yarn
       - run: yarn build
       - run: yarn test
