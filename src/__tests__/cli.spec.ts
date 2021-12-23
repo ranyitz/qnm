@@ -84,6 +84,20 @@ describe('CLI', () => {
         expect(error.message).toMatch('Did you mean "@scope/test"');
       }
     });
+
+    it('should mark bundledDependencies', () => {
+      const cwd = resolveFixture('bundled-dependencies');
+      const output = runCommand('test', { cwd });
+
+      expect(output).toMatchSnapshot();
+    });
+
+    it('should mark bundleDependencies', () => {
+      const cwd = resolveFixture('bundle-dependencies');
+      const output = runCommand('test', { cwd });
+
+      expect(output).toMatchSnapshot();
+    });
   });
 
   describe('qnm list', () => {

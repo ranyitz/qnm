@@ -17,6 +17,16 @@ export function readLinkSilent(p: string): string | null {
 const viewMap = new Map();
 
 export function npmView(packageName: string): RemoteData {
+  if (process.env.NODE_ENV === 'test') {
+    return {
+      time: {
+        created: Date.now().toString(),
+        modified: Date.now().toString(),
+      },
+      'dist-tags': { latest: '3.0.0' },
+    };
+  }
+
   if (viewMap.has(packageName)) {
     return viewMap.get(packageName);
   }
