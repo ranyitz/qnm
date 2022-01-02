@@ -4,6 +4,7 @@ import pkgDir from 'pkg-dir';
 import { PackageJson } from 'type-fest';
 import { parse as parseYarnLock } from '@yarnpkg/lockfile';
 import globby from 'globby';
+import zip from 'lodash/zip';
 import { isTruthy } from '../utils';
 import ModulesMap from './modules-map';
 import NodeModule from './node-module';
@@ -153,6 +154,39 @@ export default class Workspace {
 
   list() {
     return Array.from(this.modulesMap);
+  }
+
+  async listHeavyModules(sortType: 'duplicates' | 'size') {
+    const promises: Array<Promise<number>> = [];
+    const modules: Array<string> = [];
+    const quantity: Array<number> = [];
+
+    this.modulesMap.forEach((moduleOccurences, moduleName) => {
+      promises.push(
+        Promise.all(
+          moduleOccurences.map((nodeModule) => nodeModule.getSize()),
+        ).then((arr) => arr.reduce((x, y) => x + y, 0)),
+      );
+
+      modules.push(moduleName);
+      quantity.push(moduleOccurences.length);
+    });
+
+    const sizes = await Promise.all(promises);
+    const modulesWithSizes = zip(modules, sizes, quantity);
+    return modulesWithSizes
+      .sort((firstEl, secondEl) => {
+        if (sortType === 'size') {
+          return secondEl[1]! - firstEl[1]!;
+        }
+
+        if (sortType === 'duplicates') {
+          return secondEl[2]! - firstEl[2]!;
+        }
+
+        throw new Error('this does not suppose to happen');
+      })
+      .slice(0, 10);
   }
 
   listPackagesModuleOccurrences() {

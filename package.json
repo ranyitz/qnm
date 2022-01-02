@@ -33,6 +33,7 @@
   "devDependencies": {
     "@babel/core": "^7.7.2",
     "@types/archy": "^0.0.31",
+    "@types/get-folder-size": "2",
     "@types/jest": "^26.0.19",
     "@types/js-levenshtein": "^1.1.0",
     "@types/lodash": "^4.14.148",
@@ -59,6 +60,7 @@
     "execa": "^5.1.1",
     "figures": "^3.1.0",
     "fuzzysort": "^1.1.1",
+    "get-folder-size": "2",
     "globby": "^11.0.1",
     "husky": "^4.3.6",
     "jest": "^26.6.3",
