@@ -19,7 +19,8 @@ export default (workspace: Workspace, options: CliOptions = {}) => {
   }
 
   if (workspace.isMonorepo) {
-    const packagesModuleOccurrencesList = workspace.listPackagesModuleOccurrences();
+    const packagesModuleOccurrencesList =
+      workspace.listPackagesModuleOccurrences();
 
     return renderMonorepoList(
       moduleOccurrencesList,

@@ -136,14 +136,13 @@ export default class NodeModule {
   }
 
   /**
-   * return the size of the modules in kb
+   * return the size of the modules in mb
    */
   getSize(): Promise<number> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       getFolderSize(this.path, (err, size) => {
         if (err) {
           console.error(err);
-          // throw err;
         }
 
         resolve(Number((size / 1024 / 1024).toFixed(2)));

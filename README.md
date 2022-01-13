@@ -37,6 +37,8 @@ _qnm_ aims to get this information **fast** and tries to filter only the importa
 
 ## Installation
 
+> If you don't want to install qnm, you can also prepend the command with `npx`
+
 ```bash
 npm i --global qnm
 ```
@@ -101,6 +103,21 @@ Disables the most of colors and styling. E.g. version colors.
 
 ## Commands
 
+### doctor
+
+> experimental
+
+Shows the heaviest modules in your `node_modules`. Helpful if you want to understand what's taking the most space on your `node_modules` directory.
+
+```bash
+qnm doctor
+```
+
+sort the modules based on the amount of duplications they have in your `node_modules`.
+
+```bash
+qnm doctor --sort duplicates
+```
 ### list
 
 > alias: ls

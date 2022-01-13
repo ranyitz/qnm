@@ -17,9 +17,8 @@ export default (
   }
 
   if (workspace.isMonorepo) {
-    const packagesModuleOccurrencesList = workspace.matchPackagesModuleOccurrences(
-      match,
-    );
+    const packagesModuleOccurrencesList =
+      workspace.matchPackagesModuleOccurrences(match);
 
     return renderMonorepoList(
       moduleOccurrencesList,
