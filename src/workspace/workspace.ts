@@ -156,7 +156,7 @@ export default class Workspace {
     return Array.from(this.modulesMap);
   }
 
-  async listHeavyModules(sortType: 'duplicates' | 'size') {
+  async listHeavyModules(sortType: 'duplicates' | 'size', limit: number) {
     const promises: Array<Promise<number>> = [];
     const modules: Array<string> = [];
     const quantity: Array<number> = [];
@@ -165,7 +165,7 @@ export default class Workspace {
       promises.push(
         Promise.all(
           moduleOccurences.map((nodeModule) => nodeModule.getSize()),
-        ).then((arr) => arr.reduce((x, y) => x + y, 0)),
+        ).then((arr) => +arr.reduce((x, y) => x + y, 0).toFixed(2)),
       );
 
       modules.push(moduleName);
@@ -186,7 +186,7 @@ export default class Workspace {
 
         throw new Error('this does not suppose to happen');
       })
-      .slice(0, 10);
+      .slice(0, limit);
   }
 
   listPackagesModuleOccurrences() {

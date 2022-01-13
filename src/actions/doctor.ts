@@ -1,28 +1,18 @@
-import isEmpty from 'lodash/isEmpty';
-import NoModulesError from '../errors/no-modules-error';
-import renderModuleList from '../render/render-module-list';
 import Workspace from '../workspace/workspace';
 import { CliOptions } from '../cli';
-// import { renderMonorepoList } from '../render/render-monorepo';
+import renderDoctor from '../render/render-doctor';
+import { spinner } from '../spinner';
 
 export default async (workspace: Workspace, options: CliOptions = {}) => {
-  const moduleOccurrencesList = await workspace.listHeavyModules(options.sort!);
+  spinner.start();
 
-  console.log(moduleOccurrencesList);
-  if (isEmpty(moduleOccurrencesList)) {
-    throw new NoModulesError();
-  }
+  const doctorAnalysis = await workspace.listHeavyModules(options.sort!, 20);
 
-  if (workspace.isMonorepo) {
-    // const packagesModuleOccurrencesList =
-    //   workspace.listPackagesModuleOccurrences();
-    // return renderMonorepoList(
-    //   moduleOccurrencesList,
-    //   packagesModuleOccurrencesList,
-    //   options,
-    // );
-  }
+  spinner.stop();
 
-  // console.log(moduleOccurrencesList);
-  // return renderModuleList(moduleOccurrencesList, options);
+  return renderDoctor(doctorAnalysis);
+
+  // if (workspace.isMonorepo) {
+  //   // TODO
+  // }
 };
