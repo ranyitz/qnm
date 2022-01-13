@@ -83,7 +83,7 @@ try {
 
   program
     .command('doctor')
-    .description('explain cool stuff')
+    .description('Shows the 20 heaviest modules in your `node_modules`')
     .option(
       '--sort <sort>',
       'sort by duplicates/size using --sort=duplicates, default to size',
