@@ -1,6 +1,6 @@
 {
   "name": "qnm",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "cli utility for querying the node_modules directory",
   "bin": {
     "qnm": "bin/qnm.js"
