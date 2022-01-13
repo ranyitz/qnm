@@ -1,6 +1,7 @@
 import fs, { Stats } from 'fs';
 import path from 'path';
 import { PackageJson } from 'type-fest';
+import getFolderSize from 'get-folder-size';
 import { readLinkSilent, npmView } from '../utils';
 import Workspace from './workspace';
 
@@ -132,6 +133,21 @@ export default class NodeModule {
     }
 
     this._yarnRequiredBy.add(moduleName);
+  }
+
+  /**
+   * return the size of the modules in mb
+   */
+  getSize(): Promise<number> {
+    return new Promise((resolve) => {
+      getFolderSize(this.path, (err, size) => {
+        if (err) {
+          console.error(err);
+        }
+
+        resolve(Number((size / 1024 / 1024).toFixed(2)));
+      });
+    });
   }
 
   get isbundledDependency() {

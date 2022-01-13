@@ -93,8 +93,8 @@ export default class ModulesMap extends Map<string, Array<NodeModule>> {
     // Assign requiredBy using package.json dependencies/devDependencies
     this.forEach((moduleOccurrences, moduleName) => {
       const workspaceDependencies = this.workspace.packageJson.dependencies;
-      const workspaceDevDependencies = this.workspace.packageJson
-        .devDependencies;
+      const workspaceDevDependencies =
+        this.workspace.packageJson.devDependencies;
 
       if (
         workspaceDependencies &&

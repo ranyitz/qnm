@@ -5,6 +5,7 @@ import Workspace from './workspace/workspace';
 import matchAction from './actions/match';
 import getAction from './actions/get';
 import listAction from './actions/list';
+import doctorAction from './actions/doctor';
 import fuzzySearchAction from './actions/fuzzy-search';
 import handleError from './handler-error';
 import { getCustomHelp } from './custom-help';
@@ -22,6 +23,7 @@ export type CliOptions = {
   match?: string;
   disableColors?: boolean;
   remote?: string;
+  sort?: 'duplicates' | 'size';
 };
 
 try {
@@ -39,6 +41,11 @@ try {
       "open module's repository in the default browser if present",
     )
     .option('--remote', 'fetch remote data')
+    .option(
+      '--sort <sort>',
+      'sort by duplicates/size using --sort=duplicates, default to size',
+      'size',
+    )
     .option('--no-remote', 'do not fetch remote data');
 
   program
@@ -71,6 +78,40 @@ try {
         }),
       );
 
+      process.exit(0);
+    });
+
+  program
+    .command('doctor')
+    .description('explain cool stuff')
+    .option(
+      '--sort <sort>',
+      'sort by duplicates/size using --sort=duplicates, default to size',
+      'size',
+    )
+    .action(async () => {
+      const options = program.opts();
+
+      const workspace = Workspace.loadSync({});
+
+      const sortTypes = ['duplicates', 'size'];
+
+      const sort = options.sort;
+
+      if (!sortTypes.includes(sort)) {
+        throw new Error(
+          `--sort must to be one of the following ${sortTypes.map(
+            (t) => `\n> ${t}`,
+          )}`,
+        );
+      }
+
+      const doctorReport = await doctorAction(workspace, {
+        noColor: options.disableColors,
+        sort,
+      });
+
+      console.log(doctorReport);
       process.exit(0);
     });
 
@@ -111,7 +152,7 @@ try {
   if (program.args.filter((arg: string) => !arg.startsWith('-')).length === 0) {
     fuzzySearchAction(workspace, options);
   } else {
-    const firstArg = program.args[2];
+    const firstArg = program.args[0];
 
     if (!preDefinedCommands.includes(firstArg)) {
       const [arg] = program.args;
