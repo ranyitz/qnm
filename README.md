@@ -118,6 +118,9 @@ sort the modules based on the amount of duplications they have in your `node_mod
 ```bash
 qnm doctor --sort duplicates
 ```
+
+![image](https://user-images.githubusercontent.com/11733036/149247765-74247703-a7ce-4476-9b2e-7be31d4d672e.png)
+
 ### list
 
 > alias: ls
