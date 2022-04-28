@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import { program } from 'commander';
+// @ts-expect-error 
 import updateNotifier from 'update-notifier-webpack';
 import Workspace from './workspace/workspace';
 import matchAction from './actions/match';
