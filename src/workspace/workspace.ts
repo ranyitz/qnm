@@ -2,7 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import pkgDir from 'pkg-dir';
 import { PackageJson } from 'type-fest';
-import { parseSyml as parseYarnLock } from '@yarnpkg/parsers';
+import { parseSyml as parseYarnLock, parseResolution } from '@yarnpkg/parsers';
+import type { Resolution } from '@yarnpkg/parsers';
 import globby from 'globby';
 import zip from 'lodash/zip';
 import { isTruthy } from '../utils';
@@ -22,19 +23,16 @@ type YarnLock = Record<
 export default class Workspace {
   root: string;
   packages: Array<Workspace>;
-  _modulesMap: ModulesMap | null;
-  _packageJson: PackageJson | null;
-  _isYarn: boolean | null;
-  _yarnLock: YarnLock | null;
-  _isMonorepo: boolean | null;
+  _modulesMap: ModulesMap | null = null;
+  _packageJson: PackageJson | null = null;
+  _isYarn: boolean | null = null;
+  _yarnLock: YarnLock | null = null;
+  _isMonorepo: boolean | null = null;
+  _resolutions: Array<{ pattern: Resolution; reference: string }> | null = null;
+  _resolutionsList: Array<string> | null = null;
 
   constructor({ root }: { root: string }) {
     this.root = root;
-    this._modulesMap = null;
-    this._packageJson = null;
-    this._yarnLock = null;
-    this._isYarn = null;
-    this._isMonorepo = null;
     this.packages = [];
   }
 
@@ -93,6 +91,37 @@ export default class Workspace {
     }
 
     return this._isYarn!;
+  }
+
+  get resolutionsList(): any {
+    if (!this._resolutionsList) {
+      this._resolutions = [];
+      this._resolutionsList = [];
+
+      if (
+        typeof this.packageJson.resolutions === `object` &&
+        this.packageJson.resolutions !== null
+      ) {
+        for (const [pattern, reference] of Object.entries(
+          this.packageJson.resolutions
+        )) {
+          try {
+            const parsedResolution = parseResolution(pattern);
+
+            this._resolutions.push({
+              pattern: parsedResolution,
+              reference,
+            });
+
+            this._resolutionsList.push(parsedResolution.descriptor.fullName);
+          } catch (error) {
+            console.log('error parsing resolutions', error);
+          }
+        }
+      }
+    }
+
+    return this._resolutionsList;
   }
 
   loadPackageJson(): PackageJson {

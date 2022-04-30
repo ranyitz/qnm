@@ -150,6 +150,15 @@ export default class NodeModule {
     });
   }
 
+  get isResolutions(): boolean {
+    const resolutions = this.workspace?.resolutionsList;
+    if (!Array.isArray(resolutions)) {
+      return false;
+    }
+
+    return resolutions.includes(this.name);
+  }
+
   get isbundledDependency() {
     const bundledDependencies = this.parent?.packageJson.bundledDependencies;
     const bundleDependencies = this.parent?.packageJson.bundleDependencies;

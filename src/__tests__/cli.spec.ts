@@ -99,6 +99,13 @@ describe('CLI', () => {
       expect(output).toMatchSnapshot();
     });
 
+    it('should mark resolutions', () => {
+      const cwd = resolveFixture('resolutions');
+      const output = runCommand('test', { cwd });
+
+      expect(output).toMatchSnapshot();
+    });
+
     it('should mark bundleDependencies', () => {
       const cwd = resolveFixture('bundle-dependencies');
       const output = runCommand('test', { cwd });
