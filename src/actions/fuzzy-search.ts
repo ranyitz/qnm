@@ -76,7 +76,7 @@ const toggleMarking = ({
     : chosenModules.concat(value);
 };
 
-export default (workspace: Workspace, options: CliOptions) => {
+export default (workspace: Workspace, options: CliOptions): void => {
   let results: Array<Result> = [];
   let chosenModules: Array<string> = [];
   let currentResult = 0;

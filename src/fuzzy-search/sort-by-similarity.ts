@@ -3,7 +3,7 @@ import fuzzysort from 'fuzzysort';
 export default (
   list: Array<string>,
   string: string
-): { value: string; score: number; highlight: string | null } => {
+): Array<{ value: string; score: number; highlight: string }> => {
   return (
     fuzzysort
       .go(string, list, {
