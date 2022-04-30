@@ -13,7 +13,7 @@ import openPackage from './helpers/open';
 export default (
   workspace: Workspace,
   name: string,
-  options: CliOptions = {},
+  options: CliOptions = {}
 ): string | undefined => {
   const moduleOccurrences = workspace.getModuleOccurrences(name);
   const { open, homepage, repo } = options;
@@ -63,7 +63,7 @@ export default (
     return renderMonorepo(
       moduleOccurrences,
       packagesModuleOccurrences,
-      options,
+      options
     );
   }
 

@@ -115,7 +115,7 @@ export default class NodeModule {
   get releaseDate(): Date {
     if (!this.packageJson.version) {
       throw new Error(
-        `missing "version" in package.json for module: ${this.path}`,
+        `missing "version" in package.json for module: ${this.path}`
       );
     }
 

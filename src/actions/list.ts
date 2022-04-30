@@ -25,7 +25,7 @@ export default (workspace: Workspace, options: CliOptions = {}) => {
     return renderMonorepoList(
       moduleOccurrencesList,
       packagesModuleOccurrencesList,
-      options,
+      options
     );
   }
 

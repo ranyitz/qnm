@@ -1,4 +1,4 @@
 {
-    "lerna": "3.15.0",
-    "useWorkspaces": true
+  "lerna": "3.15.0",
+  "useWorkspaces": true
 }

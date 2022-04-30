@@ -120,7 +120,7 @@ export default class Workspace {
   }
 
   getPackagesModuleOccurrences(
-    packageName: string,
+    packageName: string
   ): Array<[string, Array<NodeModule>]> {
     return this.packages
       .map((packageWorkspace) => {
@@ -137,14 +137,14 @@ export default class Workspace {
   }
 
   matchPackagesModuleOccurrences(
-    str: string,
+    str: string
   ): Array<[string, Array<[string, Array<NodeModule>]>]> {
     return this.packages
       .map((packageWorkspace) => {
         try {
           return [packageWorkspace.name, packageWorkspace.match(str)] as [
             string,
-            Array<[string, Array<NodeModule>]>,
+            Array<[string, Array<NodeModule>]>
           ];
         } catch (error) {
           return null;
@@ -165,8 +165,8 @@ export default class Workspace {
     this.modulesMap.forEach((moduleOccurences, moduleName) => {
       promises.push(
         Promise.all(
-          moduleOccurences.map((nodeModule) => nodeModule.getSize()),
-        ).then((arr) => +arr.reduce((x, y) => x + y, 0).toFixed(2)),
+          moduleOccurences.map((nodeModule) => nodeModule.getSize())
+        ).then((arr) => +arr.reduce((x, y) => x + y, 0).toFixed(2))
       );
 
       modules.push(moduleName);
@@ -196,7 +196,7 @@ export default class Workspace {
         try {
           return [packageWorkspace.name!, packageWorkspace.list()] as [
             string,
-            Array<[string, Array<NodeModule>]>,
+            Array<[string, Array<NodeModule>]>
           ];
         } catch (error) {
           return null;
@@ -257,9 +257,11 @@ export default class Workspace {
       .forEach((location) => {
         try {
           this.packages.push(
-            Workspace.loadSync({ cwd: location, traverse: false }),
+            Workspace.loadSync({ cwd: location, traverse: false })
           );
-        } catch (error) {}
+        } catch (error) {
+          // console.error('failed loading workspace', location);
+        }
       });
   }
 

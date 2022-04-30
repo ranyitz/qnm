@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 const cursor = require('ansi')(process.stdout);
 
 const signs = ['|', '/', '-', '\\'];

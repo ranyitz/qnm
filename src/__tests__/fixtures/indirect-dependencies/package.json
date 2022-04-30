@@ -1,12 +1,12 @@
 {
-    "name": "indirect-dependencies",
-    "version": "1.0.0",
-    "devDependencies": {
-        "devDependency1": "1.0.0",
-        "devDependency2": "1.0.0"
-    },
-    "dependencies": {
-        "dependency1": "1.0.0",
-        "dependency2": "1.0.0"
-    }
+  "name": "indirect-dependencies",
+  "version": "1.0.0",
+  "devDependencies": {
+    "devDependency1": "1.0.0",
+    "devDependency2": "1.0.0"
+  },
+  "dependencies": {
+    "dependency1": "1.0.0",
+    "dependency2": "1.0.0"
+  }
 }

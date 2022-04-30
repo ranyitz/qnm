@@ -16,6 +16,6 @@ it('should colorize the first 10 results', () => {
 
 it('should start colors for each module from the first color', () => {
   expect(renderVersion('colorEqualityTest', 'foo')).toEqual(
-    renderVersion('colorEqualityTest2', 'foo'),
+    renderVersion('colorEqualityTest2', 'foo')
   );
 });

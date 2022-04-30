@@ -1,4 +1,3 @@
-
 <p align="center">
   <img src="https://gist.githubusercontent.com/ranyitz/ede5da04d74ccd9d40fc8a804d9a7a1a/raw/644d69caaa3145ede932a67c86b27f1c051eb3c6/qnm-logo.svg" alt="qnm-logo"/>
 </p>
@@ -29,11 +28,11 @@ _qnm_ aims to get this information **fast** and tries to filter only the importa
 
 ## Features
 
-*   :sparkles: Interactive fuzzy-search
-*   :abc: Match all packages with a specific string
-*   :interrobang: Explain why a package was installed
-*   :books: Supports monorepos
-*   :clock12: Show when a version was release and what is the latest version
+- :sparkles: Interactive fuzzy-search
+- :abc: Match all packages with a specific string
+- :interrobang: Explain why a package was installed
+- :books: Supports monorepos
+- :clock12: Show when a version was release and what is the latest version
 
 ## Installation
 
@@ -72,21 +71,23 @@ Which means you have 3 occurrences of lodash in your `node_modules`:
 2.  `./node_module/cli-table2/node_modules/lodash`
 3.  `./node_module/karma/node_modules/lodash`
 
-* The latest version of lodash is 4.17.21, it was published 2 days ago.
-* The other 2 occurrences of lodash (3.10.1) were released a year ago.
+- The latest version of lodash is 4.17.21, it was published 2 days ago.
+- The other 2 occurrences of lodash (3.10.1) were released a year ago.
 
 ### Fuzzy-search
+
 <img src="./assets/fuzzy-search.gif" alt="fuzzy-search" width="400px" height="400px" />
 Use `qnm` command without arguments to trigger an [`fzf`](https://github.com/junegunn/fzf) like fuzzy search.
 
-* Start typing to filter the matches from your `node_modules`
-* Use arrows to move cursor up and down
-* `Enter` key to select the item, `CTRL-C` / `ESC` to exit
-* `TAB` and `Shift-TAB` to mark multiple items
+- Start typing to filter the matches from your `node_modules`
+- Use arrows to move cursor up and down
+- `Enter` key to select the item, `CTRL-C` / `ESC` to exit
+- `TAB` and `Shift-TAB` to mark multiple items
 
 ## Options
 
 ### --no-remote
+
 do not fetch remote data from npm, use this if you want qnm to run faster. qnm will show limited view.
 
 ### -o , --open
@@ -131,9 +132,9 @@ Returns a list of all modules in node_modules directory.
 qnm list
 ```
 
-| Optional arguments |                          Description                          |
-| ------------------ | :-----------------------------------------------------------: |
-| `--deps`           | List the versions of direct dependencies and devDependencies. |
+| Optional arguments |                                       Description                                       |
+| ------------------ | :-------------------------------------------------------------------------------------: |
+| `--deps`           |              List the versions of direct dependencies and devDependencies.              |
 | `--remote`         | Fetch remote data, this may be very slow for many packages due to many network requests |
 
 ### match
@@ -158,13 +159,13 @@ eslint-plugin-react
 └── 6.10.3
 ```
 
-| Optional arguments |                          Description                          |
-| ------------------ | :-----------------------------------------------------------: |
+| Optional arguments |                                       Description                                       |
+| ------------------ | :-------------------------------------------------------------------------------------: |
 | `--remote`         | Fetch remote data, this may be very slow for many packages due to many network requests |
 
 ### homepage
 
-Opens package "homepage" property in your browser. 
+Opens package "homepage" property in your browser.
 
 ## Contributing
 

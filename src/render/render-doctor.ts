@@ -34,7 +34,7 @@ export default (doctorAnalysis: DoctorAnalysis): string => {
   const maxSize = Math.max(
     ...doctorAnalysis.map(([, size]) => {
       return size!;
-    }),
+    })
   );
 
   const sizePadding = Math.round(maxSize).toString().length + 5;
@@ -42,7 +42,7 @@ export default (doctorAnalysis: DoctorAnalysis): string => {
   const maxCount = Math.max(
     ...doctorAnalysis.map(([, , count]) => {
       return count!;
-    }),
+    })
   );
 
   const countPadding = Math.round(maxCount).toString().length;
@@ -72,7 +72,7 @@ export default (doctorAnalysis: DoctorAnalysis): string => {
       return `${padEnd(
         `${sizeInMB}${chalk.dim('mb')}`,
         sizePadding,
-        ' ',
+        ' '
       )} ${renderCount(count!, countPadding)} ${name}`;
     }),
   ].join('\n');
