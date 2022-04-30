@@ -66,6 +66,8 @@ const buildWithAncestors = (m: NodeModule, { noColor, remote }: CliOptions) => {
     ? chalk.dim.cyan(' (bundledDependencies)')
     : '';
 
+  const resolutions = m.isResolutions ? chalk.dim.cyan(' (resolutions)') : '';
+
   let releaseDate = '';
   let versionDiffSymbol = '';
 
@@ -81,6 +83,7 @@ const buildWithAncestors = (m: NodeModule, { noColor, remote }: CliOptions) => {
   const information =
     versionWithLink +
     bundledDependencies +
+    resolutions +
     symlink +
     versionDiffSymbol +
     releaseDate +
