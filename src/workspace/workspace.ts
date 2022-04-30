@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import pkgDir from 'pkg-dir';
 import { PackageJson } from 'type-fest';
-import { parse as parseYarnLock } from '@yarnpkg/lockfile';
+import { parseSyml as parseYarnLock } from '@yarnpkg/parsers';
 import globby from 'globby';
 import zip from 'lodash/zip';
 import { isTruthy } from '../utils';
@@ -62,7 +62,8 @@ export default class Workspace {
     if (!this._yarnLock) {
       const yarnLockPath = path.join(this.root, 'yarn.lock');
       const rawYarnLock = fs.readFileSync(yarnLockPath, 'utf8');
-      const yarnLock = parseYarnLock(rawYarnLock).object as YarnLock;
+      const yarnLock = parseYarnLock(rawYarnLock) as YarnLock;
+
       this._yarnLock = yarnLock;
     }
 

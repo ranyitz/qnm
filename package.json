@@ -1,6 +1,6 @@
 {
   "name": "qnm",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "cli utility for querying the node_modules directory",
   "bin": "bin/qnm.js",
   "repository": "ranyitz/qnm",
@@ -41,7 +41,7 @@
     "@typescript-eslint/eslint-plugin": "^4.10.0",
     "@typescript-eslint/parser": "^4.10.0",
     "@vercel/ncc": "^0.33.1",
-    "@yarnpkg/lockfile": "^1.1.0",
+    "@yarnpkg/parsers": "^3.0.0-rc.3",
     "ansi": "^0.3.1",
     "archy": "^1.0.0",
     "auto-changelog": "^2.3.0",
