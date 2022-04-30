@@ -1,5 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`CLI qnm <module>] should add dependents information on yarn 3 installed package 1`] = `
+"resolve-from 3.0.0 ↰ just now
+└── 5.0.0 ⇡ just now (resolve-cwd)
+"
+`;
+
 exports[`CLI qnm <module>] should add dependents information on yarn installed package 1`] = `
 "import-from 3.0.0 ↰ just now
 └── 3.0.0 ✓ (import-cwd)

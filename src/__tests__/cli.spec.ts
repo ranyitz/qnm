@@ -53,6 +53,13 @@ describe('CLI', () => {
       expect(output).toMatchSnapshot();
     });
 
+    it('should add dependents information on yarn 3 installed package', () => {
+      const cwd = resolveFixture('yarn-3');
+      const output = runCommand('resolve-from', { cwd });
+
+      expect(output).toMatchSnapshot();
+    });
+
     it('should show an indication in case there is a symlink', () => {
       const cwd = resolveFixture('symlink');
       const output = runCommand('test', { cwd });
