@@ -8,7 +8,7 @@ import { CliOptions } from '../cli';
 export default (
   workspace: Workspace,
   match: string,
-  options: CliOptions = {},
+  options: CliOptions = {}
 ) => {
   const moduleOccurrencesList = workspace.match(match);
 
@@ -23,7 +23,7 @@ export default (
     return renderMonorepoList(
       moduleOccurrencesList,
       packagesModuleOccurrencesList,
-      { ...options, match },
+      { ...options, match }
     );
   }
 

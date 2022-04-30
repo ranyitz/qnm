@@ -1,6 +1,9 @@
 import fuzzysort from 'fuzzysort';
 
-export default (list: Array<string>, string: string) => {
+export default (
+  list: Array<string>,
+  string: string
+): Array<{ value: string; score: number; highlight: string }> => {
   return (
     fuzzysort
       .go(string, list, {
@@ -8,7 +11,7 @@ export default (list: Array<string>, string: string) => {
         limit: 16, // Don't return more results than this (lower is faster)
         allowTypo: true, // Allwos a snigle transpoes (false is faster)
       })
-      // @ts-ignore
+      // @ts-expect-error sort does exists on the results type
       .sort((a, b) => a.score < b.score)
       .map((result: Fuzzysort.Result) => {
         return {

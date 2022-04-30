@@ -9,7 +9,7 @@ const runCommand = (
     cwd,
     env,
     stdio,
-  }: { cwd: string; env?: Record<string, any>; stdio?: StdioOptions },
+  }: { cwd: string; env?: Record<string, any>; stdio?: StdioOptions }
 ) =>
   execSync(`${qnmBin} ${command}`, {
     cwd,

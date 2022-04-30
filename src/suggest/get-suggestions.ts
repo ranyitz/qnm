@@ -3,7 +3,7 @@ import levenshtein from 'js-levenshtein';
 export default (
   input: string,
   options: Array<string>,
-  maxDistance: number = 2,
+  maxDistance = 2
 ): Array<string> => {
   for (const option of options) {
     if (

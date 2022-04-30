@@ -55,7 +55,7 @@ const renderItem = ({ state, result }: { state: State; result: Result }) => {
     }
     case 'current&marked': {
       return `${chalk.red(figures.pointer)}${chalk.magenta(
-        figures.pointer,
+        figures.pointer
       )}${chalk.bold(result.highlight)}`;
     }
     default: {
@@ -76,7 +76,7 @@ const toggleMarking = ({
     : chosenModules.concat(value);
 };
 
-export default (workspace: Workspace, options: CliOptions) => {
+export default (workspace: Workspace, options: CliOptions): void => {
   let results: Array<Result> = [];
   let chosenModules: Array<string> = [];
   let currentResult = 0;
@@ -102,7 +102,7 @@ export default (workspace: Workspace, options: CliOptions) => {
   const renderInputValue = () => {
     if (currentInputValue === '') {
       return `${chalk.cyan(figures.pointer)} ${chalk.inverse(' ')} ${chalk.grey(
-        'start typing to use the fuzzy search',
+        'start typing to use the fuzzy search'
       )}`;
     }
 
@@ -115,7 +115,7 @@ export default (workspace: Workspace, options: CliOptions) => {
 
   const renderUi = () => {
     logUpdate(
-      `${renderInputValue()}\n${renderAmountOfResults()}\n${renderResults()}`,
+      `${renderInputValue()}\n${renderAmountOfResults()}\n${renderResults()}`
     );
   };
 

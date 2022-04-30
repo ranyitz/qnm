@@ -33,7 +33,7 @@ export default class ModulesMap extends Map<string, Array<NodeModule>> {
 
     if (!moduleOccurrences) {
       throw new Error(
-        `The node module "${name}" does not exist in ${this.root}`,
+        `The node module "${name}" does not exist in ${this.root}`
       );
     }
 
@@ -67,8 +67,8 @@ export default class ModulesMap extends Map<string, Array<NodeModule>> {
           if (process.env.DEBUG === 'true') {
             console.error(
               chalk.dim(
-                `Warning: The module ${dependency} specified in yarn.lock but is not on the file system`,
-              ),
+                `Warning: The module ${dependency} specified in yarn.lock but is not on the file system`
+              )
             );
           }
           // Do not fail in this case, maybe the user is intereseted in a different module
@@ -81,7 +81,7 @@ export default class ModulesMap extends Map<string, Array<NodeModule>> {
           if (!nodeModule.parent) {
             const moduleName = moduleAndVerison.slice(
               0,
-              moduleAndVerison.lastIndexOf('@'),
+              moduleAndVerison.lastIndexOf('@')
             );
 
             nodeModule.addYarnRequiredByDependency(moduleName);
@@ -137,7 +137,7 @@ export default class ModulesMap extends Map<string, Array<NodeModule>> {
           modulesNames.map((name) => {
             if (isScope(name)) {
               const subScopeModules = fs.readdirSync(
-                path.join(nodeModulesPath, name),
+                path.join(nodeModulesPath, name)
               );
 
               return subScopeModules.map((subName) => {
@@ -165,9 +165,9 @@ export default class ModulesMap extends Map<string, Array<NodeModule>> {
             modulesMap.addModule(name, nodeModule);
 
             return nodeModule;
-          }),
+          })
         ).forEach((nodeModule) =>
-          traverseNodeModules(nodeModule.path, nodeModule),
+          traverseNodeModules(nodeModule.path, nodeModule)
         );
       }
     }

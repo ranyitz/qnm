@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { program } from 'commander';
-// @ts-expect-error 
+// @ts-expect-error doesn't have type definitions
 import updateNotifier from 'update-notifier-webpack';
 import Workspace from './workspace/workspace';
 import matchAction from './actions/match';
@@ -11,6 +11,7 @@ import fuzzySearchAction from './actions/fuzzy-search';
 import handleError from './handler-error';
 import { getCustomHelp } from './custom-help';
 
+// eslint-disable-next-line
 const pkg = require('../package.json');
 
 updateNotifier({ pkg }).notify();
@@ -39,13 +40,13 @@ try {
     .option('--homepage', "open module's homepage using the default browser")
     .option(
       '--repo',
-      "open module's repository in the default browser if present",
+      "open module's repository in the default browser if present"
     )
     .option('--remote', 'fetch remote data')
     .option(
       '--sort <sort>',
       'sort by duplicates/size using --sort=duplicates, default to size',
-      'size',
+      'size'
     )
     .option('--no-remote', 'do not fetch remote data');
 
@@ -63,7 +64,7 @@ try {
     .description('list all node_modules with their versions')
     .option(
       '--deps',
-      'list dependencies and devDependencies based on package.json.',
+      'list dependencies and devDependencies based on package.json.'
     )
     .option('--remote', 'fetch remote data')
     .action(() => {
@@ -76,7 +77,7 @@ try {
           deps: options.deps,
           noColor: options.disableColors,
           remote: options.remote,
-        }),
+        })
       );
 
       process.exit(0);
@@ -88,7 +89,7 @@ try {
     .option(
       '--sort <sort>',
       'sort by duplicates/size using --sort=duplicates, default to size',
-      'size',
+      'size'
     )
     .action(async () => {
       const options = program.opts();
@@ -102,8 +103,8 @@ try {
       if (!sortTypes.includes(sort)) {
         throw new Error(
           `--sort must to be one of the following ${sortTypes.map(
-            (t) => `\n> ${t}`,
-          )}`,
+            (t) => `\n> ${t}`
+          )}`
         );
       }
 
@@ -128,7 +129,7 @@ try {
         matchAction(workspace, string, {
           noColor: options.disableColors,
           remote: options.remote,
-        }).slice(0, -1),
+        }).slice(0, -1)
       );
       process.exit(0);
     });

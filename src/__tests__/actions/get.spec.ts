@@ -99,7 +99,7 @@ describe('get', () => {
 
       expect(open).toHaveBeenCalledWith(
         expect.stringMatching(/node_modules\/dep\/package.json/),
-        expect.any(Object),
+        expect.any(Object)
       );
     });
 
@@ -112,22 +112,22 @@ describe('get', () => {
           choices: expect.arrayContaining([
             expect.objectContaining({
               title: expect.stringMatching(
-                /node_modules\/dependency2\/package.json -/,
+                /node_modules\/dependency2\/package.json -/
               ),
               value: expect.stringMatching(
-                /node_modules\/dependency2\/package.json/,
+                /node_modules\/dependency2\/package.json/
               ),
             }),
             expect.objectContaining({
               title: expect.stringMatching(
-                /node_modules\/dependency1\/node_modules\/dependency2\/package.json -/,
+                /node_modules\/dependency1\/node_modules\/dependency2\/package.json -/
               ),
               value: expect.stringMatching(
-                /node_modules\/dependency1\/node_modules\/dependency2\/package.json/,
+                /node_modules\/dependency1\/node_modules\/dependency2\/package.json/
               ),
             }),
           ]),
-        }),
+        })
       );
     });
   });

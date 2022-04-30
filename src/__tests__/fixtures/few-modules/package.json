@@ -1,8 +1,8 @@
 {
-    "name": "few-modules",
-    "version": "1.0.0",
-    "dependencies": {
-        "dependency1": "1.0.0",
-        "dependency2": "1.0.0"
-    }
+  "name": "few-modules",
+  "version": "1.0.0",
+  "dependencies": {
+    "dependency1": "1.0.0",
+    "dependency2": "1.0.0"
   }
+}

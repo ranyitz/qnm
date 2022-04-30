@@ -8,7 +8,7 @@
     "sourceMap": true,
     "strict": true,
     "skipLibCheck": true,
-    
+
     /* Additional Checks */
     "noUnusedLocals": false,
     "noUnusedParameters": false,
@@ -20,8 +20,5 @@
     "esModuleInterop": true,
     "resolveJsonModule": true
   },
-  "include": [
-      "src/**/*",
-      "src/**/*.json"
-  ]
+  "include": ["src/**/*", "src/**/*.json"]
 }

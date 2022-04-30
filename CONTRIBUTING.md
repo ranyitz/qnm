@@ -13,6 +13,7 @@ Please provide us with an issue in case you've found a bug, want a new feature, 
 Good pull requests, such as patches, improvements, and new features, are a fantastic help. They should remain focused in scope and avoid containing unrelated commits.
 
 ## Local Setup
+
 Fork the repo, clone, install dependencies and run the tests:
 
 ```
@@ -37,7 +38,7 @@ In order to run the tests in watch mode ([jest](https://github.com/facebook/jest
 
 ```
 yarn test:watch
-``` 
+```
 
 ### Lint
 
@@ -45,6 +46,6 @@ In order to run the linter ([eslint](https://github.com/eslint/eslint)), run the
 
 ```
 yarn lint
-``` 
+```
 
-* The linter will run before commit on staged files, using [husky](https://github.com/typicode/husky) and [lint-stage](https://github.com/okonet/lint-staged).
+- The linter will run before commit on staged files, using [husky](https://github.com/typicode/husky) and [lint-stage](https://github.com/okonet/lint-staged).

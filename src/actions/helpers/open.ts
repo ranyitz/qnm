@@ -12,7 +12,7 @@ const getPkgJsonPath = (nodeModulesPath: string, packageName: string) =>
 
 export default function openPackage(
   moduleOccurrences: Array<NodeModule>,
-  root: string,
+  root: string
 ) {
   if (moduleOccurrences.length === 1) {
     const { nodeModulesPath, name: packageName } = moduleOccurrences[0];
@@ -30,7 +30,7 @@ export default function openPackage(
         title: `${relativePath} - ${chalk.yellow(version)}`,
         value: absolutePath,
       };
-    },
+    }
   );
 
   clearTerminal();

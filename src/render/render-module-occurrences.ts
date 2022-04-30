@@ -13,7 +13,7 @@ import renderVersion from './render-version';
 
 const getVersionDiffSymbol = (
   version: string,
-  latestVersion: string,
+  latestVersion: string
 ): string => {
   const diff = semver.diff(latestVersion, version);
 
@@ -103,14 +103,14 @@ const buildWithAncestors = (m: NodeModule, { noColor, remote }: CliOptions) => {
 export default (
   moduleOccurrences: Array<NodeModule>,
   { match, noColor, remote }: CliOptions = {},
-  monorepoPackageName?: string,
+  monorepoPackageName?: string
 ) => {
   const moduleName = highlightMatch(moduleOccurrences[0].name, match!);
   const buildedOccurrences = moduleOccurrences.map((m) =>
     buildWithAncestors(m, {
       noColor,
       remote,
-    }),
+    })
   );
 
   let latestInfo = '';
