@@ -1,7 +1,5 @@
 /* eslint-disable no-console */
 import { program } from 'commander';
-// @ts-expect-error doesn't have type definitions
-import updateNotifier from 'update-notifier-webpack';
 import Workspace from './workspace/workspace';
 import matchAction from './actions/match';
 import getAction from './actions/get';
@@ -13,8 +11,6 @@ import { getCustomHelp } from './custom-help';
 
 // eslint-disable-next-line
 const pkg = require('../package.json');
-
-updateNotifier({ pkg }).notify();
 
 export type CliOptions = {
   deps?: boolean;
