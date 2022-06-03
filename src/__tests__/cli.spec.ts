@@ -11,7 +11,7 @@ const runCommand = (
     stdio,
   }: { cwd: string; env?: Record<string, any>; stdio?: StdioOptions }
 ) =>
-  execSync(`${qnmBin} ${command}`, {
+  execSync(`node "${qnmBin}" ${command}`, {
     cwd,
     env: {
       ...process.env,
