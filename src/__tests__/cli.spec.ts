@@ -63,8 +63,15 @@ describe('CLI', () => {
     it('should show an indication in case there is a symlink', () => {
       const isWindows = /^win/.test(process.platform);
 
-      // doesn't work on windows at the moment
       if (isWindows) {
+        const cwd = resolveFixture('symlink');
+        // symlinks in windows are a bit different
+        const output = runCommand('test-windows', { cwd });
+
+        // the snapshot must look similar to the one on windows
+        expect(
+          output.replaceAll('-windows', '').replaceAll('\\', '/')
+        ).toMatchSnapshot();
         return;
       }
 
