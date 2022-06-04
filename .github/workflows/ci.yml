@@ -23,7 +23,7 @@ jobs:
     strategy:
       matrix:
         node_version: ['12', '14', '16']
-        os: [ubuntu-latest, windows-2016, macOS-latest]
+        os: [ubuntu-22.04, windows-2022, macos-12]
 
     steps:
       - uses: actions/checkout@v2
