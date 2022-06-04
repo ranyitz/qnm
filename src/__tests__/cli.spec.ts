@@ -1,5 +1,7 @@
 import { execSync, StdioOptions } from 'child_process';
 import { resolveFixture } from './utils';
+// @ts-expect-error no typings
+import replaceall from 'replaceall';
 
 const qnmBin = require.resolve('../../bin/qnm');
 
@@ -70,7 +72,7 @@ describe('CLI', () => {
 
         // the snapshot must look similar to the one on windows
         expect(
-          output.replaceAll('-windows', '').replaceAll('\\', '/')
+          replaceall('\\', '/', replaceall('-windows', '', output))
         ).toMatchSnapshot();
         return;
       }

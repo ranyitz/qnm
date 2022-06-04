@@ -71,6 +71,7 @@
     "pkg-dir": "^5.0.0",
     "prettier": "^2.2.1",
     "prompts": "^2.3.0",
+    "replaceall": "^0.1.6",
     "semver": "^7.3.5",
     "strip-ansi": "^7.0.1",
     "terminal-link": "^2.1.1",
