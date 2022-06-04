@@ -1,0 +1,39 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 14
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+
+      - name: install and lint
+        run: |
+          yarn
+          yarn lint
+
+  test:
+    name: Test on node ${{ matrix.node_version }} and ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node_version: ['12', '14', '16']
+        os: [ubuntu-latest, windows-2016, macOS-latest]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node_version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node_version }}
+
+      - name: install, build, test
+        run: |
+          yarn
+          yarn build
+          yarn test
