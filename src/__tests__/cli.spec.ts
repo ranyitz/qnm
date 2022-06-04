@@ -61,6 +61,13 @@ describe('CLI', () => {
     });
 
     it('should show an indication in case there is a symlink', () => {
+      const isWindows = /^win/.test(process.platform);
+
+      // doesn't work on windows at the moment
+      if (isWindows) {
+        return;
+      }
+
       const cwd = resolveFixture('symlink');
       const output = runCommand('test', { cwd });
 
