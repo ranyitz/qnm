@@ -4,6 +4,7 @@ jest.mock('prompts', () => {
 });
 
 import open from 'open';
+import path from 'path';
 import prompts from 'prompts';
 import getAction from '../../actions/get';
 import { resolveWorkspace } from '../utils';
@@ -93,12 +94,21 @@ describe('get', () => {
   });
 
   describe('--open', () => {
+    const isWindows = /^win/.test(process.platform);
+
     it('should open module file directory when --open flag used', () => {
       const workspace = resolveWorkspace('three-levels-deep');
       getAction(workspace, 'dep', { open: true });
 
+      let expectedPath = path.join('node_modules', 'dep', 'package.json');
+
+      if (isWindows) {
+        const sep = path.sep + path.sep;
+        expectedPath = `node_modules` + sep + 'dep' + sep + 'package.json';
+      }
+
       expect(open).toHaveBeenCalledWith(
-        expect.stringMatching(/node_modules\/dep\/package.json/),
+        expect.stringMatching(expectedPath),
         expect.any(Object)
       );
     });
@@ -106,6 +116,11 @@ describe('get', () => {
     it('should open correct module file when --open flag used with few packages matched', () => {
       const workspace = resolveWorkspace('few-modules');
       getAction(workspace, 'dependency2', { open: true });
+
+      // it's not critical to run this on windows
+      if (isWindows) {
+        return;
+      }
 
       expect(prompts).toHaveBeenCalledWith(
         expect.objectContaining({

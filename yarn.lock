@@ -4599,6 +4599,7 @@ __metadata:
     pkg-dir: ^5.0.0
     prettier: ^2.2.1
     prompts: ^2.3.0
+    replaceall: ^0.1.6
     semver: ^7.3.5
     strip-ansi: ^7.0.1
     terminal-link: ^2.1.1
@@ -4647,6 +4648,13 @@ __metadata:
   version: 3.2.0
   resolution: "regexpp@npm:3.2.0"
   checksum: a78dc5c7158ad9ddcfe01aa9144f46e192ddbfa7b263895a70a5c6c73edd9ce85faf7c0430e59ac38839e1734e275b9c3de5c57ee3ab6edc0e0b1bdebefccef8
+  languageName: node
+  linkType: hard
+
+"replaceall@npm:^0.1.6":
+  version: 0.1.6
+  resolution: "replaceall@npm:0.1.6"
+  checksum: 2396fdc6f10b7ed7c8c0298455840473a028a81e29087bc02a37cc3ff1e85467534e0992a1b45bcdb3e99370db656d260bec7bd422819b708009f060ba8b4dbe
   languageName: node
   linkType: hard
 

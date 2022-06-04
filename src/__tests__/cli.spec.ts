@@ -1,5 +1,7 @@
 import { execSync, StdioOptions } from 'child_process';
 import { resolveFixture } from './utils';
+// @ts-expect-error no typings
+import replaceall from 'replaceall';
 
 const qnmBin = require.resolve('../../bin/qnm');
 
@@ -61,6 +63,20 @@ describe('CLI', () => {
     });
 
     it('should show an indication in case there is a symlink', () => {
+      const isWindows = /^win/.test(process.platform);
+
+      if (isWindows) {
+        const cwd = resolveFixture('symlink');
+        // symlinks in windows are a bit different
+        const output = runCommand('test-windows', { cwd });
+
+        // the snapshot must look similar to the one on windows
+        expect(
+          replaceall('\\', '/', replaceall('-windows', '', output))
+        ).toMatchSnapshot();
+        return;
+      }
+
       const cwd = resolveFixture('symlink');
       const output = runCommand('test', { cwd });
 

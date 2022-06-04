@@ -141,7 +141,8 @@ export default class ModulesMap extends Map<string, Array<NodeModule>> {
               );
 
               return subScopeModules.map((subName) => {
-                const fullName = path.join(name, subName);
+                const fullName = `${name}/${subName}`;
+
                 const nodeModule = new NodeModule({
                   nodeModulesPath,
                   name: fullName,
