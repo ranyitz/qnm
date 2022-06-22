@@ -5,7 +5,6 @@ import NotFoundModuleError from '../errors/not-found-module-error';
 import NotFoundHomepageError from '../errors/not-found-homepage-error';
 import NotFoundRepositoryError from '../errors/not-found-repository-error';
 import renderModuleOccurrences from '../render/render-module-occurrences';
-import { renderMonorepo } from '../render/render-monorepo';
 import Workspace from '../workspace/workspace';
 import { CliOptions } from '../cli';
 import openPackage from './helpers/open';
@@ -15,6 +14,10 @@ export default (
   name: string,
   options: CliOptions = {}
 ): string | undefined => {
+  if (workspace.isPackageInMonorepo) {
+    return getPackageInMonorepo(workspace, name, options);
+  }
+
   const moduleOccurrences = workspace.getModuleOccurrences(name);
   const { open, homepage, repo } = options;
 
@@ -56,16 +59,18 @@ export default (
     }
   }
 
-  if (workspace.isMonorepo) {
-    const packagesModuleOccurrences =
-      workspace.getPackagesModuleOccurrences(name);
-
-    return renderMonorepo(
-      moduleOccurrences,
-      packagesModuleOccurrences,
-      options
-    );
-  }
-
   return renderModuleOccurrences(moduleOccurrences, options);
+};
+
+const getPackageInMonorepo = (
+  workspace: Workspace,
+  name: string,
+  options: CliOptions = {}
+) => {
+  const rootModuleOccurences =
+    workspace.parentMonorepo.getModuleOccurrences(name);
+
+  return (
+    renderModuleOccurrences(rootModuleOccurences, options, workspace.name)
+  );
 };

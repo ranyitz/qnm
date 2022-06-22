@@ -23,11 +23,11 @@ type YarnLock = Record<
 export default class Workspace {
   root: string;
   packages: Array<Workspace>;
+  _parentMonorepo: Workspace | null = null;
   _modulesMap: ModulesMap | null = null;
   _packageJson: PackageJson | null = null;
   _isYarn: boolean | null = null;
   _yarnLock: YarnLock | null = null;
-  _isMonorepo: boolean | null = null;
   _resolutions: Array<{ pattern: Resolution; reference: string }> | null = null;
   _resolutionsList: Array<string> | null = null;
 
@@ -72,15 +72,26 @@ export default class Workspace {
     return this.packageJson.name;
   }
 
-  get isMonorepo(): boolean {
-    if (this._isMonorepo === null) {
-      const lernaJsonPath = path.join(this.root, 'lerna.json');
+  get isPackageInMonorepo(): boolean {
+    const maybeMonrepoRoot = pkgDir.sync(path.dirname(this.root));
+    const maybeParentMonorepo = Workspace.loadSync({ cwd: maybeMonrepoRoot });
+    const isPackageInMonorepo = maybeParentMonorepo
+      .getMonorepoPackages()
+      .includes(this.root);
 
-      this._isMonorepo =
-        !!this.packageJson.workspaces || fs.existsSync(lernaJsonPath);
+    if (isPackageInMonorepo) {
+      this._parentMonorepo = maybeParentMonorepo;
     }
 
-    return this._isMonorepo;
+    return isPackageInMonorepo;
+  }
+
+  get parentMonorepo(): Workspace {
+    if (this.isPackageInMonorepo) {
+      return this._parentMonorepo!;
+    } else {
+      throw new Error('not a package in a monorepo');
+    }
   }
 
   get isYarn(): boolean {
@@ -259,7 +270,16 @@ export default class Workspace {
     return this.list().filter(([name]) => name.includes(str));
   }
 
-  loadMonorepoPackages(): void {
+  get isMonorepo(): boolean {
+    const lernaJsonPath = path.join(this.root, 'lerna.json');
+
+    return !!this.packageJson.workspaces || fs.existsSync(lernaJsonPath);
+  }
+
+  // return a list of absolut paths of packages
+  getMonorepoPackages(): Array<string> {
+    if (!this.isMonorepo) return [];
+
     let packages;
 
     const workspaces = this.packageJson.workspaces as Workspaces;
@@ -283,21 +303,11 @@ export default class Workspace {
       console.warn(`packages data wasn't loaded`);
     }
 
-    globby
-      .sync(packages, {
-        absolute: true,
-        onlyDirectories: true,
-        cwd: this.root,
-      })
-      .forEach((location) => {
-        try {
-          this.packages.push(
-            Workspace.loadSync({ cwd: location, traverse: false })
-          );
-        } catch (error) {
-          // console.error('failed loading workspace', location);
-        }
-      });
+    return globby.sync(packages, {
+      absolute: true,
+      onlyDirectories: true,
+      cwd: this.root,
+    });
   }
 
   static loadSync({
@@ -320,10 +330,6 @@ export default class Workspace {
     }
 
     const workspace = new Workspace({ root });
-
-    if (workspace.isMonorepo) {
-      workspace.loadMonorepoPackages();
-    }
 
     return workspace;
   }

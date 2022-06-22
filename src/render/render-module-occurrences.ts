@@ -11,6 +11,9 @@ import NodeModule from '../workspace/node-module';
 import { CliOptions } from '../cli';
 import renderVersion from './render-version';
 
+const renderSymlink = (m: NodeModule): string =>
+  m.symlink ? chalk.magenta(` -> ${m.symlink}`) : '';
+
 const getVersionDiffSymbol = (
   version: string,
   latestVersion: string
@@ -54,13 +57,18 @@ const getWhyInfo = (m: NodeModule) => {
 
 type TreeNode = { label: string; nodes: Array<TreeNode> } | string;
 
-const buildWithAncestors = (m: NodeModule, { noColor, remote }: CliOptions) => {
+const buildWithAncestors = (
+  m: NodeModule,
+  { noColor, remote }: CliOptions,
+  cwdModuleName?: string
+) => {
   const whyInfo = getWhyInfo(m);
   const version = noColor ? m.version : renderVersion(m.name, m.version);
   const versionWithLink = isTerminalLinkSupported
     ? terminalLink(version, path.join('File:///', m.path, 'package.json'))
     : version;
-  const symlink = m.symlink ? chalk.magenta(` -> ${m.symlink}`) : '';
+
+  const symlink = renderSymlink(m);
 
   const bundledDependencies = m.isbundledDependency
     ? chalk.dim.cyan(' (bundledDependencies)')
@@ -96,7 +104,19 @@ const buildWithAncestors = (m: NodeModule, { noColor, remote }: CliOptions) => {
 
     while (currentModule.parent) {
       currentModule = currentModule.parent;
-      hierarchy = [{ label: chalk.dim(currentModule.name), nodes: hierarchy }];
+
+      const cwdModuleMark =
+        cwdModuleName === currentModule.name ? chalk.bold` (cwd)` : '';
+
+      hierarchy = [
+        {
+          label:
+            chalk.dim(currentModule.name) +
+            renderSymlink(currentModule) +
+            cwdModuleMark,
+          nodes: hierarchy,
+        },
+      ];
     }
   }
 
@@ -106,14 +126,18 @@ const buildWithAncestors = (m: NodeModule, { noColor, remote }: CliOptions) => {
 export default (
   moduleOccurrences: Array<NodeModule>,
   { match, noColor, remote }: CliOptions = {},
-  monorepoPackageName?: string
+  cwdModuleName?: string
 ) => {
   const moduleName = highlightMatch(moduleOccurrences[0].name, match!);
   const buildedOccurrences = moduleOccurrences.map((m) =>
-    buildWithAncestors(m, {
-      noColor,
-      remote,
-    })
+    buildWithAncestors(
+      m,
+      {
+        noColor,
+        remote,
+      },
+      cwdModuleName
+    )
   );
 
   let latestInfo = '';
@@ -148,13 +172,6 @@ export default (
     label: chalk.underline(moduleName) + latestInfo,
     nodes: buildedOccurrences,
   };
-
-  if (monorepoPackageName) {
-    return archy({
-      label: chalk.bold(monorepoPackageName),
-      nodes: [packageInfo],
-    });
-  }
 
   return archy(packageInfo);
 };

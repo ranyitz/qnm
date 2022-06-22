@@ -11,8 +11,4 @@ export default async (workspace: Workspace, options: CliOptions = {}) => {
   spinner.stop();
 
   return renderDoctor(doctorAnalysis);
-
-  // if (workspace.isMonorepo) {
-  //   // TODO
-  // }
 };
