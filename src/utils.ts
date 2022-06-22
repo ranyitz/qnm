@@ -23,6 +23,7 @@ export function npmView(packageName: string): RemoteData {
         created: Date.now().toString(),
         modified: Date.now().toString(),
       },
+      versions: ['2.3.4', '3.0.0'],
       'dist-tags': { latest: '3.0.0' },
     };
   }

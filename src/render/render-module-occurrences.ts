@@ -119,10 +119,28 @@ export default (
   let latestInfo = '';
 
   if (remote) {
-    const latest = moduleOccurrences[0].latestVersion;
-    const latestLastModified = moduleOccurrences[0].latestLastModified;
+    const {
+      latestVersion,
+      latestLastModified,
+      maxVersionInSameMajor,
+      maxVersionInSameMajorLastModified,
+    } = moduleOccurrences[0];
+
+    let maxVersionInSameMajorStr = '';
+
+    if (
+      latestVersion !== maxVersionInSameMajor &&
+      maxVersionInSameMajorLastModified
+    ) {
+      maxVersionInSameMajorStr = ` | ${maxVersionInSameMajor} ↰ ${formatTime(
+        maxVersionInSameMajorLastModified
+      )}`;
+    }
+
     latestInfo = chalk.green.dim(
-      ` ${latest} ↰ ${formatTime(latestLastModified)}`
+      ` ${latestVersion} ↰ ${formatTime(
+        latestLastModified
+      )}${maxVersionInSameMajorStr}`
     );
   }
 
