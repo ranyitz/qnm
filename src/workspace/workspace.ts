@@ -75,7 +75,9 @@ export default class Workspace {
   get isMonorepo(): boolean {
     if (this._isMonorepo === null) {
       const lernaJsonPath = path.join(this.root, 'lerna.json');
-      this._isMonorepo = fs.existsSync(lernaJsonPath);
+
+      this._isMonorepo =
+        !!this.packageJson.workspaces || fs.existsSync(lernaJsonPath);
     }
 
     return this._isMonorepo;
@@ -258,19 +260,22 @@ export default class Workspace {
   }
 
   loadMonorepoPackages(): void {
-    const lernaJsonPath = path.join(this.root, 'lerna.json');
-    const lernaJson = JSON.parse(fs.readFileSync(lernaJsonPath, 'utf8'));
+    let packages;
 
-    let packages = lernaJson.packages;
+    const workspaces = this.packageJson.workspaces as Workspaces;
 
-    if (lernaJson.useWorkspaces === true) {
-      const workspaces = this.packageJson.workspaces as Workspaces;
-
+    // yarn workspaces
+    if (workspaces) {
       if (!Array.isArray(workspaces)) {
-        packages = workspaces?.packages;
+        packages = workspaces.packages;
       } else {
         packages = workspaces;
       }
+    } else {
+      const lernaJsonPath = path.join(this.root, 'lerna.json');
+      const lernaJson = JSON.parse(fs.readFileSync(lernaJsonPath, 'utf8'));
+
+      packages = lernaJson.packages;
     }
 
     if (!packages) {
@@ -282,6 +287,7 @@ export default class Workspace {
       .sync(packages, {
         absolute: true,
         onlyDirectories: true,
+        cwd: this.root,
       })
       .forEach((location) => {
         try {
