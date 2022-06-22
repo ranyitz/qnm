@@ -4,7 +4,7 @@ import renderModuleOccurrences from './render-module-occurrences';
 
 export default (
   moduleOccurrencesList: Array<[string, Array<NodeModule>]>,
-  options: CliOptions,
+  options: CliOptions
 ): string => {
   return moduleOccurrencesList
     .map(([, moduleOccurrences]) =>

@@ -70,7 +70,5 @@ const getPackageInMonorepo = (
   const rootModuleOccurences =
     workspace.parentMonorepo.getModuleOccurrences(name);
 
-  return (
-    renderModuleOccurrences(rootModuleOccurences, options, workspace.name)
-  );
+  return renderModuleOccurrences(rootModuleOccurences, options, workspace.name);
 };
