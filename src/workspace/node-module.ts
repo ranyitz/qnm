@@ -4,9 +4,12 @@ import { PackageJson } from 'type-fest';
 import getFolderSize from 'get-folder-size';
 import { readLinkSilent, npmView } from '../utils';
 import Workspace from './workspace';
+import semverMaxSatisfying from 'semver/ranges/max-satisfying';
+import semver from 'semver';
 
 export type RemoteData = {
   time: Record<string | 'modified' | 'created', string>;
+  versions: Array<string>;
   'dist-tags': Record<'latest' | string, string>;
 };
 
@@ -110,6 +113,19 @@ export default class NodeModule {
 
   get latestLastModified(): Date {
     return new Date(this.remoteData.time[this.latestVersion]);
+  }
+
+  get maxVersionInSameMajor(): string | null {
+    return semverMaxSatisfying(
+      this.remoteData.versions,
+      `^${semver.clean(this.version)}`
+    );
+  }
+
+  get maxVersionInSameMajorLastModified(): Date | null {
+    if (!this.maxVersionInSameMajor) return null;
+
+    return new Date(this.remoteData.time[this.maxVersionInSameMajor]);
   }
 
   get releaseDate(): Date {

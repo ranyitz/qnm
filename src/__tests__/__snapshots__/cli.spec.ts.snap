@@ -27,7 +27,7 @@ exports[`CLI qnm <module>] should mark bundledDependencies 1`] = `
 `;
 
 exports[`CLI qnm <module>] should mark resolutions 1`] = `
-"test 3.0.0 ↰ just now
+"test 3.0.0 ↰ just now | 2.3.4 ↰ just now
 └─┬ dep
   └── 2.0.0 (resolutions) ⇡ just now
 "
@@ -62,7 +62,7 @@ exports[`CLI qnm <module>] should work in monorepo and print subpackages modules
 └── 1.0.0 ⇡ just now
 
 package-a
-└─┬ package-foo 3.0.0 ↰ just now
+└─┬ package-foo 3.0.0 ↰ just now | 2.3.4 ↰ just now
   └── 2.0.0 ⇡ just now
 "
 `;
@@ -72,7 +72,7 @@ exports[`CLI qnm <module>] should work in monorepo with yarn workspaces 1`] = `
 └── 1.0.0 ⇡ just now
 
 package-a
-└─┬ package-foo 3.0.0 ↰ just now
+└─┬ package-foo 3.0.0 ↰ just now | 2.3.4 ↰ just now
   └── 2.0.0 ⇡ just now
 "
 `;
