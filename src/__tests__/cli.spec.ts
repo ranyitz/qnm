@@ -83,18 +83,18 @@ describe('CLI', () => {
       expect(output).toMatchSnapshot();
     });
 
-    it('should work in monorepo and print subpackages modules', () => {
+    it('should work in monorepo', () => {
       const cwd = resolveFixture('monorepo');
-      const output = runCommand('package-foo', { cwd });
+      const output = runCommand('test', { cwd });
 
-      expect(output).toMatchSnapshot();
+      expect(replaceall('\\', '/', output)).toMatchSnapshot();
     });
 
     it('should work in monorepo with yarn workspaces', () => {
       const cwd = resolveFixture('monorepo-with-workspaces');
       const output = runCommand('package-foo', { cwd });
 
-      expect(output).toMatchSnapshot();
+      expect(replaceall('\\', '/', output)).toMatchSnapshot();
     });
 
     it('should provide suggestion for scoped package with the same name', () => {
@@ -160,22 +160,6 @@ describe('CLI', () => {
     it('should list dependencies in a yarn installed package and show "why" information', () => {
       const cwd = resolveFixture('yarn-install');
       const output = runCommand('list', { cwd });
-
-      expect(output).toMatchSnapshot();
-    });
-
-    it('should list a monorepo', () => {
-      const cwd = resolveFixture('monorepo');
-      const output = runCommand('list', { cwd });
-
-      expect(output).toMatchSnapshot();
-    });
-  });
-
-  describe('qnm match', () => {
-    it('should match in monorepo and print subpackages modules', () => {
-      const cwd = resolveFixture('monorepo');
-      const output = runCommand('match packa', { cwd });
 
       expect(output).toMatchSnapshot();
     });

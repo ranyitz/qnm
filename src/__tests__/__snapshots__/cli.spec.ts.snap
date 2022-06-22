@@ -57,23 +57,16 @@ exports[`CLI qnm <module>] should show the version and dependents info on a sing
 "
 `;
 
-exports[`CLI qnm <module>] should work in monorepo and print subpackages modules 1`] = `
-"package-foo 3.0.0 ↰ just now
-└── 1.0.0 ⇡ just now
-
-package-a
-└─┬ package-foo 3.0.0 ↰ just now | 2.3.4 ↰ just now
-  └── 2.0.0 ⇡ just now
+exports[`CLI qnm <module>] should work in monorepo 1`] = `
+"test 3.0.0 ↰ just now
+└─┬ package-bar -> ../packages/package-bar
+  └── 1.0.0 ⇡ just now
 "
 `;
 
 exports[`CLI qnm <module>] should work in monorepo with yarn workspaces 1`] = `
-"package-foo 3.0.0 ↰ just now
-└── 1.0.0 ⇡ just now
-
-package-a
-└─┬ package-foo 3.0.0 ↰ just now | 2.3.4 ↰ just now
-  └── 2.0.0 ⇡ just now
+"package-foo 3.0.0 ↰ just now | 2.3.4 ↰ just now
+└── 2.0.0 -> ../packages/package-foo ⇡ just now
 "
 `;
 
@@ -121,27 +114,6 @@ exports[`CLI qnm list should --disable-colors 1`] = `
 └─┬ [2mdevDependency2[22m
   └─┬ [2mdep-of-dep[22m
     └── 1.0.0
-
-"
-`;
-
-exports[`CLI qnm list should list a monorepo 1`] = `
-"package-bar
-└── 1.0.0
-
-package-baz
-└── 1.0.0
-
-package-foo
-└── 1.0.0
-
-package-a
-└─┬ package-foo
-  └── 2.0.0
-
-package-b
-└─┬ package-bar
-  └── 3.0.0
 
 "
 `;
@@ -219,25 +191,5 @@ dep-of-dep-of-dep
   └─┬ dep-of-dep
     └── 1.0.0
 
-"
-`;
-
-exports[`CLI qnm match should match in monorepo and print subpackages modules 1`] = `
-"package-bar
-└── 1.0.0
-
-package-baz
-└── 1.0.0
-
-package-foo
-└── 1.0.0
-
-package-a
-└─┬ package-foo
-  └── 2.0.0
-
-package-b
-└─┬ package-bar
-  └── 3.0.0
 "
 `;
