@@ -276,7 +276,7 @@ export default class Workspace {
     return !!this.packageJson.workspaces || fs.existsSync(lernaJsonPath);
   }
 
-  // return a list of absolut paths of packages
+  // return a list of absolute paths of packages
   getMonorepoPackages(): Array<string> {
     if (!this.isMonorepo) return [];
 
