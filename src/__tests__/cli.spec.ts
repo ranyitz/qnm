@@ -87,14 +87,14 @@ describe('CLI', () => {
       const cwd = resolveFixture('monorepo');
       const output = runCommand('test', { cwd });
 
-      expect(output).toMatchSnapshot();
+      expect(replaceall('\\', '/', output)).toMatchSnapshot();
     });
 
     it('should work in monorepo with yarn workspaces', () => {
       const cwd = resolveFixture('monorepo-with-workspaces');
       const output = runCommand('package-foo', { cwd });
 
-      expect(output).toMatchSnapshot();
+      expect(replaceall('\\', '/', output)).toMatchSnapshot();
     });
 
     it('should provide suggestion for scoped package with the same name', () => {
