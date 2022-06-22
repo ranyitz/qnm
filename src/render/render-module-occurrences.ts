@@ -120,8 +120,10 @@ export default (
 
   if (remote) {
     const latest = moduleOccurrences[0].latestVersion;
-    const lastModified = moduleOccurrences[0].lastModified;
-    latestInfo = chalk.green.dim(` ${latest} ↰ ${formatTime(lastModified)}`);
+    const latestLastModified = moduleOccurrences[0].latestLastModified;
+    latestInfo = chalk.green.dim(
+      ` ${latest} ↰ ${formatTime(latestLastModified)}`
+    );
   }
 
   const packageInfo = {

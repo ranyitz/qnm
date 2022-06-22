@@ -108,8 +108,8 @@ export default class NodeModule {
     return this.remoteData['dist-tags'].latest;
   }
 
-  get lastModified(): Date {
-    return new Date(this.remoteData.time.modified);
+  get latestLastModified(): Date {
+    return new Date(this.remoteData.time[this.latestVersion]);
   }
 
   get releaseDate(): Date {
