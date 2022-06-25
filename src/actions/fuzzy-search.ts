@@ -82,7 +82,13 @@ export default (workspace: Workspace, options: CliOptions): void => {
   let currentResult = 0;
   let currentInputValue = '';
 
-  const modulesNames = workspace.getModulesNames();
+  let modulesNames: Array<string>;
+
+  if (workspace.isPackageInMonorepo) {
+    modulesNames = workspace.parentMonorepo.getModulesNames();
+  } else {
+    modulesNames = workspace.getModulesNames();
+  }
 
   const renderResults = () => {
     return results
