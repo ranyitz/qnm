@@ -193,3 +193,9 @@ dep-of-dep-of-dep
 
 "
 `;
+
+exports[`CLI qnm list should support an empty module in a monorepo 1`] = `
+"camelcase 3.0.0 ↰ just now
+└── 1.0.0 ⇡ just now
+"
+`;
