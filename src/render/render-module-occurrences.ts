@@ -129,6 +129,7 @@ export default (
   cwdModuleName?: string
 ) => {
   const moduleName = highlightMatch(moduleOccurrences[0].name, match!);
+
   const buildedOccurrences = moduleOccurrences.map((m) =>
     buildWithAncestors(
       m,

@@ -32,15 +32,36 @@ export function npmView(packageName: string): RemoteData {
     return viewMap.get(packageName);
   }
 
-  const { stdout, stderr } = execa.sync(`npm`, ['view', packageName, '--json']);
   let remoteDate;
+
   try {
-    remoteDate = JSON.parse(stdout);
-  } catch (error) {
-    throw new Error(`couldn't parse npm view's output
-${stderr}
-${error}
+    const { stdout, stderr } = execa.sync(
+      `npm`,
+      ['view', packageName, '--json'],
+      { timeout: 10000 }
+    );
+
+    try {
+      remoteDate = JSON.parse(stdout);
+    } catch (error) {
+      throw new Error(`couldn't parse npm view's output
+  ${stderr}
+  ${error}
     `);
+    }
+  } catch (error) {
+    if ((error as any).stderr.includes('404')) {
+      const summary = (error as any).stderr.split('\n')[1];
+      throw new Error(
+        `qnm couldn'd get remote data for this package, because it doesn't exist on the registry\n\n` +
+          summary
+      );
+    }
+
+    throw new Error(
+      `qnm couldn't get remote data, please check your connection to the npm registry\n\n` +
+        (error as Error).message.split('\n')[0]
+    );
   }
 
   viewMap.set(packageName, remoteDate);

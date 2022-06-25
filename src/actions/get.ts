@@ -14,16 +14,28 @@ export default (
   name: string,
   options: CliOptions = {}
 ): string | undefined => {
+  let moduleOccurrences;
+  let monorepoCwdModuleName;
+
   if (workspace.isPackageInMonorepo) {
-    return getPackageInMonorepo(workspace, name, options);
+    moduleOccurrences = workspace.parentMonorepo.getModuleOccurrences(name);
+    monorepoCwdModuleName = workspace.name;
+  } else {
+    moduleOccurrences = workspace.getModuleOccurrences(name);
   }
 
-  const moduleOccurrences = workspace.getModuleOccurrences(name);
   const { open, homepage, repo } = options;
 
   if (isEmpty(moduleOccurrences)) {
-    const modulesNames = workspace.getModulesNames();
-    const suggestions = getSuggestions(name, modulesNames);
+    let suggestions: Array<string> = [];
+
+    try {
+      const modulesNames = workspace.getModulesNames();
+      suggestions = getSuggestions(name, modulesNames);
+    } catch (error) {
+      // A case when we don't have node_modules at all
+      // so the call to .getModuleNames fails
+    }
 
     throw new NotFoundModuleError(name, suggestions);
   }
@@ -33,7 +45,7 @@ export default (
   }
 
   if (homepage || repo) {
-    const [nodeModule] = workspace.getModuleOccurrences(name);
+    const [nodeModule] = moduleOccurrences;
     const packageJson = nodeModule.packageJson;
 
     if (homepage) {
@@ -59,16 +71,9 @@ export default (
     }
   }
 
-  return renderModuleOccurrences(moduleOccurrences, options);
-};
-
-const getPackageInMonorepo = (
-  workspace: Workspace,
-  name: string,
-  options: CliOptions = {}
-) => {
-  const rootModuleOccurences =
-    workspace.parentMonorepo.getModuleOccurrences(name);
-
-  return renderModuleOccurrences(rootModuleOccurences, options, workspace.name);
+  return renderModuleOccurrences(
+    moduleOccurrences,
+    options,
+    monorepoCwdModuleName
+  );
 };

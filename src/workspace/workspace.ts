@@ -38,6 +38,12 @@ export default class Workspace {
 
   get modulesMap(): ModulesMap {
     if (!this._modulesMap) {
+      const nodeModulesPath = path.join(this.root, 'node_modules');
+
+      if (!fs.existsSync(nodeModulesPath)) {
+        throw new Error('could not find node_modules directory');
+      }
+
       this._modulesMap = ModulesMap.loadSync(this.root, this);
 
       if (this._modulesMap.size === 0) {
@@ -77,6 +83,7 @@ export default class Workspace {
     const maybeParentMonorepo = Workspace.loadSync({ cwd: maybeMonrepoRoot });
     const isPackageInMonorepo = maybeParentMonorepo
       .getMonorepoPackages()
+      .map(path.normalize)
       .includes(this.root);
 
     if (isPackageInMonorepo) {
@@ -321,12 +328,6 @@ export default class Workspace {
 
     if (!root) {
       throw new Error('could not identify package directory');
-    }
-
-    const nodeModulesPath = path.join(root, 'node_modules');
-
-    if (!fs.existsSync(nodeModulesPath)) {
-      throw new Error('could not find node_modules directory');
     }
 
     const workspace = new Workspace({ root });
