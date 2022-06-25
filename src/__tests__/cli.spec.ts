@@ -2,6 +2,7 @@ import { execSync, StdioOptions } from 'child_process';
 import { resolveFixture } from './utils';
 // @ts-expect-error no typings
 import replaceall from 'replaceall';
+import path from 'path';
 
 const qnmBin = require.resolve('../../bin/qnm');
 
@@ -165,14 +166,18 @@ describe('CLI', () => {
     });
 
     it('should support an empty package in a monorepo', () => {
-      const cwd = resolveFixture('monorepo/packages/package-without-modules');
+      const cwd = resolveFixture(
+        path.join('monorepo', 'packages', 'package-without-modules')
+      );
       const output = runCommand('camelcase', { cwd });
 
       expect(output).toMatchSnapshot();
     });
 
     it('should throw correctly when module is not found in a monorepo', () => {
-      const cwd = resolveFixture('monorepo/packages/package-without-modules');
+      const cwd = resolveFixture(
+        path.join('monorepo', 'packages', 'package-without-modules')
+      );
 
       try {
         runCommand('does-not-exists', { cwd, stdio: 'pipe' });
