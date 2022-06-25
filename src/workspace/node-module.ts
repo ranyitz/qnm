@@ -2,7 +2,7 @@ import fs, { Stats } from 'fs';
 import path from 'path';
 import { PackageJson } from 'type-fest';
 import getFolderSize from 'get-folder-size';
-import { readLinkSilent, npmView } from '../utils';
+import { readLinkSilent, npmView, simplifyRequiredByInfo } from '../utils';
 import Workspace from './workspace';
 import semverMaxSatisfying from 'semver/ranges/max-satisfying';
 import semver from 'semver';
@@ -196,18 +196,7 @@ export default class NodeModule {
     const requiredByInfo = this.requiredBy;
 
     if (requiredByInfo) {
-      return requiredByInfo.map((modulePath) => {
-        if (modulePath === '/') {
-          return 'dependencies';
-        } else if (modulePath === '#DEV:/') {
-          return 'devDependencies';
-        } else if (modulePath === '#USER') {
-          return `npm install ${this.name}`;
-        }
-
-        // npm sometimes starts with requiredBy with `/`
-        return modulePath.startsWith('/') ? modulePath.slice(1) : modulePath;
-      });
+      return simplifyRequiredByInfo(this.name, requiredByInfo);
     }
 
     return [];

@@ -67,3 +67,48 @@ export function npmView(packageName: string): RemoteData {
   viewMap.set(packageName, remoteDate);
   return remoteDate;
 }
+
+/**
+ * except a yarn3 array of reasons for a module to be installed
+ * and return them deduped and simplified
+ *
+ * input: [
+ * 'cacache',
+ * 'fs-minipass@npm:^2.0.0, fs-minipass',
+ * 'minizlib@npm:^2.1.1, minizlib',
+ * 'tar@npm:^6.1.11, tar'
+ * ]
+ *
+ * output: [
+ * 'cacache',
+ * 'fs-minipass',
+ * 'minizlib',
+ * 'tar'
+ * ]
+ * @param moduleName
+ * @param requiredByInfo
+ * @returns simplifiedRequiredByInfo
+ */
+export function simplifyRequiredByInfo(
+  moduleName: string,
+  requiredByInfo: Array<string>
+): Array<string> {
+  return [
+    ...new Set(
+      requiredByInfo.flatMap((el) => [
+        ...new Set(el.split(', ').map((name) => name.split('@npm:')[0])),
+      ])
+    ),
+  ].map((modulePath) => {
+    if (modulePath === '/') {
+      return 'dependencies';
+    } else if (modulePath === '#DEV:/') {
+      return 'devDependencies';
+    } else if (modulePath === '#USER') {
+      return `npm install ${moduleName}`;
+    }
+
+    // npm sometimes starts with requiredBy with `/`
+    return modulePath.startsWith('/') ? modulePath.slice(1) : modulePath;
+  });
+}

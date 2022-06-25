@@ -50,9 +50,19 @@ const highlightMatch = (str: string, match: string) =>
 
 const getWhyInfo = (m: NodeModule) => {
   const { whyInfo } = m;
-  return !isEmpty(whyInfo) && !m.parent
-    ? ` ${chalk.dim.yellow(`(${m.whyInfo.join(', ')})`)}`
-    : '';
+  if (isEmpty(whyInfo) || m.parent) {
+    return '';
+  }
+
+  let stringWhyInfo;
+
+  if (whyInfo.length > 3) {
+    stringWhyInfo = whyInfo.slice(0, 3).join(', ') + '...';
+  } else {
+    stringWhyInfo = whyInfo.join(', ');
+  }
+
+  return ` ${chalk.dim.yellow(`(${stringWhyInfo})`)}`;
 };
 
 type TreeNode = { label: string; nodes: Array<TreeNode> } | string;
