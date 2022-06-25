@@ -83,6 +83,7 @@ export default class Workspace {
     const maybeParentMonorepo = Workspace.loadSync({ cwd: maybeMonrepoRoot });
     const isPackageInMonorepo = maybeParentMonorepo
       .getMonorepoPackages()
+      .map(path.normalize)
       .includes(this.root);
 
     if (isPackageInMonorepo) {
