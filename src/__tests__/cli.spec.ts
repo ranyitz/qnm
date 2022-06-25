@@ -164,15 +164,15 @@ describe('CLI', () => {
       expect(output).toMatchSnapshot();
     });
 
-    it('should support an empty module in a monorepo', () => {
-      const cwd = resolveFixture('monorepo/packages/package-no-modules');
+    it('should support an empty package in a monorepo', () => {
+      const cwd = resolveFixture('monorepo/packages/package-without-modules');
       const output = runCommand('camelcase', { cwd });
 
       expect(output).toMatchSnapshot();
     });
 
     it('should throw correctly when module is not found in a monorepo', () => {
-      const cwd = resolveFixture('monorepo/packages/package-no-modules');
+      const cwd = resolveFixture('monorepo/packages/package-without-modules');
 
       try {
         runCommand('does-not-exists', { cwd, stdio: 'pipe' });
