@@ -35,7 +35,6 @@ export default class Workspace {
   _isPnpm: boolean | null = null;
   _yarnLock: YarnLock | null = null;
   _yarnRC: YarnRC | null = null;
-  // _pnpmLock: PnpmLockfile | null = null;
   _resolutions: Array<{ pattern: Resolution; reference: string }> | null = null;
   _resolutionsList: Array<string> | null = null;
 
