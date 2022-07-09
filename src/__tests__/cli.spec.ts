@@ -188,7 +188,7 @@ describe('CLI', () => {
       }
     });
 
-    it.only('should support circular symlinks', () => {
+    it('should support circular symlinks', () => {
       const cwd = resolveFixture('circular-links');
       const output = runCommand('foo', { cwd });
       expect(replaceall('\\', '/', output)).toMatchSnapshot();
