@@ -74,6 +74,7 @@ export default (
   return renderModuleOccurrences(
     moduleOccurrences,
     options,
+    workspace,
     monorepoCwdModuleName
   );
 };

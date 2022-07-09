@@ -1,0 +1,7 @@
+{
+  "name": "pnpm",
+  "version": "1.0.0",
+  "dependencies": {
+    "camelcase": "^7.0.0"
+  }
+}

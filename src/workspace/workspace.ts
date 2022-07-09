@@ -4,6 +4,7 @@ import pkgDir from 'pkg-dir';
 import { PackageJson } from 'type-fest';
 import { parseSyml as parseYarnLock, parseResolution } from '@yarnpkg/parsers';
 import type { Resolution } from '@yarnpkg/parsers';
+import YAML from 'yaml';
 import globby from 'globby';
 import zip from 'lodash/zip';
 import { isTruthy } from '../utils';
@@ -20,6 +21,10 @@ type YarnLock = Record<
   { version: string; dependencies: Record<string, string> }
 >;
 
+type YarnRC = {
+  nodeLinker?: string;
+};
+
 export default class Workspace {
   root: string;
   packages: Array<Workspace>;
@@ -27,7 +32,9 @@ export default class Workspace {
   _modulesMap: ModulesMap | null = null;
   _packageJson: PackageJson | null = null;
   _isYarn: boolean | null = null;
+  _isPnpm: boolean | null = null;
   _yarnLock: YarnLock | null = null;
+  _yarnRC: YarnRC | null = null;
   _resolutions: Array<{ pattern: Resolution; reference: string }> | null = null;
   _resolutionsList: Array<string> | null = null;
 
@@ -74,6 +81,21 @@ export default class Workspace {
     return this._yarnLock;
   }
 
+  get yarnRC(): YarnRC | null {
+    if (!this._yarnRC) {
+      try {
+        const yarnRCPath = path.join(this.root, '.yarnrc.yml');
+        const rawYarnRC = fs.readFileSync(yarnRCPath, 'utf8');
+        const yarnRC = YAML.parse(rawYarnRC);
+        this._yarnRC = yarnRC;
+      } catch (error) {
+        // There is a problem with the yarnrc read or parsing
+      }
+    }
+
+    return this._yarnRC as YarnRC;
+  }
+
   get name() {
     return this.packageJson.name;
   }
@@ -111,6 +133,26 @@ export default class Workspace {
     }
 
     return this._isYarn!;
+  }
+
+  get isPnpm(): boolean {
+    if (!this._isPnpm) {
+      if (fs.existsSync(path.join(this.root, 'pnpm-lock.yaml'))) {
+        this._isPnpm = true;
+      }
+      this._isPnpm = false;
+
+      try {
+        const linker = this.yarnRC?.['nodeLinker'];
+        if (linker === 'pnpm') {
+          this._isPnpm = true;
+        }
+      } catch (error) {
+        this._isPnpm = false;
+      }
+    }
+
+    return this._isPnpm!;
   }
 
   get resolutionsList(): any {

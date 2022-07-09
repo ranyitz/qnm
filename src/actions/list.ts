@@ -8,7 +8,7 @@ export default (workspace: Workspace, options: CliOptions = {}) => {
   if (options.deps) {
     const moduleOccurrencesList = workspace.listPackageJsonDependencies();
 
-    return renderModuleList(moduleOccurrencesList, options);
+    return renderModuleList(moduleOccurrencesList, options, workspace);
   }
 
   const moduleOccurrencesList = workspace.list();
@@ -17,5 +17,5 @@ export default (workspace: Workspace, options: CliOptions = {}) => {
     throw new NoModulesError();
   }
 
-  return renderModuleList(moduleOccurrencesList, options);
+  return renderModuleList(moduleOccurrencesList, options, workspace);
 };

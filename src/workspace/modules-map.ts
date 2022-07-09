@@ -124,8 +124,9 @@ export default class ModulesMap extends Map<string, Array<NodeModule>> {
 
   static loadSync(cwd: string, workspace: Workspace): ModulesMap {
     const modulesMap = new ModulesMap({ root: cwd, workspace });
+    const visited = new Set();
 
-    function traverseNodeModules(root: string, parent?: NodeModule) {
+    const traverseNodeModules = (root: string, parent?: NodeModule) => {
       const nodeModulesPath = path.resolve(root, 'node_modules');
 
       if (fs.existsSync(nodeModulesPath)) {
@@ -167,11 +168,16 @@ export default class ModulesMap extends Map<string, Array<NodeModule>> {
 
             return nodeModule;
           })
-        ).forEach((nodeModule) =>
-          traverseNodeModules(nodeModule.path, nodeModule)
-        );
+        ).forEach((nodeModule) => {
+          // on yarn 3 with pnpm linker there are cases of circular dependency
+          // this makes sure that qnm isn't analyzing the same dependency twice
+          if (visited.has(nodeModule.realpath)) return;
+          visited.add(nodeModule.realpath);
+
+          traverseNodeModules(nodeModule.path, nodeModule);
+        });
       }
-    }
+    };
 
     traverseNodeModules(cwd);
     return modulesMap;
