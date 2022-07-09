@@ -191,7 +191,7 @@ describe('CLI', () => {
     it.only('should support circular symlinks', () => {
       const cwd = resolveFixture('circular-links');
       const output = runCommand('foo', { cwd });
-      expect(output).toMatchSnapshot();
+      expect(replaceall('\\', '/', output)).toMatchSnapshot();
     });
 
     it('should support pnpm', () => {
