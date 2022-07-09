@@ -74,6 +74,10 @@ export default class NodeModule {
     return path.join(this.nodeModulesPath, this.name);
   }
 
+  get realpath() {
+    return fs.realpathSync(path.join(this.nodeModulesPath, this.name));
+  }
+
   get stats() {
     if (!this._stats) {
       this._stats = fs.statSync(this.path);

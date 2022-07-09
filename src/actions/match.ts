@@ -15,5 +15,9 @@ export default (
     throw new NotMatchModuleError(match);
   }
 
-  return renderModuleList(moduleOccurrencesList, { ...options, match });
+  return renderModuleList(
+    moduleOccurrencesList,
+    { ...options, match },
+    workspace
+  );
 };

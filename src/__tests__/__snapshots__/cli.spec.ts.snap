@@ -199,3 +199,24 @@ exports[`CLI qnm list should support an empty package in a monorepo 1`] = `
 └── 1.0.0 ⇡ just now
 "
 `;
+
+exports[`CLI qnm list should support circular symlinks 1`] = `
+"foo 3.0.0 ↰ just now
+├── 1.0.0 ⇡ just now
+└─┬ foo
+  └─┬ bar
+    └── 1.0.0 -> ../../../ ⇡ just now
+"
+`;
+
+exports[`CLI qnm list should support pnpm 1`] = `
+"camelcase 3.0.0 ↰ just now
+└── 7.0.0 ⇡ just now
+"
+`;
+
+exports[`CLI qnm list should support yarn-3 with pnpm linker 1`] = `
+"camelcase 3.0.0 ↰ just now
+└── 7.0.0 ⇡ just now (test-yarn3, dependencies)
+"
+`;

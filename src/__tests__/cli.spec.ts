@@ -187,5 +187,25 @@ describe('CLI', () => {
         );
       }
     });
+
+    it.only('should support circular symlinks', () => {
+      const cwd = resolveFixture('circular-links');
+      const output = runCommand('foo', { cwd });
+      expect(output).toMatchSnapshot();
+    });
+
+    it('should support pnpm', () => {
+      const cwd = resolveFixture('pnpm');
+      const output = runCommand('camelcase', { cwd });
+
+      expect(output).toMatchSnapshot();
+    });
+
+    it('should support yarn-3 with pnpm linker', () => {
+      const cwd = resolveFixture('yarn-3-pnpm');
+      const output = runCommand('camelcase', { cwd });
+
+      expect(output).toMatchSnapshot();
+    });
   });
 });

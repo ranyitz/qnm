@@ -10,6 +10,7 @@ import semver from 'semver';
 import NodeModule from '../workspace/node-module';
 import { CliOptions } from '../cli';
 import renderVersion from './render-version';
+import Workspace from '../workspace/workspace';
 
 const renderSymlink = (m: NodeModule): string =>
   m.symlink ? chalk.magenta(` -> ${m.symlink}`) : '';
@@ -70,6 +71,7 @@ type TreeNode = { label: string; nodes: Array<TreeNode> } | string;
 const buildWithAncestors = (
   m: NodeModule,
   { noColor, remote }: CliOptions,
+  workspace: Workspace,
   cwdModuleName?: string
 ) => {
   const whyInfo = getWhyInfo(m);
@@ -78,7 +80,9 @@ const buildWithAncestors = (
     ? terminalLink(version, path.join('File:///', m.path, 'package.json'))
     : version;
 
-  const symlink = renderSymlink(m);
+  // pnpm uses a lot of symlinks which makes this information
+  // full of clutter and irrelelvant
+  const symlink = workspace.isPnpm ? '' : renderSymlink(m);
 
   const bundledDependencies = m.isbundledDependency
     ? chalk.dim.cyan(' (bundledDependencies)')
@@ -118,12 +122,13 @@ const buildWithAncestors = (
       const cwdModuleMark =
         cwdModuleName === currentModule.name ? chalk.bold` (cwd)` : '';
 
+      // pnpm uses a lot of symlinks which makes this information
+      // full of clutter and irrelelvant
+      const symlink = workspace.isPnpm ? '' : renderSymlink(currentModule);
+
       hierarchy = [
         {
-          label:
-            chalk.dim(currentModule.name) +
-            renderSymlink(currentModule) +
-            cwdModuleMark,
+          label: chalk.dim(currentModule.name) + symlink + cwdModuleMark,
           nodes: hierarchy,
         },
       ];
@@ -136,6 +141,7 @@ const buildWithAncestors = (
 export default (
   moduleOccurrences: Array<NodeModule>,
   { match, noColor, remote }: CliOptions = {},
+  workspace: Workspace,
   cwdModuleName?: string
 ) => {
   const moduleName = highlightMatch(moduleOccurrences[0].name, match!);
@@ -147,6 +153,7 @@ export default (
         noColor,
         remote,
       },
+      workspace,
       cwdModuleName
     )
   );
