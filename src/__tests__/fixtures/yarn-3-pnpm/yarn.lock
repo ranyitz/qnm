@@ -14,7 +14,7 @@ __metadata:
 
 "test-yarn3@workspace:.":
   version: 0.0.0-use.local
-  resolution: "test-yarn3@workspace:."
+  resolution: "yarn-3-pnpm@workspace:."
   dependencies:
     camelcase: ^7.0.0
   languageName: unknown
