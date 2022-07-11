@@ -1,7 +1,6 @@
 import chalk from 'chalk';
 import figures from 'figures';
 import logUpdate from 'log-update';
-import isEmpty from 'lodash/isEmpty';
 import Input from '../fuzzy-search/input';
 import sortBySimilarity from '../fuzzy-search/sort-by-similarity';
 import Workspace from '../workspace/workspace';
@@ -160,7 +159,7 @@ export default (workspace: Workspace, options: CliOptions): void => {
   });
 
   input.on('tab', () => {
-    if (isEmpty(results)) {
+    if (results.length === 0) {
       return;
     }
 
@@ -176,7 +175,7 @@ export default (workspace: Workspace, options: CliOptions): void => {
   });
 
   input.on('shiftTab', () => {
-    if (isEmpty(results)) {
+    if (results.length === 0) {
       return;
     }
 
@@ -192,14 +191,14 @@ export default (workspace: Workspace, options: CliOptions): void => {
   });
 
   input.on('choose', () => {
-    if (isEmpty(results) && isEmpty(chosenModules)) {
+    if (results.length === 0 && chosenModules.length === 0) {
       return;
     }
 
     input.end();
     logUpdate('');
 
-    if (isEmpty(chosenModules)) {
+    if (chosenModules.length === 0) {
       chosenModules.push(results[currentResult].value);
     }
 

@@ -1,4 +1,3 @@
-import isEmpty from 'lodash/isEmpty';
 import NoModulesError from '../errors/no-modules-error';
 import renderModuleList from '../render/render-module-list';
 import Workspace from '../workspace/workspace';
@@ -13,7 +12,7 @@ export default (workspace: Workspace, options: CliOptions = {}) => {
 
   const moduleOccurrencesList = workspace.list();
 
-  if (isEmpty(moduleOccurrencesList)) {
+  if (moduleOccurrencesList.length === 0) {
     throw new NoModulesError();
   }
 

@@ -1,4 +1,3 @@
-import isEmpty from 'lodash/isEmpty';
 import NotMatchModuleError from '../errors/not-match-module-error';
 import renderModuleList from '../render/render-module-list';
 import Workspace from '../workspace/workspace';
@@ -11,7 +10,7 @@ export default (
 ) => {
   const moduleOccurrencesList = workspace.match(match);
 
-  if (isEmpty(moduleOccurrencesList)) {
+  if (moduleOccurrencesList.length === 0) {
     throw new NotMatchModuleError(match);
   }
 

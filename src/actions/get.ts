@@ -1,5 +1,4 @@
 import opn from 'open';
-import isEmpty from 'lodash/isEmpty';
 import getSuggestions from '../suggest/get-suggestions';
 import NotFoundModuleError from '../errors/not-found-module-error';
 import NotFoundHomepageError from '../errors/not-found-homepage-error';
@@ -26,7 +25,7 @@ export default (
 
   const { open, homepage, repo } = options;
 
-  if (isEmpty(moduleOccurrences)) {
+  if (moduleOccurrences.length === 0) {
     let suggestions: Array<string> = [];
 
     try {
