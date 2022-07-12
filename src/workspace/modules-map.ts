@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-import flattenDeep from 'lodash/flattenDeep';
 import chalk from 'chalk';
 import NodeModule from './node-module';
 import Workspace from './workspace';
@@ -134,8 +133,8 @@ export default class ModulesMap extends Map<string, Array<NodeModule>> {
           .readdirSync(nodeModulesPath)
           .filter(isNotHiddenDirectory);
 
-        flattenDeep(
-          modulesNames.map((name) => {
+        modulesNames
+          .map((name) => {
             if (isScope(name)) {
               const subScopeModules = fs.readdirSync(
                 path.join(nodeModulesPath, name)
@@ -168,14 +167,15 @@ export default class ModulesMap extends Map<string, Array<NodeModule>> {
 
             return nodeModule;
           })
-        ).forEach((nodeModule) => {
-          // on yarn 3 with pnpm linker there are cases of circular dependency
-          // this makes sure that qnm isn't analyzing the same dependency twice
-          if (visited.has(nodeModule.realpath)) return;
-          visited.add(nodeModule.realpath);
+          .flat()
+          .forEach((nodeModule) => {
+            // on yarn 3 with pnpm linker there are cases of circular dependency
+            // this makes sure that qnm isn't analyzing the same dependency twice
+            if (visited.has(nodeModule.realpath)) return;
+            visited.add(nodeModule.realpath);
 
-          traverseNodeModules(nodeModule.path, nodeModule);
-        });
+            traverseNodeModules(nodeModule.path, nodeModule);
+          });
       }
     };
 

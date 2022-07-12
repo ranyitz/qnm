@@ -1,9 +1,9 @@
 import chalk, { Chalk } from 'chalk';
-import identity from 'lodash/identity';
 
-type Identity<T> = (t: T) => T;
+const identity = <T>(t: T) => t;
+type Identity = typeof identity;
 
-type VersionMap = Record<string, Chalk | Identity<string>>;
+type VersionMap = Record<string, Chalk | Identity>;
 
 const moduleMap: Record<string, VersionMap> = {};
 

@@ -1,5 +1,4 @@
 import chalk from 'chalk';
-import isEmpty from 'lodash/isEmpty';
 
 function paintDiffInBold(from: string, to: string) {
   return to
@@ -18,7 +17,7 @@ export default class NotFoundModuleError extends Error {
   constructor(name: string, suggestions: Array<string>) {
     let message = `Could not find any module by the name: "${name}".`;
 
-    if (!isEmpty(suggestions)) {
+    if (suggestions.length > 0) {
       message += ` Did you mean "${paintDiffInBold(name, suggestions[0])}"?`;
     }
 

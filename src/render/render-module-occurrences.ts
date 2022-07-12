@@ -1,6 +1,5 @@
 import path from 'path';
 import chalk from 'chalk';
-import isEmpty from 'lodash/isEmpty';
 import archy from 'archy';
 import terminalLink, {
   isSupported as isTerminalLinkSupported,
@@ -51,7 +50,7 @@ const highlightMatch = (str: string, match: string) =>
 
 const getWhyInfo = (m: NodeModule) => {
   const { whyInfo } = m;
-  if (isEmpty(whyInfo) || m.parent) {
+  if (whyInfo.length === 0 || m.parent) {
     return '';
   }
 
