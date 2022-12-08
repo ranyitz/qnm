@@ -22,9 +22,9 @@
 
 > most bugs are caused by the assumptions we didn't realize we were making.
 
-When debugging a problem, I sometimes find myself checking what are the installed versions of the modules within `node_modules` directory. Current solutions like running `npm list` are not fast enough and prints too much clutter, checking the version in the `package.json` takes a bit more effort and doesn't give you more information regarding other occurrences of this module.
+I often need to quickly check the versions of the modules installed in the `node_modules` directory. Current solutions like running `npm list` are slow and produce a lot of irrelevant output. Checking the version in the `package.json` file of the specific module requires more effort and doesn’t provide information about other instances of the same module.
 
-_qnm_ aims to get this information **fast** and tries to filter only the important parts, while supporting both yarn & npm.
+_qnm_ is a tool that solves this problem by providing fast and focused information about the installed modules. It supports both `npm` and `yarn` and allows you to quickly identify the versions of the modules you are interested in.
 
 ## Features
 
