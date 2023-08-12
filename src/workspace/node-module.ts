@@ -28,9 +28,11 @@ export default class NodeModule {
   _remoteData: RemoteData | null;
   _packageJson: PackageJson | null;
   _stats: Stats | null;
+  _path: string | null;
   _realpath: string | null;
   _yarnRequiredBy: Set<string> | null;
   _symlink: string | null;
+  _maxVersionInSameMajor: string | null;
 
   constructor({
     nodeModulesPath,
@@ -48,11 +50,13 @@ export default class NodeModule {
     this.parent = parent;
     this.workspace = workspace;
     this._stats = null;
+    this._path = null;
     this._realpath = null;
     this._remoteData = null;
     this._packageJson = null;
     this._yarnRequiredBy = null;
     this._symlink = null;
+    this._maxVersionInSameMajor = null;
   }
 
   get packageJson(): PackageJson {
@@ -80,7 +84,10 @@ export default class NodeModule {
   }
 
   get path() {
-    return path.join(this.nodeModulesPath, this.name);
+    if (!this._path) {
+      this._path = path.join(this.nodeModulesPath, this.name);
+    }
+    return this._path;
   }
 
   get realpath() {
@@ -143,10 +150,13 @@ export default class NodeModule {
   }
 
   get maxVersionInSameMajor(): string | null {
-    return semverMaxSatisfying(
-      this.remoteData.versions,
-      `^${semver.clean(this.version)}`
-    );
+    if (!this._maxVersionInSameMajor) {
+      this._maxVersionInSameMajor = semverMaxSatisfying(
+        this.remoteData.versions,
+        `^${semver.clean(this.version)}`
+      );
+    }
+    return this._maxVersionInSameMajor;
   }
 
   get maxVersionInSameMajorLastModified(): Date | null {
