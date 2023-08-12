@@ -7,6 +7,13 @@ import Workspace from './workspace';
 import semverMaxSatisfying from 'semver/ranges/max-satisfying';
 import semver from 'semver';
 
+// fs.realpathSync is 70x slower than fs.realpathSync.native:
+// https://github.com/nodejs/node/issues/2680
+// However, `fs.realpathSync.native` resolves differently in
+// Windows network drive, causing file read errors
+const fsRealpathSync =
+  process.platform === 'win32' ? fs.realpathSync : fs.realpathSync.native;
+
 export type RemoteData = {
   time: Record<string | 'modified' | 'created', string>;
   versions: Array<string>;
@@ -21,6 +28,7 @@ export default class NodeModule {
   _remoteData: RemoteData | null;
   _packageJson: PackageJson | null;
   _stats: Stats | null;
+  _realpath: string | null;
   _yarnRequiredBy: Set<string> | null;
   _symlink: string | null;
 
@@ -40,6 +48,7 @@ export default class NodeModule {
     this.parent = parent;
     this.workspace = workspace;
     this._stats = null;
+    this._realpath = null;
     this._remoteData = null;
     this._packageJson = null;
     this._yarnRequiredBy = null;
@@ -75,7 +84,21 @@ export default class NodeModule {
   }
 
   get realpath() {
-    return fs.realpathSync(path.join(this.nodeModulesPath, this.name));
+    if (!this._realpath) {
+      try {
+        this._realpath = fsRealpathSync(this.path);
+      } catch (e: any) {
+        // When using npm "overwrites" with "@favware/skip-dependency", there could be modules
+        // that have symlinks to non-existing paths, causing an ENOENT error. Falling back to
+        // the path when this happen.
+        if ('code' in e && e.code === 'ENOENT') {
+          this._realpath = this.path;
+        }
+        throw e;
+      }
+    }
+
+    return this._realpath;
   }
 
   get stats() {
