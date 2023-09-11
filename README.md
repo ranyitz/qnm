@@ -34,24 +34,18 @@ _qnm_ is a tool that solves this problem by providing fast and focused informati
 - :books: Supports monorepos
 - :clock12: Show when a version was release and what is the latest version
 
-## Installation
-
-> If you don't want to install qnm, you can also prepend the command with `npx`
-
-```bash
-npm i --global qnm
-```
-
 ## Usage
 
+> You can use bunx/npx to run qnm, the docs use bunx because it's the fastest way
+
 ```bash
-qnm [module]
+bunx qnm [module]
 ```
 
 For example, if you want to see the installed versions of `lodash`:
 
 ```bash
-qnm lodash
+bunx qnm lodash
 ```
 
 And you'll see something like that:
@@ -112,13 +106,13 @@ Disables the most of colors and styling. E.g. version colors.
 Shows the heaviest modules in your `node_modules`. Helpful if you want to understand what's taking the most space on your `node_modules` directory.
 
 ```bash
-qnm doctor
+bunx qnm doctor
 ```
 
 sort the modules based on the amount of duplications they have in your `node_modules`.
 
 ```bash
-qnm doctor --sort duplicates
+bunx qnm doctor --sort duplicates
 ```
 
 ![image](https://user-images.githubusercontent.com/11733036/149247765-74247703-a7ce-4476-9b2e-7be31d4d672e.png)
@@ -130,7 +124,7 @@ qnm doctor --sort duplicates
 Returns a list of all modules in node_modules directory.
 
 ```bash
-qnm list
+bunx qnm list
 ```
 
 | Optional arguments |                                       Description                                       |
@@ -145,7 +139,7 @@ Works like grep, and match's any module that includes the supplied string.
 For example, i want to see which eslint plugins i have installed:
 
 ```bash
-> qnm match eslint-plug
+> bunx qnm match eslint-plug
 
 eslint-plugin-babel
 └── 3.3.0
@@ -175,3 +169,13 @@ Help is always welcome! Please head to the [CONTRIBUTING.md](./CONTRIBUTING.md) 
 ## License
 
 The MIT License
+
+## Installation
+
+> while qnm used to be installed globally, it's recommended to use `npx`/`bunx` to run it, it's just much faster.
+
+If you prefer the global installation, you can do it with:
+
+```bash
+npm i --global qnm
+```
