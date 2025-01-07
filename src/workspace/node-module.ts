@@ -100,7 +100,9 @@ export default class NodeModule {
         // the path when this happen.
         if ('code' in e && e.code === 'ENOENT') {
           this._realpath = this.path;
+          return this.path;
         }
+
         throw e;
       }
     }
