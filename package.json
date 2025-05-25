@@ -5,7 +5,7 @@
   "bin": "bin/qnm.js",
   "repository": "ranyitz/qnm",
   "engines": {
-    "node": ">=12"
+    "node": ">=18"
   },
   "files": [
     "dist/**",
