@@ -152,7 +152,7 @@ export default class Workspace {
       }
     }
 
-    return this._isPnpm!;
+    return this._isPnpm;
   }
 
   get resolutionsList(): any {
