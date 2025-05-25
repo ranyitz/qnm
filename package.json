@@ -1,11 +1,11 @@
 {
   "name": "qnm",
-  "version": "2.10.1",
+  "version": "2.10.4",
   "description": "cli utility for querying the node_modules directory",
   "bin": "bin/qnm.js",
   "repository": "ranyitz/qnm",
   "engines": {
-    "node": ">=12"
+    "node": ">=18"
   },
   "files": [
     "dist/**",
@@ -44,7 +44,7 @@
     "@types/semver": "^7.3.9",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
-    "@vercel/ncc": "^0.33.1",
+    "@vercel/ncc": "^0.38.3",
     "@yarnpkg/parsers": "^3.0.0-rc.3",
     "ansi": "^0.3.1",
     "archy": "^1.0.0",
